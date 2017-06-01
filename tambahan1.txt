@@ -1,0 +1,5 @@
+riwayat pekerjaan
+> jabatan
+> tahun bulan -> link ke SK
+
+manajemen file (SK, proposal, dsb) untuk tiap record penelitian
