@@ -1,4 +1,8 @@
 <?php
+if($this->input->get("sd")){
+    $this->load->view('mydocuments_research');
+}
+
 if($action){
     $this->load->view('mydocuments_'.$action);
 }
@@ -120,18 +124,18 @@ if($action){
                     $pt .= $p.'/';
                 }
         ?>
-            <a href="<?= site_url()."/home/mydocuments/?d=".$pt ?>"><?= ($p=="root"?'<h4 style="display:inline"><i class="glyphicon glyphicon-home"></i></h4>':'<h3 style="display:inline">'.$p.'</h3>') ?></a><h3 style="display:inline">&nbsp;&nbsp;&frasl;&nbsp;</h3>
+            <a href="<?= site_url()."/home/mydocuments/?d=".$pt.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>"><?= ($p=="root"?'<h4 style="display:inline"><i class="glyphicon glyphicon-home"></i></h4>':'<h3 style="display:inline">'.$p.'</h3>') ?></a><h3 style="display:inline">&nbsp;&nbsp;&frasl;&nbsp;</h3>
         <?php
             endforeach;
         ?>
     </div>
     
-    <form id="multiple-action" action="<?= site_url()."/home/mydocuments/multiple-action/?d=".$pt ?>" method="post"></form>
+    <form id="multiple-action" action="<?= site_url()."/home/mydocuments/multiple-action/?d=".$pt.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>" method="post"></form>
     
     <div class="panel-body">
         <ul class="nav nav-pills">
-            <li><a role="presentation" class="btn" href="<?= site_url()."/home/mydocuments/upload/?d=".$pt ?>"><i class="glyphicon glyphicon-plus"></i> Upload File</a></li>
-            <li><a role="presentation" class="btn" href="<?= site_url()."/home/mydocuments/makedir/?d=".$pt ?>"><i class="glyphicon glyphicon-folder-close"></i> Buat Folder</a></li>
+            <li><a role="presentation" class="btn" href="<?= site_url()."/home/mydocuments/upload/?d=".$pt.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>"><i class="glyphicon glyphicon-plus"></i> Upload File</a></li>
+            <li><a role="presentation" class="btn" href="<?= site_url()."/home/mydocuments/makedir/?d=".$pt.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>"><i class="glyphicon glyphicon-folder-close"></i> Buat Folder</a></li>
             <li><a role="presentation" class="btn btn-parent"><button type="submit" value="remove" name="intent" form="multiple-action" class="btn-inherit"><i class="glyphicon glyphicon-remove"></i> Hapus</button></a></li>
             <li><a role="presentation" class="btn btn-parent"><button type="submit" value="rename" name="intent" form="multiple-action" class="btn-inherit"><i class="glyphicon glyphicon-edit"></i> Ubah nama</button></a></li>
             
@@ -142,8 +146,8 @@ if($action){
                 </a>
                 <ul class="dropdown-menu">
                     <li><small>multiple</small></li>
-                    <li><a role="presentation" class="btn" href="<?= site_url()."/home/mydocuments/makedir/?d=".$pt ?>"><i class="glyphicon glyphicon-folder-close"></i> Buat Folder</a></li>
-                    <li><a role="presentation" class="btn" href="<?= site_url()."/home/mydocuments/makedir/?d=".$pt ?>"><i class="glyphicon glyphicon-folder-close"></i> Buat Folder</a></li>
+                    <li><a role="presentation" class="btn" href="<?= site_url()."/home/mydocuments/makedir/?d=".$pt.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>"><i class="glyphicon glyphicon-folder-close"></i> Buat Folder</a></li>
+                    <li><a role="presentation" class="btn" href="<?= site_url()."/home/mydocuments/makedir/?d=".$pt.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>"><i class="glyphicon glyphicon-folder-close"></i> Buat Folder</a></li>
                 </ul>
             </li>
 -->
@@ -173,7 +177,7 @@ if($action){
                     
                 </label>
             </div>
-            <a class="dir-item" href="<?= site_url()."/home/mydocuments/?d=".implode('/', $dir_path).'/'.$dir_entry->name ?>"><i class="glyphicon glyphicon-folder-open col-md-2"></i><span class="col-md-8"><?= $dir_entry->name ?></span></a><!--<a href="<?= site_url()."/home/mydocuments/remove/?d=".$this->input->get('d')."&remove_directory=".$dir_entry->name; ?>"><span class="delete-icon"><b>&times;</b></span></a>-->
+            <a class="dir-item" href="<?= site_url()."/home/mydocuments/?d=".implode('/', $dir_path).'/'.$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>"><i class="glyphicon glyphicon-folder-open col-md-2"></i><span class="col-md-8"><?= $dir_entry->name ?></span></a><!--<a href="<?= site_url()."/home/mydocuments/remove/?d=".$this->input->get('d')."&remove_directory=".$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""); ?>"><span class="delete-icon"><b>&times;</b></span></a>-->
         </h4></div></div>
         <?php
                 else:
@@ -188,7 +192,7 @@ if($action){
                     
                 </label>
             </div>
-            <a class="dir-item" href="<?= site_url()."/home/mydocuments/?d=".$this->input->get('d')."&f=".$pt.$dir_entry->name ?>"><i class="glyphicon glyphicon-file col-md-2"></i><span class="col-md-8"><?= $dir_entry->name ?> <small>(<?= human_filesize(filesize(str_replace('/','\\',$this->session->userdata('work_dir').$pt.$dir_entry->name)), 0); ?>)</small></span></a><!--<a href="<?= site_url()."/home/mydocuments/remove/?d=".$this->input->get('d')."&remove_file=".$dir_entry->name; ?>"><span class="delete-icon"><b>&times;</b></span></a>-->
+            <a class="dir-item" href="<?= site_url()."/home/mydocuments/?d=".$this->input->get('d')."&f=".$pt.$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>"><i class="glyphicon glyphicon-file col-md-2"></i><span class="col-md-8"><?= $dir_entry->name ?> <small>(<?= human_filesize(filesize(str_replace('/','\\',$this->session->userdata('work_dir').($this->input->get("sd") ? "/.profile/".$this->input->get("sd").$this->input->get("id")."/":"").$pt.$dir_entry->name)), 0); ?>)</small></span></a><!--<a href="<?= site_url()."/home/mydocuments/remove/?d=".$this->input->get('d')."&remove_file=".$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""); ?>"><span class="delete-icon"><b>&times;</b></span></a>-->
         </h4></div></div>
         <?php
                 endif;

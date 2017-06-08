@@ -27,27 +27,32 @@ class Akun_model extends CI_Model{
         return $data;
     }
     
-    public function getPenelitian(){
+    public function getPenelitian($id=null){
+        if($id) $this->db->where("id", $id);
         $this->db->where(array("uid"=>$this->session->userdata('login')->uid, "tipe"=>"penelitian"));
         return $this->db->get("penelitian")->result();
     }
     
-    public function getPengabdian(){
+    public function getPengabdian($id=null){
+        if($id) $this->db->where("id", $id);
         $this->db->where(array("uid"=>$this->session->userdata('login')->uid, "tipe"=>"pengabdian"));
         return $this->db->get("penelitian")->result();
     }
     
-    public function getPublikasi(){
+    public function getPublikasi($id=null){
+        if($id) $this->db->where("id", $id);
         $this->db->where("uid", $this->session->userdata('login')->uid);
         return $this->db->get("publikasi")->result();
     }
     
-    public function getSeminar(){
+    public function getSeminar($id=null){
+        if($id) $this->db->where("id", $id);
         $this->db->where("uid", $this->session->userdata('login')->uid);
         return $this->db->get("seminar")->result();
     }
     
-    public function getPekerjaan(){
+    public function getPekerjaan($id=null){
+        if($id) $this->db->where("id", $id);
         $this->db->where("uid", $this->session->userdata('login')->uid);
         return $this->db->get("pekerjaan")->result();
     }
@@ -73,5 +78,18 @@ class Akun_model extends CI_Model{
     }
     public function setPekerjaan($data){
         $this->db->insert("pekerjaan", $data);
+    }
+    
+    public function updatePenelitian($data, $id){
+        return $this->db->update("penelitian", $data, array("id"=>$id));
+    }
+    public function updatePekerjaan($data, $id){
+        return $this->db->update("pekerjaan", $data, array("id"=>$id));
+    }
+    public function updatePublikasi($data, $id){
+        return $this->db->update("publikasi", $data, array("id"=>$id));
+    }
+    public function updateSeminar($data, $id){
+        return $this->db->update("seminar", $data, array("id"=>$id));
     }
 }

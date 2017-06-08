@@ -16,6 +16,7 @@ class Home extends MY_Controller {
         
         $this->data['identitas'] = $this->Akun_model->getIdentitas();
         $this->data['pendidikan'] = $this->Akun_model->getPendidikan();
+        $this->data['pekerjaan'] = $this->Akun_model->getPekerjaan();
         $this->data['penelitian'] = $this->Akun_model->getPenelitian();
         $this->data['pengabdian'] = $this->Akun_model->getPengabdian();
         $this->data['publikasi'] = $this->Akun_model->getPublikasi();
@@ -48,6 +49,8 @@ class Home extends MY_Controller {
             $this->Akun_model->setPublikasi($post_data);
         } else if($target == "seminar") {
             $this->Akun_model->setSeminar($post_data);
+        } else if($target == "pekerjaan") {
+            $this->Akun_model->setPekerjaan($post_data);
         }
         
         redirect('/home');
@@ -97,7 +100,58 @@ class Home extends MY_Controller {
     
     public function mydocuments($action=NULL)
 	{
-        $work_dir = $this->session->userdata('work_dir');
+        if($this->input->get("sd")){
+            $this->load->helper('form');
+            $this->load->model('Akun_model');
+            if($this->input->get("update")){
+                $post_data = $this->input->post();
+                unset($post_data['save']);
+                switch($this->input->get("sd")){
+                    case 'pekerjaan':
+                        $this->Akun_model->updatePekerjaan($post_data, $this->input->get("id"));
+                        break;
+                    case 'penelitian':
+                        $this->Akun_model->updatePenelitian($post_data, $this->input->get("id"));
+                        break;
+                    case 'pengabdian':
+                        $this->Akun_model->updatePenelitian($post_data, $this->input->get("id"));
+                        break;
+                    case 'publikasi':
+                        $this->Akun_model->updatePublikasi($post_data, $this->input->get("id"));
+                        break;
+                    case 'seminar':
+                        $this->Akun_model->updateSeminar($post_data, $this->input->get("id"));
+                        break;
+
+                }
+                $this->session->set_flashdata('update_success', 'Data sudah diperbaharui.');
+                redirect(site_url()."/home/mydocuments/?d=".$this->input->get('d').($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""));
+            }
+            switch($this->input->get("sd")){
+                case 'pekerjaan':
+                    $this->data['research_data'] = $this->Akun_model->getPekerjaan($this->input->get("id"));
+                    break;
+                case 'penelitian':
+                    $this->data['research_data'] = $this->Akun_model->getPenelitian($this->input->get("id"));
+                    break;
+                case 'pengabdian':
+                    $this->data['research_data'] = $this->Akun_model->getPengabdian($this->input->get("id"));
+                    break;
+                case 'publikasi':
+                    $this->data['research_data'] = $this->Akun_model->getPublikasi($this->input->get("id"));
+                    break;
+                case 'seminar':
+                    $this->data['research_data'] = $this->Akun_model->getSeminar($this->input->get("id"));
+                    break;
+                
+            }
+            $work_dir = $this->session->userdata('work_dir')."\\.profile\\".$this->input->get("sd").$this->input->get("id");
+            if(!file_exists($work_dir)){
+                mkdir($work_dir);
+            }
+        } else {
+            $work_dir = $this->session->userdata('work_dir');
+        }
         if($action == "multiple-action"){
             $action = $this->input->post("intent");
         }
@@ -113,10 +167,10 @@ class Home extends MY_Controller {
                 } else {
                     if(mkdir($dir_path.'/'.$this->input->post('dir_name'), 0750)){
                         $this->session->set_flashdata('success', 'Folder \'<b>'.$this->input->post('dir_name').'</b>\' telah berhasil dibuat');
-                        redirect(site_url()."/home/mydocuments/?d=".$this->input->get('d'));
+                        redirect(site_url()."/home/mydocuments/?d=".$this->input->get('d').($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""));
                     } else {
                         $this->session->set_flashdata('failure', 'Folder \'<b>'.$this->input->post('dir_name').'</b>\' gagal dibuat. Mungkin terdapat karakter yang tidak boleh digunakan atau folder sudah ada.');
-                        redirect(site_url()."/home/mydocuments/makedir/?d=".$this->input->get('d'));
+                        redirect(site_url()."/home/mydocuments/makedir/?d=".$this->input->get('d').($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""));
                     }
                 }
             }
@@ -135,7 +189,7 @@ class Home extends MY_Controller {
                         unlink($work_dir.$this->input->get('d').'/'.$f);
                     }
                 }
-                redirect(site_url()."/home/mydocuments/?d=".$this->input->get('d'));
+                redirect(site_url()."/home/mydocuments/?d=".$this->input->get('d').($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""));
             }
         } else if($action == "rename"){
             $this->load->helper('form');
@@ -151,14 +205,14 @@ class Home extends MY_Controller {
                     if(!file_exists($dir_path.'/'.$this->input->post('new_name'))){
                         if(rename($dir_path.'/'.$this->input->post('old_name'),$dir_path.'/'.$this->input->post('new_name'))){
                             $this->session->set_flashdata('success', 'Nama '.$this->input->post('type').' berhasil diubah menjadi \'<b>'.$this->input->post('new_name').'</b>\'.');
-                            redirect(site_url()."/home/mydocuments/?d=".$this->input->get('d'));
+                            redirect(site_url()."/home/mydocuments/?d=".$this->input->get('d').($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""));
                         } else {
                             $this->session->set_flashdata('failure', 'Gagal mengubah nama '.$this->input->post('type').' menjadi \'<b>'.$this->input->post('new_name').'</b>\'. Mungkin terdapat karakter yang tidak boleh digunakan sebagai nama '.$this->input->post('type').'.');
-                            redirect(site_url()."/home/mydocuments/rename/?d=".$this->input->get('d')."&old_name=".$this->input->post('old_name')."&type=".$this->input->post('type'));
+                            redirect(site_url()."/home/mydocuments/rename/?d=".$this->input->get('d')."&old_name=".$this->input->post('old_name')."&type=".$this->input->post('type').($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""));
                         }
                     } else {
                         $this->session->set_flashdata('failure', 'Gagal mengubah nama '.$this->input->post('type').' menjadi \'<b>'.$this->input->post('new_name').'</b>\'. Nama sudah ada pada folder ini.');
-                        redirect(site_url()."/home/mydocuments/rename/?d=".$this->input->get('d')."&old_name=".$this->input->post('old_name')."&type=".$this->input->post('type'));
+                        redirect(site_url()."/home/mydocuments/rename/?d=".$this->input->get('d')."&old_name=".$this->input->post('old_name')."&type=".$this->input->post('type').($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""));
                     }
                 }
             } else {
@@ -172,7 +226,7 @@ class Home extends MY_Controller {
                         $old_name = $this->input->post("selected_file")[0];
                         $type = "file";
                     }
-                    redirect(site_url()."/home/mydocuments/rename/?d=".$this->input->get('d')."&old_name=".$old_name."&type=".$type);
+                    redirect(site_url()."/home/mydocuments/rename/?d=".$this->input->get('d')."&old_name=".$old_name."&type=".$type.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""));
                 }
             }
         } else if($action == "upload"){
@@ -198,7 +252,7 @@ class Home extends MY_Controller {
                 else
                 {
                         $this->session->set_flashdata('success', 'File \'<b>'.$this->upload->data('file_name').'</b>\' telah berhasil diupload.');
-                        redirect(site_url()."/home/mydocuments/?d=".$this->input->get('d'));
+                        redirect(site_url()."/home/mydocuments/?d=".$this->input->get('d').($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""));
                     
                 }
             }

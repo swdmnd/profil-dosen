@@ -1,6 +1,6 @@
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h4><a role="button" class="close" aria-label="Close" href="<?= site_url()."/home/mydocuments/?d=".$this->input->get('d'); ?>"><span aria-hidden="true">&times;</span></a>Buat folder baru di '<?= $this->input->get('d') ?>'</h4>
+        <h4><a role="button" class="close" aria-label="Close" href="<?= site_url()."/home/mydocuments/?d=".$this->input->get('d').($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""); ?>"><span aria-hidden="true">&times;</span></a>Buat folder baru di '<?= $this->input->get('d') ?>'</h4>
     </div>
     
     <div class="panel-body">
@@ -12,7 +12,7 @@
         <?php
             endif;
         ?>
-        <?= form_open(site_url()."/home/mydocuments/makedir/?d=".$this->input->get('d'), 'class="form-horizontal"'); ?>
+        <?= form_open(site_url()."/home/mydocuments/makedir/?d=".$this->input->get('d').($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""), 'class="form-horizontal"'); ?>
             <div class="form-group">
                 <label for="dir_name" class="col-sm-2 control-label">Nama Folder</label>
                 <div class="col-sm-10">
@@ -22,7 +22,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="submit" class="btn btn-primary" name="makedir" value="Buat Folder">
-                    <a role="button" class="btn btn-danger" href="<?= site_url()."/home/mydocuments/?d=".$this->input->get('d'); ?>">Batalkan</a>
+                    <a role="button" class="btn btn-danger" href="<?= site_url()."/home/mydocuments/?d=".$this->input->get('d').($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""); ?>">Batalkan</a>
                 </div>
             </div>
         <?= form_close(); ?>

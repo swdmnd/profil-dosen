@@ -25,6 +25,7 @@ class Login extends MY_Controller {
                     $WORK_DIR = $GLOBALS['WORK_DIR'].$result->uid.$result->no_induk;
                     if(!file_exists($WORK_DIR)){
                         mkdir($WORK_DIR);
+                        mkdir($WORK_DIR.'\.profile');
                     }
                     $this->session->set_userdata('work_dir', $WORK_DIR);
                     redirect('home/index', 'location');
