@@ -11,6 +11,15 @@ class Akun_model extends CI_Model{
         return $this->db->get("users")->row();
     }
     
+    public function getProdi(){
+        $res = $this->db->get("prodi")->result();
+        foreach($res as $item){
+            $data['nm_prodi'][] = $item->nm_prodi;
+        }
+        $data = (object) $data;
+        return $data;		
+    }	
+	
     public function getPendidikan(){
         $this->db->where("uid", $this->session->userdata('login')->uid);
         $res = $this->db->get("pendidikan")->result();

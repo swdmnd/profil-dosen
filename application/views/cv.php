@@ -1,6 +1,8 @@
+<link rel="<?= base_url(); ?>assets/css/bootstrap-tagsinput.css">
+
 <div class="panel panel-default" id="identitas">
     <div class="panel-heading">
-        <h4><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;Identitas Diri</h4>
+        <h4><img src="<?= base_url() . $identitas->foto?>" width="100px" height="120px" class="img-circle">&nbsp;&nbsp;Identitas Diri</h4>
     </div>
     
     <div class="panel-body">
@@ -12,12 +14,27 @@
         <?php
             endif;
         ?>
-        <?= form_open(site_url()."/home/save/identitas", 'class="form-horizontal"'); ?>
+        <?= form_open_multipart(site_url()."/home/save/identitas", 'class="form-horizontal"'); ?>
             <div class="form-group">
                 <label for="nama_lengkap" class="col-sm-2 control-label">Nama Lengkap (dengan gelar)</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Nama lengkap" value="<?= $identitas->nama_lengkap ?>">
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="prodi" class="col-sm-2 control-label">Program Studi</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="prodi" name="prodi" placeholder="Program Studi" list="listprodi" value="<?= $identitas->prodi ?>">
+					<datalist id='listprodi'>
+					<?php					
+                    foreach($prodi->nm_prodi as $item):
+					?>
+                    <option value='<?= $item ?>'>
+					<?php
+                    endforeach;
+					?>
+					</datalist>                
+				</div>
             </div>
             <div class="form-group">
                 <label for="jabatan_fungsional" class="col-sm-2 control-label">Jabatan fungsional</label>
@@ -31,12 +48,14 @@
                     <input type="text" class="form-control" id="jabatan_struktural" name="jabatan_struktural" placeholder="Jabatan struktural" value="<?= $identitas->jabatan_struktural ?>">
                 </div>
             </div>
+			<!--
             <div class="form-group">
                 <label for="no_induk" class="col-sm-2 control-label">NIP/NIK/No. Identitas lain</label>
                 <div class="col-sm-10">
                     <p class="form-control-static"><?= $identitas->no_induk ?></p>
                 </div>
             </div>
+			-->
             <div class="form-group">
                 <label for="nidn" class="col-sm-2 control-label">NIDN</label>
                 <div class="col-sm-10">
@@ -93,16 +112,55 @@
             </div>
             <div class="form-group">
                 <label for="meluluskan" class="col-sm-2 control-label">Lulusan yang telah dihasilkan</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="meluluskan" name="meluluskan" placeholder="Lulusan yang telah dihasilkan" value="<?= $identitas->meluluskan ?>">
+                <div class="col-sm-10 form-horizontal">
+					<?php
+					$meluluskan = $identitas->meluluskan;
+					if ($meluluskan!='')
+					{
+					preg_match_all("/([^,= ]+):([^,= ]+)/", $meluluskan, $r);
+					$result = array_combine($r[1], $r[2]);
+					?>
+                    <label for="D3" class="col-sm-2 control-label">D3</label><div class="col-sm-10"><input type="text" class="form-control" id="jumlahlulusanD3" name="D3" placeholder="Jumlah D3" value="<?= $result['D3']?>"></div>				
+                    <label for="S1" class="col-sm-2 control-label">S1</label><div class="col-sm-10"><input type="text" class="form-control" id="jumlahlulusanS1" name="S1" placeholder="Jumlah S1" value="<?= $result['S1']?>"></div>
+                    <label for="Profesi" class="col-sm-2 control-label">Profesi</label><div class="col-sm-10"><input type="text" class="form-control" id="jumlahlulusanPr" name="Pr" placeholder="Jumlah Profesi" value="<?= $result['Pr']?>"></div>
+                    <label for="S2" class="col-sm-2 control-label">S2</label><div class="col-sm-10"><input type="text" class="form-control" id="jumlahlulusanS2" name="S2" placeholder="Jumlah S2" value="<?= $result['S2']?>"></div>
+                    <label for="S3" class="col-sm-2 control-label">S3</label><div class="col-sm-10"><input type="text" class="form-control" id="jumlahlulusanS3" name="S3" placeholder="Jumlah S3" value="<?= $result['S3']?>"></div>
+					<?php
+					}
+					else
+					{
+					?>
+                    D3 : <input type="text" class="form-control" id="jumlahlulusanD3" name="D3" placeholder="Jumlah D3" value="">				
+                    S1 : <input type="text" class="form-control" id="jumlahlulusanS1" name="S1" placeholder="Jumlah S1" value="">
+                    Profesi : <input type="text" class="form-control" id="jumlahlulusanPr" name="Pr" placeholder="Jumlah Profesi" value="">
+                    S2 : <input type="text" class="form-control" id="jumlahlulusanS2" name="S2" placeholder="Jumlah S2" value="">
+                    S3 : <input type="text" class="form-control" id="jumlahlulusanS3" name="S3" placeholder="Jumlah S3" value="">
+					<?php
+					}
+					?>
+					<label class="col-sm-2"></label><div class="col-sm-2"><button>Jumlahkan</button>				
+                    <input type="hidden" class="form-control" id="meluluskan" name="meluluskan" placeholder="Lulusan yang telah dihasilkan" value=<?= $identitas->meluluskan ?>>
                 </div>
             </div>
             <div class="form-group">
                 <label for="mk_diampu" class="col-sm-2 control-label">Mata kuliah yang diampu</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="mk_diampu" name="mk_diampu" placeholder="Mata kuliah yang diampu">
+                <div class="col-sm-10" style="margin-top:10px">
+                    <input type="text" class="form-control" data-role="tagsinput" id="mk_diampu" name="mk_diampu" placeholder="Pisahkan dengan koma" value="<?= $identitas->mk_diampu ?>">
                 </div>
             </div>
+            <div class="form-group">
+                <label for="research_interests" class="col-sm-2 control-label">Research Interest</label>
+                <div class="col-sm-10" style="margin-top:5px">
+                    <input type="text" class="form-control" data-role="tagsinput" id="research_interests" name="research_interests" placeholder="Pisahkan dengan koma" value="<?= $identitas->research_interests ?>">              
+				</div>
+            </div>
+            <div class="form-group">
+                <label for="foto" class="col-sm-2 control-label">Pilih Foto</label>
+                <div class="col-sm-10" style="margin-top:5px">
+                        <input type="file" name="foto" />              
+				</div>
+            </div>			
+    <br />
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="submit" class="btn btn-primary" name="save" value="Simpan">
@@ -510,7 +568,7 @@
                     <tr><td><?= ++$i ?></td><td><?= $item->tahun_mulai==$item->tahun_selesai?$item->tahun_mulai:$item->tahun_mulai." - ".$item->tahun_selesai ?></td><td><?= $item->judul ?></td><td><?= $item->sumber_dana ?></td><td><?= $item->jumlah_dana ?></td>
                         <td>
                         <div class="btn-group">
-                          <a href="<?= site_url; ?>home/mydocuments?sd=pengabdian&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
+                          <a href="<?= site_url(); ?>home/mydocuments?sd=pengabdian&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
                           <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
@@ -599,7 +657,7 @@
             ?>
                     <tr><td><?= ++$i ?></td><td><?= $item->tahun ?></td><td><?= $item->judul ?></td><td><?= $item->nomor_junal ?></td><td><?= $item->nama_jurnal ?></td><td>
                         <div class="btn-group">
-                          <a href="<?= site_url; ?>home/mydocuments?sd=publikasi&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
+                          <a href="<?= site_url(); ?>home/mydocuments?sd=publikasi&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
                           <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
@@ -686,7 +744,7 @@
             ?>
                     <tr><td><?= ++$i ?></td><td><?= $item->nama_seminar ?></td><td><?= $item->tema ?></td><td><?= $item->tempat.' '.$item->waktu ?></td><td>
                         <div class="btn-group">
-                          <a href="<?= site_url; ?>home/mydocuments?sd=seminar&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
+                          <a href="<?= site_url(); ?>home/mydocuments?sd=seminar&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
                           <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
@@ -706,7 +764,80 @@
         </tbody>
     </table>
 </div>
-
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+		document.getElementById("meluluskan").value = '';
+		var D3 = $("#jumlahlulusanD3").serializeArray();
+        var S1 = $("#jumlahlulusanS1").serializeArray();
+		var Pr = $("#jumlahlulusanPr").serializeArray();
+		var S2 = $("#jumlahlulusanS2").serializeArray();
+		var S3 = $("#jumlahlulusanS3").serializeArray();
+		
+        $.each(D3, function(i, field){
+			var value = 0;			
+			if (field.value=='')
+			{
+				value = 0;
+			}
+			else
+			{
+				value = field.value;
+			}
+			document.getElementById("meluluskan").value += field.name + ":" + value + ",";
+        });		
+        $.each(S1, function(i, field){
+			var value = 0;			
+			if (field.value=='')
+			{
+				value = 0;
+			}
+			else
+			{
+				value = field.value;
+			}			
+			document.getElementById("meluluskan").value += field.name + ":" + value + ",";
+        });
+        $.each(Pr, function(i, field){
+			var value = 0;			
+			if (field.value=='')
+			{
+				value = 0;
+			}
+			else
+			{
+				value = field.value;
+			}			
+			document.getElementById("meluluskan").value += field.name + ":" + value + ",";
+        });		
+        $.each(S2, function(i, field){
+			var value = 0;			
+			if (field.value=='')
+			{
+				value = 0;
+			}
+			else
+			{
+				value = field.value;
+			}
+			document.getElementById("meluluskan").value += field.name + ":" + value + ",";
+        });	
+        $.each(S3, function(i, field){
+			var value = 0;			
+			if (field.value=='')
+			{
+				value = 0;
+			}
+			else
+			{
+				value = field.value;
+			}			
+			document.getElementById("meluluskan").value += field.name + ":" + value ;
+        });	
+		return false;
+    });
+});
+</script>
 <script src="<?= base_url(); ?>assets/plugins/datepicker/bootstrap-datepicker.js"></script>
 <script src="<?= base_url(); ?>assets/plugins/datepicker/locales/bootstrap-datepicker.id.js"></script>
 <script src="<?= base_url(); ?>assets/plugins/select2/select2.full.min.js"></script>
@@ -718,3 +849,4 @@
     });
     $(".select2").select2();
 </script>
+<script src="<?= base_url(); ?>assets/js/bootstrap-tagsinput.js"></script>

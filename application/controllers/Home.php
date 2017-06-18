@@ -15,13 +15,13 @@ class Home extends MY_Controller {
         $this->load->model('Akun_model');        
         
         $this->data['identitas'] = $this->Akun_model->getIdentitas();
+        $this->data['prodi'] = $this->Akun_model->getProdi();
         $this->data['pendidikan'] = $this->Akun_model->getPendidikan();
         $this->data['pekerjaan'] = $this->Akun_model->getPekerjaan();
         $this->data['penelitian'] = $this->Akun_model->getPenelitian();
         $this->data['pengabdian'] = $this->Akun_model->getPengabdian();
         $this->data['publikasi'] = $this->Akun_model->getPublikasi();
         $this->data['seminar'] = $this->Akun_model->getSeminar();
-        
         $this->data['content'] = 'cv';
         $this->set_tab_index("1");
         $this->set_page_header("Curriculum Vitae", "CV <a href=\"".site_url()."/home/printpdf\"><i class=\"glyphicon glyphicon-print\"></i></a>");
@@ -33,14 +33,43 @@ class Home extends MY_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
         $this->load->model('Akun_model');        
-        
         $post_data = $this->input->post();
         unset($post_data['save']);
         $post_data['uid'] = $this->session->userdata('login')->uid;
         if($target == "identitas") {
             unset($post_data['mk_diampu']);
+			unset($post_data['D3']);
+			unset($post_data['S1']);
+			unset($post_data['Pr']);
+			unset($post_data['S2']);
+			unset($post_data['S3']);
             $post_data['tanggal_lahir'] = strtodate($post_data['tanggal_lahir']);
-            $this->Akun_model->setIdentitas($post_data);
+            //$this->Akun_model->setIdentitas($post_data);
+			$work_dir = $this->session->userdata('work_dir');
+			if(!empty($_FILES['foto']['name'])){			
+			$config =  array(
+                  'upload_path'     => $work_dir."/foto/",
+                  'file_name'      	=> $_FILES["foto"]["name"],
+                  'allowed_types'   => "gif|jpg|png|jpeg",
+                  'overwrite'       => TRUE,
+                  'max_size'        => "2000" 
+                );
+            $this->load->library('upload',$config);
+			$this->upload->initialize($config);
+            if ($this->upload->do_upload('foto'))
+                {
+					$post_data['foto'] = $work_dir."/foto/".$_FILES['foto']['name'];
+					$this->Akun_model->setIdentitas($post_data);
+				}
+            else
+                {
+					$this->Akun_model->setIdentitas($post_data);
+                }
+			}
+			else
+			{
+				$this->Akun_model->setIdentitas($post_data);
+			}
         } else if($target == "pendidikan") {
             $this->Akun_model->setPendidikan($post_data);
         } else if($target == "penelitian") {
