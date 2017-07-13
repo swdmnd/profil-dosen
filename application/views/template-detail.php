@@ -213,7 +213,7 @@ desired effect
               <!-- The user image in the navbar-->
               <img src="<?= base_url(); ?>assets/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs"><?= $user->nama ?></span>
+              <span class="hidden-xs"><?= $identitas->nama_lengkap ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -221,7 +221,7 @@ desired effect
                 <img src="<?= base_url(); ?>assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  <?= $user->nama ?>
+                  <?= $identitas->nama_lengkap ?>
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
@@ -271,7 +271,7 @@ desired effect
           <img src="<?= base_url() . $identitas->foto; ?>" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p><?= $user->nama ?></p>
+          <p><?= $identitas->nama_lengkap ?></p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
@@ -290,7 +290,7 @@ desired effect
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
-      <?php if($user->level == 'dosen'): ?>
+      <?php if($identitas->level == 'dosen'): ?>
       <ul class="sidebar-menu">
         <li class="header">MENU DOSEN</li>
         <!-- Optionally, you can add icons to the links -->
@@ -459,6 +459,5 @@ desired effect
      Both of these plugins are recommended to enhance the
      user experience. Slimscroll is required when using the
      fixed layout. -->
-
 </body>
 </html>

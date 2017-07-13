@@ -1,21 +1,20 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends MY_Controller {
+class Detail extends MY_Controller {
 
 	public function __construct(){
         parent::__construct();
-        $this->cek_session_in();
     }
-
+    
 	public function index($uid='')
 	{
 		if ($uid=='')
 		{
         $this->load->helper('form');
         $this->load->library('form_validation');
-        $this->load->model('Akun_model');
-
+        $this->load->model('Akun_model');        
+        
         $this->data['identitas'] = $this->Akun_model->getIdentitas();
         $this->data['prodi'] = $this->Akun_model->getProdi();
         $this->data['pendidikan'] = $this->Akun_model->getPendidikan();
@@ -27,149 +26,54 @@ class Home extends MY_Controller {
         $this->data['content'] = 'cv';
         $this->set_tab_index("1");
         $this->set_page_header("Curriculum Vitae", "CV <a href=\"".site_url()."/home/printpdf\"><i class=\"glyphicon glyphicon-print\"></i></a>");
-		$this->load->view('template', $this->data);
+		$this->load->view('template-detail', $this->data);			
 		}
 		else
 		{
         $this->load->helper('form');
         $this->load->library('form_validation');
-        $this->load->model('Akun_model');
-
+        $this->load->model('Akun_model');        
+        
         $this->data['identitas'] = $this->Akun_model->getIdentitas($uid);
         $this->data['prodi'] = $this->Akun_model->getProdi();
         $this->data['pendidikan'] = $this->Akun_model->getPendidikan($uid);
-        $this->data['pekerjaan'] = $this->Akun_model->getPekerjaan($uid);
-        $this->data['penelitian'] = $this->Akun_model->getPenelitian($uid);
-        $this->data['pengabdian'] = $this->Akun_model->getPengabdian($uid);
-        $this->data['publikasi'] = $this->Akun_model->getPublikasi($uid);
-        $this->data['seminar'] = $this->Akun_model->getSeminar($uid);
+        $this->data['pekerjaan'] = $this->Akun_model->getPekerjaan(null,$uid);
+        $this->data['penelitian'] = $this->Akun_model->getPenelitian(null,$uid);
+        $this->data['pengabdian'] = $this->Akun_model->getPengabdian(null,$uid);
+        $this->data['publikasi'] = $this->Akun_model->getPublikasi(null,$uid);
+        $this->data['seminar'] = $this->Akun_model->getSeminar(null,$uid);
         $this->data['content'] = 'cv-detail';
         $this->set_tab_index("1");
         $this->set_page_header("Curriculum Vitae", "CV <a href=\"".site_url()."/home/printpdf\"><i class=\"glyphicon glyphicon-print\"></i></a>");
-		$this->load->view('template', $this->data);
+		$this->load->view('template-detail', $this->data);		
 		}
-
+		
 	}
-
-	public function deletependidikan($id,$uid)
-	{
-        $this->load->model('Akun_model');
-        $this->Akun_model->deletePendidikan($id,$uid);
-				redirect('/home');
-	}
-
-	public function deletepenelitian($id,$uid)
-	{
-        $this->load->model('Akun_model');
-        $this->Akun_model->deletePenelitian($id,$uid);
-				redirect('/home');
-	}
-
-	public function deletepekerjaan($id,$uid)
-	{
-        $this->load->model('Akun_model');
-        $this->Akun_model->deletePekerjaan($id,$uid);
-				redirect('/home');
-	}
-
-	public function deletepublikasi($id,$uid)
-	{
-        $this->load->model('Akun_model');
-        $this->Akun_model->deletePublikasi($id,$uid);
-				redirect('/home');
-	}
-
-	public function deleteseminar($id,$uid)
-	{
-        $this->load->model('Akun_model');
-        $this->Akun_model->deleteSeminar($id,$uid);
-				redirect('/home');
-	}
-
-	public function updatependidikanlive()
-	{
-				$idpendidikan = $this->input->post("idpendidikan");
-				$valuependidikan = $this->input->post("valuependidikan");
-				$modulpendidikan = $this->input->post("modulpendidikan");
-        $this->load->model('Akun_model');
-        $this->Akun_model->updatePendidikanlive($idpendidikan,$valuependidikan,$modulpendidikan);
-				//redirect('/home');
-	}
-
-	public function updatepenelitianlive()
-	{
-				$idpenelitian = $this->input->post("idpenelitian");
-				$valuepenelitian = $this->input->post("valuepenelitian");
-				$modulpenelitian = $this->input->post("modulpenelitian");
-        $this->load->model('Akun_model');
-        $this->Akun_model->updatePenelitianlive($idpenelitian,$valuepenelitian,$modulpenelitian);
-				//redirect('/home');
-	}
-
-	public function updatepengabdianlive()
-	{
-				$idpengabdian = $this->input->post("idpengabdian");
-				$valuepengabdian = $this->input->post("valuepengabdian");
-				$modulpengabdian = $this->input->post("modulpengabdian");
-        $this->load->model('Akun_model');
-        $this->Akun_model->updatePengabdianlive($idpengabdian,$valuepengabdian,$modulpengabdian);
-				//redirect('/home');
-	}
-
-	public function updatepekerjaanlive()
-	{
-				$idpekerjaan = $this->input->post("idpekerjaan");
-				$valuepekerjaan = $this->input->post("valuepekerjaan");
-				$modulpekerjaan = $this->input->post("modulpekerjaan");
-        $this->load->model('Akun_model');
-        $this->Akun_model->updatePekerjaanlive($idpekerjaan,$valuepekerjaan,$modulpekerjaan);
-				//redirect('/home');
-	}
-
-	public function updatepublikasilive()
-	{
-				$idpublikasi = $this->input->post("idpublikasi");
-				$valuepublikasi = $this->input->post("valuepublikasi");
-				$modulpublikasi = $this->input->post("modulpublikasi");
-        $this->load->model('Akun_model');
-        $this->Akun_model->updatePublikasilive($idpublikasi,$valuepublikasi,$modulpublikasi);
-				//redirect('/home');
-	}
-
-	public function updateseminarlive()
-	{
-				$idseminar = $this->input->post("idseminar");
-				$valueseminar = $this->input->post("valueseminar");
-				$modulseminar = $this->input->post("modulseminar");
-				$this->load->model('Akun_model');
-				$this->Akun_model->updatePublikasilive($idseminar,$valueseminar,$modulseminar);
-				//redirect('/home');
-	}
-
+    
     public function save($target)
 	{
         $this->load->helper('form');
         $this->load->library('form_validation');
-        $this->load->model('Akun_model');
+        $this->load->model('Akun_model');        
         $post_data = $this->input->post();
         unset($post_data['save']);
         $post_data['uid'] = $this->session->userdata('login')->uid;
         if($target == "identitas") {
-					unset($post_data['D3']);
-					unset($post_data['S1']);
-					unset($post_data['Pr']);
-					unset($post_data['S2']);
-					unset($post_data['S3']);
+			unset($post_data['D3']);
+			unset($post_data['S1']);
+			unset($post_data['Pr']);
+			unset($post_data['S2']);
+			unset($post_data['S3']);
             $post_data['tanggal_lahir'] = strtodate($post_data['tanggal_lahir']);
             //$this->Akun_model->setIdentitas($post_data);
 			$work_dir = $this->session->userdata('work_dir');
-			if(!empty($_FILES['foto']['name'])){
+			if(!empty($_FILES['foto']['name'])){			
 			$config =  array(
                   'upload_path'     => $work_dir."/foto/",
                   'file_name'      	=> $_FILES["foto"]["name"],
                   'allowed_types'   => "gif|jpg|png|jpeg",
                   'overwrite'       => TRUE,
-                  'max_size'        => "2000"
+                  'max_size'        => "2000" 
                 );
             $this->load->library('upload',$config);
 			$this->upload->initialize($config);
@@ -196,30 +100,28 @@ class Home extends MY_Controller {
         } else if($target == "seminar") {
             $this->Akun_model->setSeminar($post_data);
         } else if($target == "pekerjaan") {
-					//$post_data['tahun_mulai'] = date('Y',strtotime($post_data['tahun_mulai']));
-					//$post_data['tahun_selesai'] = date('Y',strtotime($post_data['tahun_selesai']));
-          $this->Akun_model->setPekerjaan($post_data);
+            $this->Akun_model->setPekerjaan($post_data);
         }
-
+        
         redirect('/home');
 	}
-
+    
     public function printpdf(){
         tcpdf_init();
-        $this->load->model('Akun_model');
-
+        $this->load->model('Akun_model');        
+        
         $this->data['identitas'] = $this->Akun_model->getIdentitas();
         $this->data['pendidikan'] = $this->Akun_model->getPendidikan();
         $this->data['penelitian'] = $this->Akun_model->getPenelitian();
         $this->data['pengabdian'] = $this->Akun_model->getPengabdian();
         $this->data['publikasi'] = $this->Akun_model->getPublikasi();
         $this->data['seminar'] = $this->Akun_model->getSeminar();
-
+        
         $this->data['content'] = 'cv';
         $this->set_tab_index("1");
         $this->set_page_header("Curriculum Vitae", "CV");
 		$content = $this->load->view('printcv2.php', $this->data, TRUE);
-
+        
         $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $obj_pdf->SetCreator(PDF_CREATOR);
         // remove default header/footer
@@ -245,13 +147,12 @@ class Home extends MY_Controller {
         $obj_pdf->writeHTML($content, true, false, true, false, '');
         $obj_pdf->Output('cv.pdf', 'I');
     }
-
+    
     public function mydocuments($action=NULL)
 	{
         if($this->input->get("sd")){
             $this->load->helper('form');
             $this->load->model('Akun_model');
-		        $this->data['identitas'] = $this->Akun_model->getIdentitas();
             if($this->input->get("update")){
                 $post_data = $this->input->post();
                 unset($post_data['save']);
@@ -292,7 +193,7 @@ class Home extends MY_Controller {
                 case 'seminar':
                     $this->data['research_data'] = $this->Akun_model->getSeminar($this->input->get("id"));
                     break;
-
+                
             }
             $work_dir = $this->session->userdata('work_dir')."\\.profile\\".$this->input->get("sd").$this->input->get("id");
             if(!file_exists($work_dir)){
@@ -300,8 +201,6 @@ class Home extends MY_Controller {
             }
         } else {
             $work_dir = $this->session->userdata('work_dir');
-						$this->load->model('Akun_model');
-						$this->data['identitas'] = $this->Akun_model->getIdentitas();
         }
         if($action == "multiple-action"){
             $action = $this->input->post("intent");
@@ -384,7 +283,7 @@ class Home extends MY_Controller {
             $this->load->library('upload');
             $this->load->helper('form');
             $dir_path = $work_dir.$this->input->get('d');
-
+            
             if($this->input->post('upload')){
                 $config['upload_path']          = $dir_path;
                 $config['allowed_types']        = 'jpg|png|jpeg|pdf|docx|doc|xlsx|xls|pptx|ppt|zip|rar';
@@ -398,23 +297,23 @@ class Home extends MY_Controller {
 
                 if ( ! $this->upload->do_upload('file'))
                 {
-
+                        
                 }
                 else
                 {
                         $this->session->set_flashdata('success', 'File \'<b>'.$this->upload->data('file_name').'</b>\' telah berhasil diupload.');
                         redirect(site_url()."/home/mydocuments/?d=".$this->input->get('d').($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""));
-
+                    
                 }
             }
         }
         $this->data['action'] = $action;
-
+        
         if($file_path=$this->input->get('f')){
             $this->load->helper(array('download'));
             force_download($work_dir.$file_path, NULL);
         }
-
+        
         $this->load->helper('directory');
         $dir_path = $work_dir.$this->input->get('d');
         $this->data['ls'] = array();
@@ -438,18 +337,18 @@ class Home extends MY_Controller {
         $this->data['dir_path'] = array_filter(explode('/', $this->data['dir_path']));
         $this->data['dir_path'] = array_splice($this->data['dir_path'], 2);
         $this->data['dir_path'][0] = "root";
-
+        
         $this->set_tab_index("2");
         $this->set_page_header("My Documents", "");
         $this->data['content'] = 'mydocuments';
 		$this->load->view('template', $this->data);
 	}
-
+    
     public function upload(){
-
+        
     }
-
+    
     public function makedir(){
-
+        
     }
 }

@@ -5,7 +5,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 <head>
-  
+
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -43,7 +43,7 @@ desired effect
     ?>
   </style>
 <body class="hold-transition skin-blue sidebar-mini">
-    
+
 <div class="wrapper">
     <div class="panel panel-default" action="notme">
         <div class="panel-heading">
@@ -247,7 +247,7 @@ desired effect
                     if(empty($publikasi)) echo '<tr><td colspan="5"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
                     foreach($publikasi as $item):
                 ?>
-                        <tr><td><?= ++$i ?></td><td><?= $item->tahun ?></td><td><?= $item->judul ?></td><td><?= $item->nomor_junal ?></td><td><?= $item->nama_jurnal ?></td></tr>
+                        <tr><td><?= ++$i ?></td><td><?= $item->tahun ?></td><td><?= $item->judul ?></td><td><?= $item->nomor_jurnal ?></td><td><?= $item->nama_jurnal ?></td></tr>
                 <?php
                     endforeach;
                 ?>
