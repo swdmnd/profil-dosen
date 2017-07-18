@@ -6,15 +6,15 @@ class Detail extends MY_Controller {
 	public function __construct(){
         parent::__construct();
     }
-    
+
 	public function index($uid='')
 	{
 		if ($uid=='')
 		{
         $this->load->helper('form');
         $this->load->library('form_validation');
-        $this->load->model('Akun_model');        
-        
+        $this->load->model('Akun_model');
+
         $this->data['identitas'] = $this->Akun_model->getIdentitas();
         $this->data['prodi'] = $this->Akun_model->getProdi();
         $this->data['pendidikan'] = $this->Akun_model->getPendidikan();
@@ -23,17 +23,19 @@ class Detail extends MY_Controller {
         $this->data['pengabdian'] = $this->Akun_model->getPengabdian();
         $this->data['publikasi'] = $this->Akun_model->getPublikasi();
         $this->data['seminar'] = $this->Akun_model->getSeminar();
+				$this->data['buku_teks'] = $this->Akun_model->getBukuTeks();
+        $this->data['penghargaan'] = $this->Akun_model->getPenghargaan();
         $this->data['content'] = 'cv';
         $this->set_tab_index("1");
         $this->set_page_header("Curriculum Vitae", "CV <a href=\"".site_url()."/home/printpdf\"><i class=\"glyphicon glyphicon-print\"></i></a>");
-		$this->load->view('template-detail', $this->data);			
+		$this->load->view('template-detail', $this->data);
 		}
 		else
 		{
         $this->load->helper('form');
         $this->load->library('form_validation');
-        $this->load->model('Akun_model');        
-        
+        $this->load->model('Akun_model');
+
         $this->data['identitas'] = $this->Akun_model->getIdentitas($uid);
         $this->data['prodi'] = $this->Akun_model->getProdi();
         $this->data['pendidikan'] = $this->Akun_model->getPendidikan($uid);
@@ -42,19 +44,21 @@ class Detail extends MY_Controller {
         $this->data['pengabdian'] = $this->Akun_model->getPengabdian(null,$uid);
         $this->data['publikasi'] = $this->Akun_model->getPublikasi(null,$uid);
         $this->data['seminar'] = $this->Akun_model->getSeminar(null,$uid);
+				$this->data['buku_teks'] = $this->Akun_model->getBukuTeks(null,$uid);
+        $this->data['penghargaan'] = $this->Akun_model->getPenghargaan(null,$uid);
         $this->data['content'] = 'cv-detail';
         $this->set_tab_index("1");
-        $this->set_page_header("Curriculum Vitae", "CV <a href=\"".site_url()."/home/printpdf\"><i class=\"glyphicon glyphicon-print\"></i></a>");
-		$this->load->view('template-detail', $this->data);		
+				$this->set_page_header("Curriculum Vitae", "CV <a href=\"".site_url()."/home/printpdf\"><i class=\"glyphicon glyphicon-print\"></i></a>&nbsp;&nbsp;<a href='" . site_url('pencarian/view') . "' class='btn-sm btn-danger' role='button'>Back</a>");
+		$this->load->view('template-detail', $this->data);
 		}
-		
+
 	}
-    
+
     public function save($target)
 	{
         $this->load->helper('form');
         $this->load->library('form_validation');
-        $this->load->model('Akun_model');        
+        $this->load->model('Akun_model');
         $post_data = $this->input->post();
         unset($post_data['save']);
         $post_data['uid'] = $this->session->userdata('login')->uid;
@@ -67,13 +71,13 @@ class Detail extends MY_Controller {
             $post_data['tanggal_lahir'] = strtodate($post_data['tanggal_lahir']);
             //$this->Akun_model->setIdentitas($post_data);
 			$work_dir = $this->session->userdata('work_dir');
-			if(!empty($_FILES['foto']['name'])){			
+			if(!empty($_FILES['foto']['name'])){
 			$config =  array(
                   'upload_path'     => $work_dir."/foto/",
                   'file_name'      	=> $_FILES["foto"]["name"],
                   'allowed_types'   => "gif|jpg|png|jpeg",
                   'overwrite'       => TRUE,
-                  'max_size'        => "2000" 
+                  'max_size'        => "2000"
                 );
             $this->load->library('upload',$config);
 			$this->upload->initialize($config);
@@ -102,26 +106,26 @@ class Detail extends MY_Controller {
         } else if($target == "pekerjaan") {
             $this->Akun_model->setPekerjaan($post_data);
         }
-        
+
         redirect('/home');
 	}
-    
+
     public function printpdf(){
         tcpdf_init();
-        $this->load->model('Akun_model');        
-        
+        $this->load->model('Akun_model');
+
         $this->data['identitas'] = $this->Akun_model->getIdentitas();
         $this->data['pendidikan'] = $this->Akun_model->getPendidikan();
         $this->data['penelitian'] = $this->Akun_model->getPenelitian();
         $this->data['pengabdian'] = $this->Akun_model->getPengabdian();
         $this->data['publikasi'] = $this->Akun_model->getPublikasi();
         $this->data['seminar'] = $this->Akun_model->getSeminar();
-        
+
         $this->data['content'] = 'cv';
         $this->set_tab_index("1");
         $this->set_page_header("Curriculum Vitae", "CV");
 		$content = $this->load->view('printcv2.php', $this->data, TRUE);
-        
+
         $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $obj_pdf->SetCreator(PDF_CREATOR);
         // remove default header/footer
@@ -147,7 +151,7 @@ class Detail extends MY_Controller {
         $obj_pdf->writeHTML($content, true, false, true, false, '');
         $obj_pdf->Output('cv.pdf', 'I');
     }
-    
+
     public function mydocuments($action=NULL)
 	{
         if($this->input->get("sd")){
@@ -193,7 +197,7 @@ class Detail extends MY_Controller {
                 case 'seminar':
                     $this->data['research_data'] = $this->Akun_model->getSeminar($this->input->get("id"));
                     break;
-                
+
             }
             $work_dir = $this->session->userdata('work_dir')."\\.profile\\".$this->input->get("sd").$this->input->get("id");
             if(!file_exists($work_dir)){
@@ -283,7 +287,7 @@ class Detail extends MY_Controller {
             $this->load->library('upload');
             $this->load->helper('form');
             $dir_path = $work_dir.$this->input->get('d');
-            
+
             if($this->input->post('upload')){
                 $config['upload_path']          = $dir_path;
                 $config['allowed_types']        = 'jpg|png|jpeg|pdf|docx|doc|xlsx|xls|pptx|ppt|zip|rar';
@@ -297,23 +301,23 @@ class Detail extends MY_Controller {
 
                 if ( ! $this->upload->do_upload('file'))
                 {
-                        
+
                 }
                 else
                 {
                         $this->session->set_flashdata('success', 'File \'<b>'.$this->upload->data('file_name').'</b>\' telah berhasil diupload.');
                         redirect(site_url()."/home/mydocuments/?d=".$this->input->get('d').($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""));
-                    
+
                 }
             }
         }
         $this->data['action'] = $action;
-        
+
         if($file_path=$this->input->get('f')){
             $this->load->helper(array('download'));
             force_download($work_dir.$file_path, NULL);
         }
-        
+
         $this->load->helper('directory');
         $dir_path = $work_dir.$this->input->get('d');
         $this->data['ls'] = array();
@@ -337,18 +341,18 @@ class Detail extends MY_Controller {
         $this->data['dir_path'] = array_filter(explode('/', $this->data['dir_path']));
         $this->data['dir_path'] = array_splice($this->data['dir_path'], 2);
         $this->data['dir_path'][0] = "root";
-        
+
         $this->set_tab_index("2");
         $this->set_page_header("My Documents", "");
         $this->data['content'] = 'mydocuments';
 		$this->load->view('template', $this->data);
 	}
-    
+
     public function upload(){
-        
+
     }
-    
+
     public function makedir(){
-        
+
     }
 }

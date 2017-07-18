@@ -2,7 +2,7 @@
 
 <div class="panel panel-default" id="identitas">
     <div class="panel-heading">
-        <h4><img src="<?= base_url() . $identitas->foto?>" width="100px" height="120px" class="img-circle">&nbsp;&nbsp;Identitas Diri</h4>
+        <h4><img src="<?= base_url() . $identitas->foto?>" width="100px" height="120px" class="img-circle"><br><br>Identitas Diri</h4>
     </div>
 
     <div class="panel-body">
@@ -423,7 +423,7 @@
 
 <div class="panel panel-default" id="penelitian">
     <div class="panel-heading">
-        <h4><i class="glyphicon glyphicon-tint"></i>&nbsp;&nbsp;Pengalaman Penelitian</h4>
+        <h4><i class="glyphicon glyphicon-tint"></i>&nbsp;&nbsp;Penelitian</h4>
     </div>
 
     <div class="panel-body">
@@ -519,7 +519,7 @@
 
 <div class="panel panel-default" id="pengabdian">
     <div class="panel-heading">
-        <h4><i class="glyphicon glyphicon-leaf"></i>&nbsp;&nbsp;Pengalaman Pengabdian Kepada Masyarakat</h4>
+        <h4><i class="glyphicon glyphicon-leaf"></i>&nbsp;&nbsp;Pengabdian Masyarakat</h4>
     </div>
 
     <div class="panel-body">
@@ -615,7 +615,7 @@
 
 <div class="panel panel-default" id="jurnal">
     <div class="panel-heading">
-        <h4><i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;Pengalaman Penulisan Artikel Ilmiah dalam Jurnal</h4>
+        <h4><i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;Publikasi Ilmiah</h4>
     </div>
 
     <div class="panel-body">
@@ -631,7 +631,13 @@
             <div class="form-group">
                 <label for="tahun" class="col-sm-2 control-label">Tahun Publikasi</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="tahun" name="tahun" placeholder="Tahun publikasi" required>
+                    <input type="text" class="form-control" id="tahun" name="tahun" placeholder="2017, Januari" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="penulis" class="col-sm-2 control-label">Penulis Publikasi</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="penulis" name="penulis" placeholder="Penulis publikasi" required>
                 </div>
             </div>
             <div class="form-group">
@@ -665,6 +671,7 @@
             <tr>
                 <th>No.</th>
                 <th>Tahun</th>
+                <th>Penulis</th>
                 <th>Judul Artikel Ilmiah</th>
                 <th>Volume/Nomor</th>
                 <th>Nama Jurnal</th>
@@ -679,7 +686,7 @@
                 foreach($publikasi as $item):
             ?>
                     <!--<tr><td><?= ++$i ?></td><td><?= $item->tahun ?></td><td><?= $item->judul ?></td><td><?= $item->nomor_jurnal ?></td><td><?= $item->nama_jurnal ?></td><td>-->
-            <tr data-id="<?= $item->id ?>"><td><?= ++$i ?></td><td><span class='span-publikasi-tahun caption-publikasi' data-id='<?= $item->id ?>'><?= $item->tahun ?></span> <input style="display: none;" type='text' class='field-publikasi-tahun form-control editor-publikasi' value='<?= $item->tahun ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-publikasi-judul caption-publikasi' data-id='<?= $item->id ?>'><?= $item->judul ?></span> <input style="display: none;" type='text' class='field-publikasi-judul form-control editor-publikasi' value='<?= $item->judul ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-publikasi-nomor_jurnal caption-publikasi' data-id='<?= $item->id ?>'><?= $item->nomor_jurnal ?></span> <input style='display: none; type='text' class='field-publikasi-nomor_jurnal form-control editor-publikasi' value='<?= $item->nomor_jurnal ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-publikasi-nama_jurnal caption-publikasi' data-id='<?= $item->id ?>'><?= $item->nama_jurnal ?></span> <input style='display: none; type='text' class='field-publikasi-nama_jurnal form-control editor-publikasi' value='<?= $item->nama_jurnal ?>' data-id='<?= $item->id ?>' /></td>
+            <tr data-id="<?= $item->id ?>"><td><?= ++$i ?></td><td><span class='span-publikasi-tahun caption-publikasi' data-id='<?= $item->id ?>'><?= $item->tahun ?></span> <input style="display: none;" type='text' class='field-publikasi-tahun form-control editor-publikasi' value='<?= $item->tahun ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-publikasi-penulis caption-publikasi' data-id='<?= $item->id ?>'><?= $item->penulis ?></span> <input style="display: none;" type='text' class='field-publikasi-penulis form-control editor-publikasi' value='<?= $item->penulis ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-publikasi-judul caption-publikasi' data-id='<?= $item->id ?>'><?= $item->judul ?></span> <input style="display: none;" type='text' class='field-publikasi-judul form-control editor-publikasi' value='<?= $item->judul ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-publikasi-nomor_jurnal caption-publikasi' data-id='<?= $item->id ?>'><?= $item->nomor_jurnal ?></span> <input style='display: none; type='text' class='field-publikasi-nomor_jurnal form-control editor-publikasi' value='<?= $item->nomor_jurnal ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-publikasi-nama_jurnal caption-publikasi' data-id='<?= $item->id ?>'><?= $item->nama_jurnal ?></span> <input style='display: none; type='text' class='field-publikasi-nama_jurnal form-control editor-publikasi' value='<?= $item->nama_jurnal ?>' data-id='<?= $item->id ?>' /></td>
                         <td>
                         <div class="btn-group">
                           <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown"><a href="#">Action</a>
@@ -699,9 +706,173 @@
     </table>
 </div>
 
+<div class="panel panel-default" id="bukuteks">
+    <div class="panel-heading">
+        <h4><i class="glyphicon glyphicon-book"></i>&nbsp;&nbsp;Buku Teks</h4>
+    </div>
+
+    <div class="panel-body">
+        <?= validation_errors('<div class="alert alert-danger" role="alert">', '</div>'); ?>
+        <?php
+            if($this->session->flashdata("failure")):
+        ?>
+            <div class="alert alert-danger" role="alert"><?= $this->session->flashdata("failure") ?></div>
+        <?php
+            endif;
+        ?>
+        <?= form_open(site_url()."/home/save/buku_teks", 'class="form-horizontal"'); ?>
+            <div class="form-group">
+                <label for="tahun_terbit" class="col-sm-2 control-label">Tahun terbit</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="tahun_terbit" name="tahun_terbit" placeholder="Tahun terbit" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="penulis" class="col-sm-2 control-label">Penulis</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="penulis" name="penulis" placeholder="Penulis Buku Teks" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="judul_buku" class="col-sm-2 control-label">Judul Buku</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="judul_buku" name="judul_buku" placeholder="Judul Buku Teks" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="penerbit" class="col-sm-2 control-label">Penerbit</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="penerbit" name="penerbit" placeholder="Penerbit Buku Teks" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" class="btn btn-primary" name="save" value="Simpan">
+                </div>
+            </div>
+        <?= form_close(); ?>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Tahun terbit</th>
+                <th>Penulis</th>
+                <th>Judul Buku</th>
+                <th>Penerbit</th>
+                <th>Pilihan</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php
+                $i=0;
+                if(empty($buku_teks)) echo '<tr><td colspan="5"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
+                foreach($buku_teks as $item):
+            ?>
+                    <!--<tr><td><?= ++$i ?></td><td><?= $item->nama_seminar ?></td><td><?= $item->tema ?></td><td><?= $item->tempat.' '.$item->waktu ?></td><td>-->
+            <tr data-id="<?= $item->id ?>"><td><?= ++$i ?></td><td><span class='span-bukuteks-tahun_terbit caption-bukuteks' data-id='<?= $item->id ?>'><?= $item->tahun_terbit ?></span> <input style="display: none;" type='text' class='field-bukuteks-tahun_terbit form-control editor-bukuteks' value='<?= $item->tahun_terbit ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-bukuteks-penulis caption-bukuteks' data-id='<?= $item->id ?>'><?= $item->penulis ?></span> <input style="display: none;" type='text' class='field-bukuteks-penulis form-control editor-bukuteks' value='<?= $item->penulis ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-bukuteks-judul_buku caption-bukuteks' data-id='<?= $item->id ?>'><?= $item->judul_buku ?></span> <input style='display: none; type='text' class='field-bukuteks-judul_buku form-control editor-bukuteks' value='<?= $item->judul_buku ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-bukuteks-penerbit caption-bukuteks' data-id='<?= $item->id ?>'><?= $item->penerbit ?></span> <input style='display: none; type='text' class='field-bukuteks-penerbit form-control editor-bukuteks' value='<?= $item->penerbit ?>' data-id='<?= $item->id ?>' /></td><td>
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown"><a href='#'>Action</a>
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu">
+                            <li><a href="<?= site_url(); ?>/home/mydocuments?sd=buku_teks&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a></li>
+                            <li><a href="<?= site_url() ?>/home/deletebukuteks/<?= $item->id ?>/<?= $identitas->uid ?>" type="button" class="btn btn-default btn-flat">Delete <span class="glyphicon glyphicon-trash"></span></a></li>
+                          </ul>
+                        </div>
+                        </td></tr>
+            <?php
+                endforeach;
+            ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="panel panel-default" id="penghargaan">
+    <div class="panel-heading">
+        <h4><i class="glyphicon glyphicon-bookmark"></i>&nbsp;&nbsp;Penghargaan</h4>
+    </div>
+
+    <div class="panel-body">
+        <?= validation_errors('<div class="alert alert-danger" role="alert">', '</div>'); ?>
+        <?php
+            if($this->session->flashdata("failure")):
+        ?>
+            <div class="alert alert-danger" role="alert"><?= $this->session->flashdata("failure") ?></div>
+        <?php
+            endif;
+        ?>
+        <?= form_open(site_url()."/home/save/penghargaan", 'class="form-horizontal"'); ?>
+            <div class="form-group">
+                <label for="tahun_penghargaan" class="col-sm-2 control-label">Tahun penghargaan</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="tahun_penghargaan" name="tahun_penghargaan" placeholder="Tahun Penghargaan" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="nama_penghargaan" class="col-sm-2 control-label">Nama Penghargaan</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="nama_penghargaan" name="nama_penghargaan" placeholder="Nama Penghargaan" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pemberi_penghargaan" class="col-sm-2 control-label">Pemberi Penghargaan</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="pemberi_penghargaan" name="pemberi_penghargaan" placeholder="Pemberi Penghargaan" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" class="btn btn-primary" name="save" value="Simpan">
+                </div>
+            </div>
+        <?= form_close(); ?>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Tahun penghargaan</th>
+                <th>Nama penghargaan</th>
+                <th>Pemberi penghargaan</th>
+                <th>Pilihan</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php
+                $i=0;
+                if(empty($penghargaan)) echo '<tr><td colspan="5"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
+                foreach($penghargaan as $item):
+            ?>
+                    <!--<tr><td><?= ++$i ?></td><td><?= $item->nama_seminar ?></td><td><?= $item->tema ?></td><td><?= $item->tempat.' '.$item->waktu ?></td><td>-->
+            <tr data-id="<?= $item->id ?>"><td><?= ++$i ?></td><td><span class='span-penghargaan-tahun_penghargaan caption-penghargaan' data-id='<?= $item->id ?>'><?= $item->tahun_penghargaan ?></span> <input style="display: none;" type='text' class='field-penghargaan-tahun_penghargaan form-control editor-penghargaan' value='<?= $item->tahun_penghargaan ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-penghargaan-nama_penghargaan caption-penghargaan' data-id='<?= $item->id ?>'><?= $item->nama_penghargaan ?></span> <input style="display: none;" type='text' class='field-penghargaan-nama_penghargaan form-control editor-penghargaan' value='<?= $item->nama_penghargaan ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-penghargaan-pemberi_penghargaan caption-penghargaan' data-id='<?= $item->id ?>'><?= $item->pemberi_penghargaan ?></span> <input style='display: none; type='text' class='field-penghargaan-nama_penghargaan form-control editor-penghargaan' value='<?= $item->nama_penghargaan ?>' data-id='<?= $item->id ?>' /></td><td>
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown"><a href='#'>Action</a>
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu">
+                            <li><a href="<?= site_url(); ?>/home/mydocuments?sd=penghargaan&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a></li>
+                            <li><a href="<?= site_url() ?>/home/deletepenghargaan/<?= $item->id ?>/<?= $identitas->uid ?>" type="button" class="btn btn-default btn-flat">Delete <span class="glyphicon glyphicon-trash"></span></a></li>
+                          </ul>
+                        </div>
+                        </td></tr>
+            <?php
+                endforeach;
+            ?>
+        </tbody>
+    </table>
+</div>
+
+
 <div class="panel panel-default" id="seminar">
     <div class="panel-heading">
-        <h4><i class="glyphicon glyphicon-share"></i>&nbsp;&nbsp;Pemakalah Seminar</h4>
+        <h4><i class="glyphicon glyphicon-share"></i>&nbsp;&nbsp;Nara Sumber</h4>
     </div>
 
     <div class="panel-body">
@@ -752,7 +923,8 @@
                 <th>No.</th>
                 <th>Nama Pertemuan Ilmiah/Seminar</th>
                 <th>Judul Artikel Ilmiah</th>
-                <th>Waktu dan Tempat</th>
+                <th>Waktu</th>
+                <th>Tempat</th>
                 <th>Pilihan</th>
             </tr>
         </thead>
@@ -763,19 +935,16 @@
                 if(empty($seminar)) echo '<tr><td colspan="5"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
                 foreach($seminar as $item):
             ?>
-                    <tr><td><?= ++$i ?></td><td><?= $item->nama_seminar ?></td><td><?= $item->tema ?></td><td><?= $item->tempat.' '.$item->waktu ?></td><td>
+                    <!--<tr><td><?= ++$i ?></td><td><?= $item->nama_seminar ?></td><td><?= $item->tema ?></td><td><?= $item->tempat.' '.$item->waktu ?></td><td>-->
+            <tr data-id="<?= $item->id ?>"><td><?= ++$i ?></td><td><span class='span-seminar-nama_seminar caption-seminar' data-id='<?= $item->id ?>'><?= $item->nama_seminar ?></span> <input style="display: none;" type='text' class='field-seminar-nama_seminar form-control editor-seminar' value='<?= $item->nama_seminar ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-seminar-tema caption-seminar' data-id='<?= $item->id ?>'><?= $item->tema ?></span> <input style="display: none;" type='text' class='field-seminar-tema form-control editor-seminar' value='<?= $item->tema ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-seminar-waktu caption-seminar' data-id='<?= $item->id ?>'><?= $item->waktu ?></span> <input style='display: none; type='text' class='field-seminar-waktu form-control editor-seminar' value='<?= $item->waktu ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-seminar-tempat caption-seminar' data-id='<?= $item->id ?>'><?= $item->tempat ?></span> <input style='display: none; type='text' class='field-seminar-tempat form-control editor-seminar' value='<?= $item->tempat ?>' data-id='<?= $item->id ?>' /></td><td>
                         <div class="btn-group">
-                          <a href="<?= site_url(); ?>/home/mydocuments?sd=seminar&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
-                          <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+                          <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown"><a href='#'>Action</a>
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                           </button>
                           <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
+                            <li><a href="<?= site_url(); ?>/home/mydocuments?sd=seminar&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a></li>
+                            <li><a href="<?= site_url() ?>/home/deleteseminar/<?= $item->id ?>/<?= $identitas->uid ?>" type="button" class="btn btn-default btn-flat">Delete <span class="glyphicon glyphicon-trash"></span></a></li>
                           </ul>
                         </div>
                         </td></tr>
@@ -785,6 +954,9 @@
         </tbody>
     </table>
 </div>
+
+
+
 <script>
 $(document).ready(function(){
     $(".dropdown-toggle").dropdown();
@@ -870,6 +1042,11 @@ $(document).ready(function(){
         format: "d MM yyyy",
         language: "id"
     });
+    $('#waktu').datepicker({
+        autoclose: true,
+        format: "d MM yyyy",
+        language: "id"
+    });
     $(".select2").select2();
 </script>
 <script src="<?= base_url(); ?>assets/js/bootstrap-tagsinput.js"></script>
@@ -900,6 +1077,12 @@ $(this).find("span[class~='caption-pengabdian']").hide();
 $(this).find("input[class~='editor-pengabdian']").fadeIn().focus();
 $(this).find("span[class~='caption-publikasi']").hide();
 $(this).find("input[class~='editor-publikasi']").fadeIn().focus();
+$(this).find("span[class~='caption-seminar']").hide();
+$(this).find("input[class~='editor-seminar']").fadeIn().focus();
+$(this).find("span[class~='caption-bukuteks']").hide();
+$(this).find("input[class~='editor-bukuteks']").fadeIn().focus();
+$(this).find("span[class~='caption-penghargaan']").hide();
+$(this).find("input[class~='editor-penghargaan']").fadeIn().focus();
 });
 
 $(document).on("keydown",".editor-pendidikan",function(e){
@@ -1028,6 +1211,8 @@ if(target.is(".field-publikasi-tahun")){
 data.modulpublikasi="tahun";
 }else if(target.is(".field-publikasi-judul")){
 data.modulpublikasi="judul";
+}else if(target.is(".field-publikasi-penulis")){
+data.modulpublikasi="penulis";
 }else if(target.is(".field-publikasi-nomor_jurnal")){
 data.modulpublikasi="nomor_jurnal";
 }else if(target.is(".field-publikasi-nama_jurnal")){
@@ -1041,6 +1226,85 @@ $.ajax({
 })
 target.hide();
 target.siblings("span[class~='caption-publikasi']").html(value).fadeIn();
+}
+
+});
+
+$(document).on("keydown",".editor-seminar",function(e){
+if(e.keyCode==13){
+var target=$(e.target);
+var value=target.val();
+var id=target.attr("data-id");
+var data={idseminar:id,valueseminar:value};
+if(target.is(".field-seminar-nama_seminar")){
+data.modulseminar="nama_seminar";
+}else if(target.is(".field-seminar-tema")){
+data.modulseminar="tema";
+}else if(target.is(".field-seminar-tempat")){
+data.modulseminar="tempat";
+}else if(target.is(".field-seminar-waktu")){
+data.modulseminar="waktu";
+}
+//alert(JSON.stringify(data));
+$.ajax({
+	data:data,
+	url:"<?php echo site_url() . '/home/updateseminarlive/' ?>",
+
+})
+target.hide();
+target.siblings("span[class~='caption-seminar']").html(value).fadeIn();
+}
+
+});
+
+$(document).on("keydown",".editor-bukuteks",function(e){
+if(e.keyCode==13){
+var target=$(e.target);
+var value=target.val();
+var id=target.attr("data-id");
+var data={idbukuteks:id,valuebukuteks:value};
+if(target.is(".field-bukuteks-tahun_terbit")){
+data.modulbukuteks="tahun_terbit";
+}else if(target.is(".field-bukuteks-penulis")){
+data.modulbukuteks="penulis";
+}else if(target.is(".field-bukuteks-judul_buku")){
+data.modulbukuteks="judul_buku";
+}else if(target.is(".field-bukuteks-penerbit")){
+data.modulbukuteks="penerbit";
+}
+//alert(JSON.stringify(data));
+$.ajax({
+	data:data,
+	url:"<?php echo site_url() . '/home/updatebukutekslive/' ?>",
+
+})
+target.hide();
+target.siblings("span[class~='caption-bukuteks']").html(value).fadeIn();
+}
+
+});
+
+$(document).on("keydown",".editor-penghargaan",function(e){
+if(e.keyCode==13){
+var target=$(e.target);
+var value=target.val();
+var id=target.attr("data-id");
+var data={idpenghargaan:id,valuepenghargaan:value};
+if(target.is(".field-penghargaan-tahun_penghargaan")){
+data.modulpenghargaan="tahun_penghargaan";
+}else if(target.is(".field-penghargaan-nama_penghargaan")){
+data.modulpenghargaan="nama_penghargaan";
+}else if(target.is(".field-penghargaan-pemberi_penghargaan")){
+data.modulpenghargaan="pemberi_penghargaan";
+}
+//alert(JSON.stringify(data));
+$.ajax({
+	data:data,
+	url:"<?php echo site_url() . '/home/updatepenghargaanlive/' ?>",
+
+})
+target.hide();
+target.siblings("span[class~='caption-penghargaan']").html(value).fadeIn();
 }
 
 });

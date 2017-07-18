@@ -76,7 +76,7 @@ body > section,
 .sec-title {}
 
 .sec-title h2 {
-  color: #0eb493;
+  color: #4682B4;
   font-size: 28px;
   font-weight: 800;
   text-transform: uppercase;
@@ -372,7 +372,7 @@ top: -8px;
 }
 
 .overlay {
-	background-color: rgba(14,180,147,.9);
+	background-color: rgba(187,234,235,.9);
 	text-align: center;
 	position: absolute;
 	left: 0;
@@ -484,7 +484,7 @@ top: -8px;
 }
 
 .team-member .social-links li a {
-  background-color: #0d7c67;
+  background-color: #4682B4;
   color: #fff;
   height: 42px;
   padding: 10px 0 0;

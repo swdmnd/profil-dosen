@@ -24,6 +24,9 @@ class Home extends MY_Controller {
         $this->data['pengabdian'] = $this->Akun_model->getPengabdian();
         $this->data['publikasi'] = $this->Akun_model->getPublikasi();
         $this->data['seminar'] = $this->Akun_model->getSeminar();
+				$this->data['buku_teks'] = $this->Akun_model->getBukuTeks();
+				$this->data['penghargaan'] = $this->Akun_model->getPenghargaan();
+
         $this->data['content'] = 'cv';
         $this->set_tab_index("1");
         $this->set_page_header("Curriculum Vitae", "CV <a href=\"".site_url()."/home/printpdf\"><i class=\"glyphicon glyphicon-print\"></i></a>");
@@ -43,6 +46,8 @@ class Home extends MY_Controller {
         $this->data['pengabdian'] = $this->Akun_model->getPengabdian($uid);
         $this->data['publikasi'] = $this->Akun_model->getPublikasi($uid);
         $this->data['seminar'] = $this->Akun_model->getSeminar($uid);
+        $this->data['buku_teks'] = $this->Akun_model->getBukuTeks($uid);
+        $this->data['penghargaan'] = $this->Akun_model->getPenghargaan($uid);
         $this->data['content'] = 'cv-detail';
         $this->set_tab_index("1");
         $this->set_page_header("Curriculum Vitae", "CV <a href=\"".site_url()."/home/printpdf\"><i class=\"glyphicon glyphicon-print\"></i></a>");
@@ -83,6 +88,20 @@ class Home extends MY_Controller {
 	{
         $this->load->model('Akun_model');
         $this->Akun_model->deleteSeminar($id,$uid);
+				redirect('/home');
+	}
+
+	public function deletebukuteks($id,$uid)
+	{
+        $this->load->model('Akun_model');
+        $this->Akun_model->deleteBukuTeks($id,$uid);
+				redirect('/home');
+	}
+
+	public function deletepenghargaan($id,$uid)
+	{
+        $this->load->model('Akun_model');
+        $this->Akun_model->deletePenghargaan($id,$uid);
 				redirect('/home');
 	}
 
@@ -142,7 +161,27 @@ class Home extends MY_Controller {
 				$valueseminar = $this->input->post("valueseminar");
 				$modulseminar = $this->input->post("modulseminar");
 				$this->load->model('Akun_model');
-				$this->Akun_model->updatePublikasilive($idseminar,$valueseminar,$modulseminar);
+				$this->Akun_model->updateSeminarlive($idseminar,$valueseminar,$modulseminar);
+				//redirect('/home');
+	}
+
+	public function updatebukutekslive()
+	{
+				$idbukuteks = $this->input->post("idbukuteks");
+				$valuebukuteks = $this->input->post("valuebukuteks");
+				$modulbukuteks = $this->input->post("modulbukuteks");
+				$this->load->model('Akun_model');
+				$this->Akun_model->updateBukuTekslive($idbukuteks,$valuebukuteks,$modulbukuteks);
+				//redirect('/home');
+	}
+
+	public function updatepenghargaanlive()
+	{
+				$idpenghargaan = $this->input->post("idpenghargaan");
+				$valuepenghargaan = $this->input->post("valuepenghargaan");
+				$modulpenghargaan = $this->input->post("modulpenghargaan");
+				$this->load->model('Akun_model');
+				$this->Akun_model->updatePenghargaanlive($idpenghargaan,$valuepenghargaan,$modulpenghargaan);
 				//redirect('/home');
 	}
 
@@ -194,11 +233,16 @@ class Home extends MY_Controller {
         } else if($target == "publikasi") {
             $this->Akun_model->setPublikasi($post_data);
         } else if($target == "seminar") {
+					$post_data['waktu'] = strtodate($post_data['waktu']);
             $this->Akun_model->setSeminar($post_data);
         } else if($target == "pekerjaan") {
 					//$post_data['tahun_mulai'] = date('Y',strtotime($post_data['tahun_mulai']));
 					//$post_data['tahun_selesai'] = date('Y',strtotime($post_data['tahun_selesai']));
           $this->Akun_model->setPekerjaan($post_data);
+        } else if($target == "buku_teks") {
+            $this->Akun_model->setBukuTeks($post_data);
+        } else if($target == "penghargaan") {
+            $this->Akun_model->setPenghargaan($post_data);
         }
 
         redirect('/home');
@@ -214,6 +258,8 @@ class Home extends MY_Controller {
         $this->data['pengabdian'] = $this->Akun_model->getPengabdian();
         $this->data['publikasi'] = $this->Akun_model->getPublikasi();
         $this->data['seminar'] = $this->Akun_model->getSeminar();
+				$this->data['buku_teks'] = $this->Akun_model->getBukuTeks();
+				$this->data['penghargaan'] = $this->Akun_model->getPenghargaan();
 
         $this->data['content'] = 'cv';
         $this->set_tab_index("1");
@@ -271,6 +317,12 @@ class Home extends MY_Controller {
                     case 'seminar':
                         $this->Akun_model->updateSeminar($post_data, $this->input->get("id"));
                         break;
+										case 'buku_teks':
+		                    $this->Akun_model->updateBukuTeks($post_data, $this->input->get("id"));
+		                    break;
+										case 'penghargaan':
+				                $this->Akun_model->updatePenghargaan($post_data, $this->input->get("id"));
+				                break;
 
                 }
                 $this->session->set_flashdata('update_success', 'Data sudah diperbaharui.');
@@ -292,7 +344,12 @@ class Home extends MY_Controller {
                 case 'seminar':
                     $this->data['research_data'] = $this->Akun_model->getSeminar($this->input->get("id"));
                     break;
-
+								case 'buku_teks':
+		                $this->data['research_data'] = $this->Akun_model->getBukuTeks($this->input->get("id"));
+		                break;
+								case 'penghargaan':
+				            $this->data['research_data'] = $this->Akun_model->getPenghargaan($this->input->get("id"));
+				            break;
             }
             $work_dir = $this->session->userdata('work_dir')."\\.profile\\".$this->input->get("sd").$this->input->get("id");
             if(!file_exists($work_dir)){

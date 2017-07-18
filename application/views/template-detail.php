@@ -22,7 +22,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/select2/select2.min.css">
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/iCheck/all.css">
-    
+
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= base_url(); ?>assets/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -37,7 +37,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-    
+
   <!-- REQUIRED JS SCRIPTS -->
 
   <!-- jQuery 2.2.3 -->
@@ -55,7 +55,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             window.scrollTo(window.scrollX, window.scrollY - 50);
         }
       }
-      
+
       $('document').ready(function(){
           // This will capture hash changes while on the page
           window.addEventListener("hashchange", offsetAnchor);
@@ -65,7 +65,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           // seems necessary to allow the browser to jump to the anchor first.
           window.setTimeout(offsetAnchor, 1); // The delay of 1 is arbitrary and may not always work right (although it did in my testing).
       });
-      
+
   </script>
 </head>
 <!--
@@ -114,10 +114,12 @@ desired effect
           <!-- Messages: style can be found in dropdown.less-->
           <li class="dropdown messages-menu">
             <!-- Menu toggle button -->
+            <!--
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
               <span class="label label-success">4</span>
             </a>
+          -->
             <ul class="dropdown-menu">
               <li class="header">You have 4 messages</li>
               <li>
@@ -150,10 +152,12 @@ desired effect
           <!-- Notifications Menu -->
           <li class="dropdown notifications-menu">
             <!-- Menu toggle button -->
+            <!--
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
               <span class="label label-warning">10</span>
             </a>
+          -->
             <ul class="dropdown-menu">
               <li class="header">You have 10 notifications</li>
               <li>
@@ -173,10 +177,12 @@ desired effect
           <!-- Tasks Menu -->
           <li class="dropdown tasks-menu">
             <!-- Menu Toggle Button -->
+            <!--
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-flag-o"></i>
               <span class="label label-danger">9</span>
             </a>
+          -->
             <ul class="dropdown-menu">
               <li class="header">You have 9 tasks</li>
               <li>
@@ -211,21 +217,21 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="<?= base_url(); ?>assets/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="<?= base_url() . $identitas->foto; ?>" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs"><?= $identitas->nama_lengkap ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="<?= base_url(); ?>assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="<?= base_url() . $identitas->foto; ?>" class="img-circle" alt="User Image">
 
                 <p>
                   <?= $identitas->nama_lengkap ?>
-                  <small>Member since Nov. 2012</small>
                 </p>
               </li>
               <!-- Menu Body -->
+              <!--
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
@@ -237,10 +243,11 @@ desired effect
                   <div class="col-xs-4 text-center">
                     <a href="#">Friends</a>
                   </div>
-                </div>
+                </div>-->
                 <!-- /.row -->
-              </li>
+              <!--</li>-->
               <!-- Menu Footer-->
+              <!--
               <li class="user-footer">
                 <div class="pull-left">
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
@@ -249,12 +256,15 @@ desired effect
                   <a href="<?=site_url()?>/login/logout" class="btn btn-default btn-flat">Log out</a>
                 </div>
               </li>
+            -->
             </ul>
           </li>
           <!-- Control Sidebar Toggle Button -->
+          <!--
           <li>
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
           </li>
+        -->
         </ul>
       </div>
     </nav>
@@ -270,13 +280,14 @@ desired effect
         <div class="pull-left image">
           <img src="<?= base_url() . $identitas->foto; ?>" class="img-circle" alt="User Image">
         </div>
+        <div style="margin-top:50px">
         <div class="pull-left info">
-          <p><?= $identitas->nama_lengkap ?></p>
+          <p style="color:white;"><?= wordwrap($identitas->nama_lengkap, 40, "<br />\n"); ?></p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
-
+    </div>
       <!-- search form (Optional) -->
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
@@ -301,17 +312,19 @@ desired effect
             </span></a>
             <?php if($tab=="1") :?>
             <ul class="treeview-menu">
-                <li><a href="#identitas"><i class="glyphicon glyphicon-user"></i> <span>Identitas Diri</span></a></li>
-                <li><a href="#pendidikan"><i class="glyphicon glyphicon-education"></i> <span>Riwayat Pendidikan</span></a></li>
-                <li><a href="#pekerjaan"><i class="glyphicon glyphicon-briefcase"></i> <span>Riwayat Pekerjaan</span></a></li>
-                <li><a href="#penelitian"><i class="glyphicon glyphicon-tint"></i> <span>Penelitian</span></a></li>
-                <li><a href="#pengabdian"><i class="glyphicon glyphicon-leaf"></i> <span>Pengabdian Masyarakat</span></a></li>
-                <li><a href="#jurnal"><i class="glyphicon glyphicon-pencil"></i> <span>Penulisan Artikel Ilmiah</span></a></li>
-                <li><a href="#seminar"><i class="glyphicon glyphicon-share"></i> <span>Pemakalah Seminar</span></a></li>
-            </ul>            
+              <li><a href="#identitas"><i class="glyphicon glyphicon-user"></i> <span>Identitas Diri</span></a></li>
+              <li><a href="#pendidikan"><i class="glyphicon glyphicon-education"></i> <span>Riwayat Pendidikan</span></a></li>
+              <li><a href="#pekerjaan"><i class="glyphicon glyphicon-briefcase"></i> <span>Riwayat Pekerjaan</span></a></li>
+              <li><a href="#penelitian"><i class="glyphicon glyphicon-tint"></i> <span>Penelitian</span></a></li>
+              <li><a href="#pengabdian"><i class="glyphicon glyphicon-leaf"></i> <span>Pengabdian Masyarakat</span></a></li>
+              <li><a href="#jurnal"><i class="glyphicon glyphicon-pencil"></i> <span>Publikasi Ilmiah</span></a></li>
+              <li><a href="#bukuteks"><i class="glyphicon glyphicon-book"></i> <span>Buku Teks</span></a></li>
+              <li><a href="#penghargaan"><i class="glyphicon glyphicon-bookmark"></i> <span>Penghargaan</span></a></li>
+              <li><a href="#seminar"><i class="glyphicon glyphicon-share"></i> <span>Nara Sumber</span></a></li>
+            </ul>
             <?php endif; ?>
         </li>
-        <li <?= $tab=="2" ? 'class="active"':"" ?>><a href="<?= site_url() ?>/home/mydocuments"><i class="glyphicon glyphicon-file"></i> <span>My Documents</span></a></li>
+        <!--<li <?= $tab=="2" ? 'class="active"':"" ?>><a href="<?= site_url() ?>/home/mydocuments"><i class="glyphicon glyphicon-file"></i> <span>My Documents</span></a></li>-->
 <!--
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>

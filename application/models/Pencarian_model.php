@@ -105,15 +105,14 @@ class Pencarian_model extends CI_Model {
         return $prodis;
     }
 
-    public function get_list_users()
+    public function get_list_users($limit,$start)
     {
         $this->db->select('uid,nama_lengkap,prodi,research_interests,foto,deskripsi_singkat');
         $this->db->from($this->table);
         $this->db->order_by('nama_lengkap','asc');
+        $this->db->limit($limit, $start);
         $query = $this->db->get();
-        $result = $query->result_array();
-
-
+        $result = $query->result();
         return $result;
     }
 

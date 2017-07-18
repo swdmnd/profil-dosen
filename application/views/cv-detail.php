@@ -1,6 +1,6 @@
 <div class="panel panel-default" id="identitas">
     <div class="panel-heading">
-        <h4><img src="<?= base_url() . $identitas->foto?>" width="100px" height="120px" class="img-circle">&nbsp;&nbsp;Identitas Diri</h4>
+        <h4><img src="<?= base_url() . $identitas->foto?>" width="100px" height="120px" class="img-circle"><br><br>Identitas Diri</h4>
     </div>
 
     <div class="panel-body">
@@ -133,9 +133,9 @@
             <tr>
                 <th></th>
                 <?php
-                    foreach($pendidikan->tingkat as $item):
+                    foreach($pendidikan->tingkat as $item => $value):
                 ?>
-                            <th><?= $item ?></th>
+                            <th><span class='span-pendidikan-tingkat caption-pendidikan' data-id='<?= $value['id'] ?>'><?= $value['tingkat'] ?></span></th>
                 <?php
                     endforeach;
                 ?>
@@ -146,9 +146,9 @@
             <tr>
                 <th>Nama PT</th>
                 <?php
-                    foreach($pendidikan->nama_pt as $item):
+                    foreach($pendidikan->nama_pt as $item => $value):
                 ?>
-                            <td><?= $item ?></td>
+                            <td><span class='span-pendidikan-nama_pt caption-pendidikan' data-id='<?= $value['id'] ?>'><?= $value['nama_pt'] ?></span></td>
                 <?php
                     endforeach;
                 ?>
@@ -156,9 +156,9 @@
             <tr>
                 <th>Bidang Ilmu</th>
                 <?php
-                    foreach($pendidikan->bidang_ilmu as $item):
+                    foreach($pendidikan->bidang_ilmu as $item => $value):
                 ?>
-                            <td><?= $item ?></td>
+                            <td><span class='span-pendidikan-bidang_ilmu caption-pendidikan' data-id='<?= $value['id'] ?>'><?= $value['bidang_ilmu'] ?></span></td>
                 <?php
                     endforeach;
                 ?>
@@ -166,9 +166,9 @@
             <tr>
                 <th>Tahun Masuk</th>
                 <?php
-                    foreach($pendidikan->tahun_masuk as $item):
+                    foreach($pendidikan->tahun_masuk as $item => $value):
                 ?>
-                            <td><?= $item ?></td>
+                            <td><span class='span-pendidikan-tahun_masuk caption-pendidikan' data-id='<?= $value['id'] ?>'><?= $value['tahun_masuk'] ?></span></td>
                 <?php
                     endforeach;
                 ?>
@@ -176,9 +176,9 @@
             <tr>
                 <th>Tahun Lulus</th>
                 <?php
-                    foreach($pendidikan->tahun_lulus as $item):
+                    foreach($pendidikan->tahun_lulus as $item => $value):
                 ?>
-                            <td><?= $item ?></td>
+                            <td><span class='span-pendidikan-tahun_lulus caption-pendidikan' data-id='<?= $value['id'] ?>'><?= $value['tahun_lulus'] ?></span> </td>
                 <?php
                     endforeach;
                 ?>
@@ -186,9 +186,9 @@
             <tr>
                 <th>Judul Tugas Akhir</th>
                 <?php
-                    foreach($pendidikan->judul_ta as $item):
+                    foreach($pendidikan->judul_ta as $item => $value):
                 ?>
-                            <td><?= $item ?></td>
+                            <td><span class='span-pendidikan-judul_ta caption-pendidikan' data-id='<?= $value['id'] ?>'><?= $value['judul_ta'] ?></span></td>
                 <?php
                     endforeach;
                 ?>
@@ -196,9 +196,9 @@
             <tr>
                 <th>Nama Pembimbing/Promotor</th>
                 <?php
-                    foreach($pendidikan->pembimbing as $item):
+                    foreach($pendidikan->pembimbing as $item => $value):
                 ?>
-                            <td><?= $item ?></td>
+                            <td><span class='span-pendidikan-pembimbing caption-pendidikan' data-id='<?= $value['id'] ?>'><?= $value['pembimbing'] ?></span></td>
                 <?php
                     endforeach;
                 ?>
@@ -219,9 +219,8 @@
         <thead>
             <tr>
                 <th>No.</th>
+                <th>Tahun</th>
                 <th>Jabatan</th>
-                <th>Masa Jabatan</th>
-                <th>Pilihan</th>
             </tr>
         </thead>
 
@@ -231,23 +230,8 @@
                 if(empty($pekerjaan)) echo '<tr><td colspan="5"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
                 foreach($pekerjaan as $item):
             ?>
-                    <tr><td><?= ++$i ?></td><td><?= $item->jabatan ?></td><td><?= $item->tahun ?></td>
-                    <td>
-                        <div class="btn-group">
-                          <a type="button" class="btn btn-default btn-flat">Action</a>
-                          <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                          </button>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                          </ul>
-                        </div>
-                        </td></tr>
+                    <tr><td><?= ++$i ?></td><td><?= $item->tahun_mulai ?> - <?= $item->tahun_selesai?></td><td><?= $item->jabatan?></td>
+                    </tr>
             <?php
                 endforeach;
             ?>
@@ -257,7 +241,7 @@
 
 <div class="panel panel-default" id="penelitian">
     <div class="panel-heading">
-        <h4><i class="glyphicon glyphicon-tint"></i>&nbsp;&nbsp;Pengalaman Penelitian</h4>
+        <h4><i class="glyphicon glyphicon-tint"></i>&nbsp;&nbsp;Penelitian</h4>
     </div>
 
     <table class="table">
@@ -267,7 +251,6 @@
                 <th rowspan="2" style="vertical-align:middle;">Tahun</th>
                 <th rowspan="2" style="vertical-align:middle;">Judul Penelitian</th>
                 <th colspan="2"><center>Pendanaan</center></th>
-                <th rowspan="2" style="vertical-align:middle;">Pilihan</th>
             </tr>
             <tr>
                 <th>Sumber</th>
@@ -282,22 +265,6 @@
                 foreach($penelitian as $item):
             ?>
                     <tr><td><?= ++$i ?></td><td><?= $item->tahun_mulai==$item->tahun_selesai?$item->tahun_mulai:$item->tahun_mulai." - ".$item->tahun_selesai ?></td><td><?= $item->judul ?></td><td><?= $item->sumber_dana ?></td><td><?= $item->jumlah_dana ?></td>
-                        <td>
-                        <div class="btn-group">
-                          <a href="<?= site_url(); ?>/home/mydocuments?sd=penelitian&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
-                          <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                          </button>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                          </ul>
-                        </div>
-                        </td>
             </tr>
             <?php
                 endforeach;
@@ -308,7 +275,7 @@
 
 <div class="panel panel-default" id="pengabdian">
     <div class="panel-heading">
-        <h4><i class="glyphicon glyphicon-leaf"></i>&nbsp;&nbsp;Pengalaman Pengabdian Kepada Masyarakat</h4>
+        <h4><i class="glyphicon glyphicon-leaf"></i>&nbsp;&nbsp;Pengabdian Masyarakat</h4>
     </div>
 
     <table class="table">
@@ -318,7 +285,6 @@
                 <th rowspan="2" style="vertical-align:middle;">Tahun</th>
                 <th rowspan="2" style="vertical-align:middle;">Judul Pengabdian Kepada Masyarakat</th>
                 <th colspan="2"><center>Pendanaan</center></th>
-                <th rowspan="2" style="vertical-align:middle;">Pilihan</th>
             </tr>
             <tr>
                 <th>Sumber</th>
@@ -333,22 +299,6 @@
                 foreach($pengabdian as $item):
             ?>
                     <tr><td><?= ++$i ?></td><td><?= $item->tahun_mulai==$item->tahun_selesai?$item->tahun_mulai:$item->tahun_mulai." - ".$item->tahun_selesai ?></td><td><?= $item->judul ?></td><td><?= $item->sumber_dana ?></td><td><?= $item->jumlah_dana ?></td>
-                        <td>
-                        <div class="btn-group">
-                          <a href="<?= site_url(); ?>home/mydocuments?sd=pengabdian&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
-                          <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                          </button>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                          </ul>
-                        </div>
-                        </td>
             </tr>
             <?php
                 endforeach;
@@ -359,18 +309,14 @@
 
 <div class="panel panel-default" id="jurnal">
     <div class="panel-heading">
-        <h4><i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;Pengalaman Penulisan Artikel Ilmiah dalam Jurnal</h4>
+        <h4><i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;Publikasi Ilmiah</h4>
     </div>
 
     <table class="table">
         <thead>
             <tr>
                 <th>No.</th>
-                <th>Tahun</th>
-                <th>Judul Artikel Ilmiah</th>
-                <th>Volume/Nomor</th>
-                <th>Nama Jurnal</th>
-                <th>Pilihan</th>
+                <th>Publikasi</th>
             </tr>
         </thead>
 
@@ -378,24 +324,29 @@
             <?php
                 $i=0;
                 if(empty($publikasi)) echo '<tr><td colspan="6"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
+                $publikasilengkap = '';
                 foreach($publikasi as $item):
+                  $penulisarray = explode(",",$item->penulis);
+                  $jml = count($penulisarray);
+                  $penulis = '';
+                  for ($x = 0; $x < $jml; $x++) {
+                  if ($x!=$jml-1)
+                  {
+                    $penulis .= implode(' ',array_reverse(explode(' ',$penulisarray[$x]))) . ", ";
+                  }
+                  else
+                  {
+                    $penulis .= implode(' ',array_reverse(explode(' ',$penulisarray[$x])));
+                  }
+                  }
+                  $tahun = "(" . $item->tahun . ")";
+                  $judul = $item->judul;
+                  $nama_jurnal = "In " . $item->nama_jurnal;
+                  $nomor_jurnal = " (" . $item->nomor_jurnal . ")";
+                  $publikasilengkap = $penulis . " . " . $tahun . " . " . $judul . " . " . $nama_jurnal . $nomor_jurnal . ".";
             ?>
-                    <tr><td><?= ++$i ?></td><td><?= $item->tahun ?></td><td><?= $item->judul ?></td><td><?= $item->nomor_jurnal ?></td><td><?= $item->nama_jurnal ?></td><td>
-                        <div class="btn-group">
-                          <a href="<?= site_url(); ?>home/mydocuments?sd=publikasi&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
-                          <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                          </button>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                          </ul>
-                        </div>
-                        </td></tr>
+                    <tr><td><?= ++$i ?></td><td><?= $publikasilengkap ?></td>
+                    </tr>
             <?php
                 endforeach;
             ?>
@@ -403,9 +354,86 @@
     </table>
 </div>
 
+<div class="panel panel-default" id="bukuteks">
+    <div class="panel-heading">
+      <h4><i class="glyphicon glyphicon-book"></i>&nbsp;&nbsp;Buku Teks</h4>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Buku Teks</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php
+                $i=0;
+                if(empty($buku_teks)) echo '<tr><td colspan="6"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
+                $bukutekslengkap = '';
+                foreach($buku_teks as $item):
+                  $penulisarray = explode(",",$item->penulis);
+                  $jml = count($penulisarray);
+                  $penulis = '';
+                  for ($x = 0; $x < $jml; $x++) {
+                  if ($x!=$jml-1)
+                  {
+                    $penulis .= implode(' ',array_reverse(explode(' ',$penulisarray[$x]))) . ", ";
+                  }
+                  else
+                  {
+                    $penulis .= implode(' ',array_reverse(explode(' ',$penulisarray[$x])));
+                  }
+                  }
+                  $tahun_terbit = "(" . $item->tahun_terbit . ")";
+                  $judul_buku = $item->judul_buku;
+                  $penerbit = $item->penerbit;
+                  $bukutekslengkap = $penulis . " . " . $tahun . " . " . $judul . " . " . $penerbit . ".";
+            ?>
+                    <tr><td><?= ++$i ?></td><td><?= $bukutekslengkap ?></td>
+                    </tr>
+            <?php
+                endforeach;
+            ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="panel panel-default" id="penghargaan">
+    <div class="panel-heading">
+        <h4><i class="glyphicon glyphicon-bookmark"></i>&nbsp;&nbsp;Penghargaan</h4>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Tahun penghargaan</th>
+                <th>Nama penghargaan</th>
+                <th>Pemberi penghargaan</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php
+                $i=0;
+                if(empty($penghargaan)) echo '<tr><td colspan="5"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
+                foreach($penghargaan as $item):
+            ?>
+                    <tr><td><?= ++$i ?></td><td><?= $item->tahun_penghargaan ?></td><td><?= $item->nama_penghargaan ?></td><td><?= $item->pemberi_penghargaan ?></td>
+                    </tr>
+            <?php
+                endforeach;
+            ?>
+        </tbody>
+    </table>
+</div>
+
+
 <div class="panel panel-default" id="seminar">
     <div class="panel-heading">
-        <h4><i class="glyphicon glyphicon-share"></i>&nbsp;&nbsp;Pemakalah Seminar</h4>
+        <h4><i class="glyphicon glyphicon-share"></i>&nbsp;&nbsp;Nara Sumber</h4>
     </div>
 
     <table class="table">
@@ -415,7 +443,6 @@
                 <th>Nama Pertemuan Ilmiah/Seminar</th>
                 <th>Judul Artikel Ilmiah</th>
                 <th>Waktu dan Tempat</th>
-                <th>Pilihan</th>
             </tr>
         </thead>
 
@@ -425,111 +452,10 @@
                 if(empty($seminar)) echo '<tr><td colspan="5"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
                 foreach($seminar as $item):
             ?>
-                    <tr><td><?= ++$i ?></td><td><?= $item->nama_seminar ?></td><td><?= $item->tema ?></td><td><?= $item->tempat.' '.$item->waktu ?></td><td>
-                        <div class="btn-group">
-                          <a href="<?= site_url(); ?>home/mydocuments?sd=seminar&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
-                          <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                          </button>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                          </ul>
-                        </div>
-                        </td></tr>
+                    <tr><td><?= ++$i ?></td><td><?= $item->nama_seminar ?></td><td><?= $item->tema ?></td><td><?= $item->tempat.', '.$item->waktu ?></td></tr>
             <?php
                 endforeach;
             ?>
         </tbody>
     </table>
 </div>
-<script>
-$(document).ready(function(){
-    $("button").click(function(){
-		document.getElementById("meluluskan").value = '';
-		var D3 = $("#jumlahlulusanD3").serializeArray();
-        var S1 = $("#jumlahlulusanS1").serializeArray();
-		var Pr = $("#jumlahlulusanPr").serializeArray();
-		var S2 = $("#jumlahlulusanS2").serializeArray();
-		var S3 = $("#jumlahlulusanS3").serializeArray();
-
-        $.each(D3, function(i, field){
-			var value = 0;
-			if (field.value=='')
-			{
-				value = 0;
-			}
-			else
-			{
-				value = field.value;
-			}
-			document.getElementById("meluluskan").value += field.name + ":" + value + ",";
-        });
-        $.each(S1, function(i, field){
-			var value = 0;
-			if (field.value=='')
-			{
-				value = 0;
-			}
-			else
-			{
-				value = field.value;
-			}
-			document.getElementById("meluluskan").value += field.name + ":" + value + ",";
-        });
-        $.each(Pr, function(i, field){
-			var value = 0;
-			if (field.value=='')
-			{
-				value = 0;
-			}
-			else
-			{
-				value = field.value;
-			}
-			document.getElementById("meluluskan").value += field.name + ":" + value + ",";
-        });
-        $.each(S2, function(i, field){
-			var value = 0;
-			if (field.value=='')
-			{
-				value = 0;
-			}
-			else
-			{
-				value = field.value;
-			}
-			document.getElementById("meluluskan").value += field.name + ":" + value + ",";
-        });
-        $.each(S3, function(i, field){
-			var value = 0;
-			if (field.value=='')
-			{
-				value = 0;
-			}
-			else
-			{
-				value = field.value;
-			}
-			document.getElementById("meluluskan").value += field.name + ":" + value ;
-        });
-		return false;
-    });
-});
-</script>
-<script src="<?= base_url(); ?>assets/plugins/datepicker/bootstrap-datepicker.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/datepicker/locales/bootstrap-datepicker.id.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/select2/select2.full.min.js"></script>
-<script>
-    $('#tanggal_lahir').datepicker({
-        autoclose: true,
-        format: "d MM yyyy",
-        language: "id"
-    });
-    $(".select2").select2();
-</script>
-<script src="<?= base_url(); ?>assets/js/bootstrap-tagsinput.js"></script>

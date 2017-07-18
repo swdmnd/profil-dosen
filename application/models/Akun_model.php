@@ -123,6 +123,32 @@ class Akun_model extends CI_Model{
         return $this->db->get("pekerjaan")->result();
     }
 
+    public function getBukuTeks($id=null,$uid=''){
+        if($id) $this->db->where("id", $id);
+		if ($uid=='')
+		{
+        $this->db->where("uid", $this->session->userdata('login')->uid);
+		}
+		else
+		{
+        $this->db->where("uid", $uid);
+		}
+        return $this->db->get("buku_teks")->result();
+    }
+
+    public function getPenghargaan($id=null,$uid=''){
+        if($id) $this->db->where("id", $id);
+    if ($uid=='')
+    {
+        $this->db->where("uid", $this->session->userdata('login')->uid);
+    }
+    else
+    {
+        $this->db->where("uid", $uid);
+    }
+        return $this->db->get("penghargaan")->result();
+    }
+
     public function setIdentitas($data){
         return $this->db->update("users", $data, array("uid"=>($this->session->userdata('login')->uid)));
     }
@@ -145,6 +171,15 @@ class Akun_model extends CI_Model{
     public function setPekerjaan($data){
         $this->db->insert("pekerjaan", $data);
     }
+
+    public function setBukuTeks($data){
+        $this->db->insert("buku_teks", $data);
+    }
+
+    public function setPenghargaan($data){
+        $this->db->insert("penghargaan", $data);
+    }
+
     public function updatePendidikanlive($idpendidikan,$valuependidikan,$modulpendidikan){
   		$this->db->where(array("id"=>$idpendidikan));
   		$this->db->update("pendidikan",array($modulpendidikan=>$valuependidikan));
@@ -184,6 +219,20 @@ class Akun_model extends CI_Model{
   		$this->db->where(array("id"=>$idseminar));
   		$this->db->update("seminar",array($modulseminar=>$valueseminar));
   	}
+    public function updateBukuTeks($data, $id){
+        return $this->db->update("buku_teks", $data, array("id"=>$id));
+    }
+    public function updateBukuTekslive($idbukuteks,$valuebukuteks,$modulbukuteks){
+  		$this->db->where(array("id"=>$idbukuteks));
+  		$this->db->update("buku_teks",array($modulbukuteks=>$valuebukuteks));
+  	}
+    public function updatePenghargaan($data, $id){
+        return $this->db->update("penghargaan", $data, array("id"=>$id));
+    }
+    public function updatePenghargaanlive($idpenghargaan,$valuepenghargaan,$modulpenghargaan){
+  		$this->db->where(array("id"=>$idpenghargaan));
+  		$this->db->update("penghargaan",array($modulpenghargaan=>$valuepenghargaan));
+  	}
     public function deletePendidikan($id,$uid)
     {
       $this->db->delete('pendidikan', array('id'=>$id,'uid'=>$uid));
@@ -203,5 +252,13 @@ class Akun_model extends CI_Model{
     public function deleteSeminar($id,$uid)
     {
       $this->db->delete('seminar', array('id'=>$id,'uid'=>$uid));
+    }
+    public function deleteBukuTeks($id,$uid)
+    {
+      $this->db->delete('buku_teks', array('id'=>$id,'uid'=>$uid));
+    }
+    public function deletePenghargaan($id,$uid)
+    {
+      $this->db->delete('penghargaan', array('id'=>$id,'uid'=>$uid));
     }
 }
