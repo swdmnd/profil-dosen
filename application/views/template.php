@@ -22,9 +22,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/select2/select2.min.css">
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/iCheck/all.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.css">
     
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?= base_url(); ?>assets/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="<?= base_url(); ?>assets/css/AdminLTE.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect.
@@ -46,8 +48,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="<?= base_url(); ?>assets/js/bootstrap.min.js"></script>
   <!-- Slimscroll -->
   <script src="<?= base_url(); ?>assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+  <!-- Select2 -->
+  <script src="<?= base_url(); ?>assets/plugins/select2/select2.min.js"></script>
+  <!-- InputMask -->
+  <script src="<?= base_url(); ?>assets/plugins/mask/jquery.mask.min.js"></script>
+  <!-- DataTable -->
+  <script src="<?= base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="<?= base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
+  <script src="<?= base_url(); ?>assets/plugins/highlight/jquery.highlight.js"></script>
   <!-- AdminLTE App -->
-  <script src="<?= base_url(); ?>assets/js/app.min.js"></script>
+  <script src="<?= base_url(); ?>assets/js/app.js"></script>
   <script>
       // The function actually applying the offset
       function offsetAnchor() {
@@ -95,7 +105,7 @@ desired effect
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="<?= site_url().(($user->level=="admin") ? "/admin":"/home") ?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><center><img class="img-responsive" style="height:44px; width:auto;" src="<?= base_url(); ?>/assets/img/logo_undip.png" /></center></span>
       <!-- logo for regular state and mobile devices -->
@@ -127,7 +137,7 @@ desired effect
                     <a href="#">
                       <div class="pull-left">
                         <!-- User Image -->
-                        <img src="<?= base_url(); ?>assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="<?= site_url(); ?>/getfile/profileImage/true" class="img-circle" alt="User Image">
                       </div>
                       <!-- Message title and timestamp -->
                       <h4>
@@ -211,17 +221,17 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="<?= base_url(); ?>assets/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="<?= site_url(); ?>/getfile/profileImage/true" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs"><?= $user->nama ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="<?= base_url(); ?>assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="<?= site_url(); ?>/getfile/profileImage/true" class="img-circle" alt="User Image">
 
                 <p>
-                  <?= $user->nama ?>
+                  <?= $user->nama_lengkap ?>
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
@@ -243,7 +253,7 @@ desired effect
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="<?=site_url()?>/settings/" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="<?=site_url()?>/login/logout" class="btn btn-default btn-flat">Log out</a>
@@ -268,7 +278,7 @@ desired effect
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?= base_url(); ?>assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="<?= site_url(); ?>/getfile/profileImage/true" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><?= $user->nama ?></p>
@@ -312,6 +322,25 @@ desired effect
             <?php endif; ?>
         </li>
         <li <?= $tab=="2" ? 'class="active"':"" ?>><a href="<?= site_url() ?>/home/mydocuments"><i class="glyphicon glyphicon-file"></i> <span>My Documents</span></a></li>
+<!--
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#">Link in level 2</a></li>
+            <li><a href="#">Link in level 2</a></li>
+          </ul>
+        </li>
+-->
+      </ul>
+      <?php elseif($user->level == "admin"): ?>
+      <ul class="sidebar-menu">
+        <li class="header">MENU ADMIN</li>
+        <!-- Optionally, you can add icons to the links -->
+        <li <?= $tab=="1" ? 'class="active"':"" ?>><a href="<?= site_url() ?>/admin"><i class="glyphicon glyphicon-user"></i> <span>Akun</span></a></li>
 <!--
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
@@ -370,7 +399,7 @@ desired effect
   <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-      Fakultas Teknik
+      Fakultas Psikologi
     </div>
     <!-- Default to the left -->
     <strong>Copyright &copy; 2017 <a href="<?= site_url() ?>/home">Sistem Informasi Dosen Universitas Diponegoro</a>.</strong> All rights reserved (仮).

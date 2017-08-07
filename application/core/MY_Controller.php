@@ -12,10 +12,15 @@ class MY_Controller extends CI_Controller {
         $this->data['tab'] = "";
     }
     
-    public function cek_session_in(){
+    public function cek_session_in($level=null){
 		if($this->session->userdata('login')==null){
 			redirect(site_url('login/index'));
 		}
+        if($level){
+          if($level!=$this->session->userdata('login')->level){
+            show_404();
+          }
+        }
 	}
 
 	public function cek_session_out(){

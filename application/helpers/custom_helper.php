@@ -27,6 +27,13 @@ function rrmdir($dir) {
     } 
 }
 
+function sanitize_path($path){
+  if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+      $path = str_replace("/", "\\", $path);
+  }
+  return $path;
+}
+
 function datetostr($date){
     if($date=="0000-00-00") return $date;
     $list = 
@@ -71,14 +78,8 @@ function strtodate($str){
     return $tokens[2].'-'.$tokens[1].'-'.$tokens[0];
 }
 
-function tcpdf_init()
-{
-    $tcpdf_config = '../assets/plugins/tcpdf/config/tcpdf_config.php';
-    $tcpdf_file = '../assets/plugins/tcpdf/tcpdf.php';
-    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-        $tcpdf_config = str_replace("/", "\\", $tcpdf_config);
-        $tcpdf_file = str_replace("/", "\\", $tcpdf_file);
-    }
-    require_once(APPPATH.$tcpdf_config);
-    require_once(APPPATH.$tcpdf_file);
+$fpdf = '../assets/plugins/fpdf/fpdf.php';
+if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+    $fpdf = str_replace("/", "\\", $fpdf);
 }
+require_once(APPPATH.$fpdf);

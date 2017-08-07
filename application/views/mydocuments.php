@@ -192,7 +192,7 @@ if($action){
                     
                 </label>
             </div>
-            <a class="dir-item" href="<?= site_url()."/home/mydocuments/?d=".$this->input->get('d')."&f=".$pt.$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>"><i class="glyphicon glyphicon-file col-md-2"></i><span class="col-md-8"><?= $dir_entry->name ?> <small>(<?= human_filesize(filesize(str_replace('/','\\',$this->session->userdata('work_dir').($this->input->get("sd") ? "/.profile/".$this->input->get("sd").$this->input->get("id")."/":"").$pt.$dir_entry->name)), 0); ?>)</small></span></a><!--<a href="<?= site_url()."/home/mydocuments/remove/?d=".$this->input->get('d')."&remove_file=".$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""); ?>"><span class="delete-icon"><b>&times;</b></span></a>-->
+            <a class="dir-item" href="<?= site_url()."/home/mydocuments/?d=".$this->input->get('d')."&f=".$pt.$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>"><i class="glyphicon glyphicon-file col-md-2"></i><span class="col-md-8"><?= $dir_entry->name ?> <small>(<?= human_filesize(filesize(sanitize_path($work_dir.$pt.$dir_entry->name)), 0); ?>)</small></span></a><!--<a href="<?= site_url()."/home/mydocuments/remove/?d=".$this->input->get('d')."&remove_file=".$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""); ?>"><span class="delete-icon"><b>&times;</b></span></a>-->
         </h4></div></div>
         <?php
                 endif;

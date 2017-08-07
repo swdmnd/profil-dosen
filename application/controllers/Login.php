@@ -22,13 +22,18 @@ class Login extends MY_Controller {
             } else {
                 if(!empty($result=$this->Login_model->login())) {
                     $this->session->set_userdata('login', $result);
-                    $WORK_DIR = $GLOBALS['WORK_DIR'].$result->uid.$result->no_induk;
-                    if(!file_exists($WORK_DIR)){
-                        mkdir($WORK_DIR);
-                        mkdir($WORK_DIR.'\.profile');
+                    if($result->level=="dosen"){
+                      $WORK_DIR = $GLOBALS['WORK_DIR'].$result->uid.$result->no_induk;
+                      if(!file_exists($WORK_DIR)){
+                          mkdir($WORK_DIR);
+                          mkdir($WORK_DIR.'\.profile');
+                      }
+                      $this->session->set_userdata('work_dir', $WORK_DIR);
+                      redirect('home/index', 'location');
+                    } else if($result->level=="admin"){
+                      redirect('admin/index', 'location');
                     }
-                    $this->session->set_userdata('work_dir', $WORK_DIR);
-                    redirect('home/index', 'location');
+                    
                 } else {
                     $data['error_msg'] = "Username atau password salah.";
                 }

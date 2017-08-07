@@ -5,7 +5,7 @@ class Home extends MY_Controller {
 
 	public function __construct(){
         parent::__construct();
-        $this->cek_session_in();
+        $this->cek_session_in('dosen');
     }
     
 	public function index()
@@ -18,8 +18,11 @@ class Home extends MY_Controller {
         $this->data['pendidikan'] = $this->Akun_model->getPendidikan();
         $this->data['pekerjaan'] = $this->Akun_model->getPekerjaan();
         $this->data['penelitian'] = $this->Akun_model->getPenelitian();
+        $this->data['penelitian_extra'] = $this->Akun_model->getPenelitianExtra();
         $this->data['pengabdian'] = $this->Akun_model->getPengabdian();
+        $this->data['pengabdian_extra'] = $this->Akun_model->getPengabdianExtra();
         $this->data['publikasi'] = $this->Akun_model->getPublikasi();
+        $this->data['publikasi_extra'] = $this->Akun_model->getPublikasiExtra();
         $this->data['seminar'] = $this->Akun_model->getSeminar();
         
         $this->data['content'] = 'cv';
@@ -38,16 +41,21 @@ class Home extends MY_Controller {
         unset($post_data['save']);
         $post_data['uid'] = $this->session->userdata('login')->uid;
         if($target == "identitas") {
-            unset($post_data['mk_diampu']);
+            $post_data['mk_diampu'] = serialize(array_map('trim', $post_data['mk_diampu']));
             $post_data['tanggal_lahir'] = strtodate($post_data['tanggal_lahir']);
             $this->Akun_model->setIdentitas($post_data);
         } else if($target == "pendidikan") {
+            $post_data['pembimbing'] = implode(', ', array_map('trim', $post_data['pembimbing']));
             $this->Akun_model->setPendidikan($post_data);
         } else if($target == "penelitian") {
+            $post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
             $this->Akun_model->setPenelitian($post_data);
         } else if($target == "publikasi") {
+            $post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
             $this->Akun_model->setPublikasi($post_data);
         } else if($target == "seminar") {
+            $post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
+            $post_data['waktu'] = strtodate($post_data['waktu']);
             $this->Akun_model->setSeminar($post_data);
         } else if($target == "pekerjaan") {
             $this->Akun_model->setPekerjaan($post_data);
@@ -57,45 +65,24 @@ class Home extends MY_Controller {
 	}
     
     public function printpdf(){
-        tcpdf_init();
         $this->load->model('Akun_model');        
         
-        $this->data['identitas'] = $this->Akun_model->getIdentitas();
-        $this->data['pendidikan'] = $this->Akun_model->getPendidikan();
-        $this->data['penelitian'] = $this->Akun_model->getPenelitian();
-        $this->data['pengabdian'] = $this->Akun_model->getPengabdian();
-        $this->data['publikasi'] = $this->Akun_model->getPublikasi();
-        $this->data['seminar'] = $this->Akun_model->getSeminar();
-        
-        $this->data['content'] = 'cv';
-        $this->set_tab_index("1");
-        $this->set_page_header("Curriculum Vitae", "CV");
-		$content = $this->load->view('printcv2.php', $this->data, TRUE);
-        
-        $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-        $obj_pdf->SetCreator(PDF_CREATOR);
-        // remove default header/footer
-        $obj_pdf->setPrintHeader(false);
-        $obj_pdf->setPrintFooter(false);
-        //$title = "PDF Report";
-        //$obj_pdf->SetTitle($title);
-        //$obj_pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $title, PDF_HEADER_STRING);
-        //$obj_pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-        //$obj_pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-        $obj_pdf->SetDefaultMonospacedFont('helvetica');
-        $obj_pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-        $obj_pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-        $obj_pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-        $obj_pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-        $obj_pdf->SetFont('helvetica', '', 9);
-        $obj_pdf->setFontSubsetting(false);
-        $obj_pdf->AddPage();
-        ob_start();
-            // we can have any view part here like HTML, PHP etc
-            // $content = ob_get_contents();
-        ob_end_clean();
-        $obj_pdf->writeHTML($content, true, false, true, false, '');
-        $obj_pdf->Output('cv.pdf', 'I');
+        $identitas = $this->Akun_model->getIdentitas();
+        $pendidikan = $this->Akun_model->getPendidikan();
+        $pekerjaan = $this->Akun_model->getPekerjaan();
+        $penelitian = $this->Akun_model->getPenelitian();
+        $penelitian_extra = $this->Akun_model->getPenelitianExtra();
+        $pengabdian = $this->Akun_model->getPengabdian();
+        $pengabdian_extra = $this->Akun_model->getPengabdianExtra();
+        $publikasi = $this->Akun_model->getPublikasi();
+        $publikasi_extra = $this->Akun_model->getPublikasiExtra();
+        $seminar = $this->Akun_model->getSeminar();
+      
+        $pdf = new FPDF('P','mm','A4');
+        $pdf->AddPage();
+        $pdf->SetFont('Arial','B',16);
+        $pdf->Cell(0, 14, $identitas->nama_lengkap, 0, 1, 'C');
+        $pdf->Output();
     }
     
     public function mydocuments($action=NULL)
@@ -111,43 +98,64 @@ class Home extends MY_Controller {
                         $this->Akun_model->updatePekerjaan($post_data, $this->input->get("id"));
                         break;
                     case 'penelitian':
+                        $post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
                         $this->Akun_model->updatePenelitian($post_data, $this->input->get("id"));
                         break;
                     case 'pengabdian':
+                        $post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
                         $this->Akun_model->updatePenelitian($post_data, $this->input->get("id"));
                         break;
                     case 'publikasi':
+                        $post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
                         $this->Akun_model->updatePublikasi($post_data, $this->input->get("id"));
                         break;
                     case 'seminar':
                         $this->Akun_model->updateSeminar($post_data, $this->input->get("id"));
                         break;
-
                 }
                 $this->session->set_flashdata('update_success', 'Data sudah diperbaharui.');
                 redirect(site_url()."/home/mydocuments/?d=".$this->input->get('d').($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""));
             }
+            $q=null;
             switch($this->input->get("sd")){
                 case 'pekerjaan':
                     $this->data['research_data'] = $this->Akun_model->getPekerjaan($this->input->get("id"));
                     break;
                 case 'penelitian':
                     $this->data['research_data'] = $this->Akun_model->getPenelitian($this->input->get("id"));
+                    $this->data['research_members'] = $this->Akun_model->getDetailPenelitian($this->input->get("id"));
+                    $q = $this->db->query("SELECT penelitian.* FROM penelitian, bersama WHERE penelitian.id = bersama.id_penelitian AND bersama.id_anggota = {$this->session->userdata('login')->uid} AND bersama.ref='penelitian' AND penelitian.id = ".$this->input->get("id"))->row();
                     break;
                 case 'pengabdian':
                     $this->data['research_data'] = $this->Akun_model->getPengabdian($this->input->get("id"));
+                    $this->data['research_members'] = $this->Akun_model->getDetailPenelitian($this->input->get("id"));
+                    $q = $this->db->query("SELECT penelitian.* FROM penelitian, bersama WHERE penelitian.id = bersama.id_penelitian AND bersama.id_anggota = {$this->session->userdata('login')->uid} AND bersama.ref='penelitian' AND penelitian.id = ".$this->input->get("id"))->row();
                     break;
                 case 'publikasi':
                     $this->data['research_data'] = $this->Akun_model->getPublikasi($this->input->get("id"));
+                    $this->data['research_members'] = $this->Akun_model->getDetailPublikasi($this->input->get("id"));
+                    $q = $this->db->query("SELECT publikasi.* FROM publikasi, bersama WHERE publikasi.id = bersama.id_penelitian AND bersama.id_anggota = {$this->session->userdata('login')->uid} AND bersama.ref='publikasi' AND publikasi.id = ".$this->input->get("id"))->row();
                     break;
                 case 'seminar':
                     $this->data['research_data'] = $this->Akun_model->getSeminar($this->input->get("id"));
                     break;
                 
             }
-            $work_dir = $this->session->userdata('work_dir')."\\.profile\\".$this->input->get("sd").$this->input->get("id");
-            if(!file_exists($work_dir)){
-                mkdir($work_dir);
+            if($q){
+              if($q->uid == $this->session->userdata('login')->uid){
+                $work_dir = sanitize_path($this->session->userdata('work_dir')."/.profile/".$this->input->get("sd").$this->input->get("id"));
+                if(!file_exists($work_dir)){
+                    mkdir($work_dir);
+                }
+              } else {
+                $result = $this->db->query("SELECT * FROM users WHERE uid = ".$q->uid)->row();
+                $work_dir = sanitize_path($GLOBALS['WORK_DIR'].$result->uid.$result->no_induk."/.profile/".$this->input->get("sd").$this->input->get("id"));
+              }
+            } else {
+              $work_dir = sanitize_path($this->session->userdata('work_dir')."/.profile/".$this->input->get("sd").$this->input->get("id"));
+              if(!file_exists($work_dir)){
+                  mkdir($work_dir);
+              }
             }
         } else {
             $work_dir = $this->session->userdata('work_dir');
@@ -287,6 +295,7 @@ class Home extends MY_Controller {
         $this->data['dir_path'] = array_filter(explode('/', $this->data['dir_path']));
         $this->data['dir_path'] = array_splice($this->data['dir_path'], 2);
         $this->data['dir_path'][0] = "root";
+        $this->data['work_dir'] = $work_dir;
         
         $this->set_tab_index("2");
         $this->set_page_header("My Documents", "");
@@ -294,11 +303,13 @@ class Home extends MY_Controller {
 		$this->load->view('template', $this->data);
 	}
     
-    public function upload(){
-        
-    }
-    
-    public function makedir(){
-        
+    public function get_user_list(){
+        $term = $this->input->get("query");
+        $query = $this->db->query("SELECT * FROM users WHERE nama_lengkap LIKE '%$term%' OR no_induk LIKE '%$term%'")->result();
+        $result = array();
+        foreach($query as $q){
+          array_push($result, array("id"=>$q->uid, "text"=>"(".$q->no_induk.") ".$q->nama_lengkap));
+        }
+        echo json_encode($result);
     }
 }
