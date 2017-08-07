@@ -204,7 +204,7 @@ desired effect
       Fakultas Psikologi
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2017 <a href="<?= site_url() ?>/home">Sistem Informasi Dosen Universitas Diponegoro</a>.</strong> All rights reserved (仮).
+    <strong>Copyright &copy; 2017 <a href="<?= site_url() ?>/beranda">Sistem Informasi Dosen Universitas Diponegoro</a>.</strong> All rights reserved (仮).
   </footer>
 </div>
 <!-- ./wrapper -->

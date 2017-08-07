@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 07, 2017 at 02:45 AM
+-- Generation Time: Aug 07, 2017 at 03:48 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -33,14 +33,6 @@ CREATE TABLE `bersama` (
   `ref` enum('penelitian','publikasi') NOT NULL DEFAULT 'penelitian'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Dumping data for table `bersama`
---
-
-INSERT INTO `bersama` (`id`, `id_penelitian`, `id_anggota`, `ref`) VALUES
-(4, 1, 1, 'publikasi'),
-(6, 1, 2, 'penelitian');
-
 -- --------------------------------------------------------
 
 --
@@ -53,14 +45,6 @@ CREATE TABLE `pekerjaan` (
   `tahun` year(4) NOT NULL,
   `jabatan` varchar(100) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `pekerjaan`
---
-
-INSERT INTO `pekerjaan` (`id`, `uid`, `tahun`, `jabatan`) VALUES
-(1, 1, 2010, 'Gol IV/A'),
-(2, 1, 2015, 'Gol IV/AA');
 
 -- --------------------------------------------------------
 
@@ -79,15 +63,6 @@ CREATE TABLE `pendidikan` (
   `judul_ta` varchar(255) NOT NULL,
   `pembimbing` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `pendidikan`
---
-
-INSERT INTO `pendidikan` (`id`, `uid`, `tingkat`, `nama_pt`, `bidang_ilmu`, `tahun_masuk`, `tahun_lulus`, `judul_ta`, `pembimbing`) VALUES
-(5, 1, 'S1', 'asdf', 0, 1990, 2000, '12', '12'),
-(8, 1, 'D3', 'asdf', 0, 2011, 2017, 'asdf', 'aaa, aku juga pembimbing'),
-(7, 2, 'D3', 'asdf', 0, 2009, 2015, 'asdf', 'asdf');
 
 -- --------------------------------------------------------
 
@@ -108,19 +83,6 @@ CREATE TABLE `penelitian` (
   `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `penelitian`
---
-
-INSERT INTO `penelitian` (`id`, `uid`, `judul`, `tahun_mulai`, `tahun_selesai`, `sumber_dana`, `jumlah_dana`, `tags`, `tipe`, `timestamp`) VALUES
-(1, 1, 'asd', 2010, 2014, 'asdf', 2100000, 'tes,aja', 'penelitian', '2017-08-06 14:01:31'),
-(2, 1, 'asdf', 2013, 2013, 'KEMENRISTEK', 125, '', 'penelitian', '2017-08-06 14:01:31'),
-(3, 1, '123', 2013, 2014, '123', 123, '', 'pengabdian', '2017-08-06 14:01:31'),
-(4, 1, 'asu', 2010, 2011, 'asu', 222222, '', 'penelitian', '2017-08-06 14:01:31'),
-(5, 1, 'tes', 2010, 2014, 'KEMENRISTEK', 100000, '', 'penelitian', '2017-08-06 14:01:31'),
-(6, 1, 'haha', 2011, 2018, 'asu', 853, '', 'pengabdian', '2017-08-06 14:01:31'),
-(7, 1, 'Kisah Nabi Muhammad', 2014, 2019, 'asdf', 123123, 'asdf,dd', 'penelitian', '2017-08-06 14:01:31');
-
 -- --------------------------------------------------------
 
 --
@@ -138,14 +100,6 @@ CREATE TABLE `publikasi` (
   `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `publikasi`
---
-
-INSERT INTO `publikasi` (`id`, `uid`, `judul`, `tahun`, `nama_jurnal`, `nomor_jurnal`, `tags`, `timestamp`) VALUES
-(1, 2, 'aaa', 0000, 'aaa', 'aaa', '', '2017-08-06 14:02:34'),
-(2, 1, 'sss', 2019, 'sss', 'sss', '', '2017-08-06 14:02:34');
-
 -- --------------------------------------------------------
 
 --
@@ -162,14 +116,6 @@ CREATE TABLE `seminar` (
   `tags` varchar(4096) NOT NULL,
   `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
-
---
--- Dumping data for table `seminar`
---
-
-INSERT INTO `seminar` (`id`, `uid`, `nama_seminar`, `tema`, `tempat`, `waktu`, `tags`, `timestamp`) VALUES
-(1, 2, 'asdf', 'asdf', 'asdf', '1999-02-02', '', '2017-08-06 14:03:03'),
-(2, 1, 'asdf', 'asdf', 'asdf', '2017-09-06', '', '2017-08-06 14:03:03');
 
 -- --------------------------------------------------------
 
@@ -208,10 +154,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`uid`, `no_induk`, `password`, `nama`, `level`, `nama_lengkap`, `jabatan_fungsional`, `jabatan_struktural`, `nidn`, `tempat_lahir`, `tanggal_lahir`, `alamat_rumah`, `kontak_rumah`, `kontak_hp`, `alamat_kantor`, `kontak_kantor`, `email`, `meluluskan`, `mk_diampu`, `foto`, `tanggal_buat`, `tanggal_login`, `aktif`) VALUES
-(1, 'dosen', '102a6ed6587b5b8cb4ebbe972864690b', 'Dosen Biasa', 'dosen', 'Muhammad Arief Fatkhurrahman', 'Pegawai', 'Pegawai', '0001', 'Subang', '1995-12-25', 'Bekasi', '088821222122', '0888121233213', 'Semarang', '088812312312', 'contoh@gmail.com', 'masih prototype', 'a:1:{i:0;s:1:\"1\";}', 'faf787d0ab3ec37b86b73925978701ae.jpg', '2017-05-10 08:51:21', '2017-08-06 13:28:45', 1),
-(2, '21060113140126', '102a6ed6587b5b8cb4ebbe972864690b', 'arief', 'dosen', 'arief', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '2017-08-03 06:01:40', '2017-08-05 16:46:03', 1),
-(3, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 'admin', 'admin', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '2017-08-06 07:15:27', '2017-08-06 07:42:13', 0),
-(4, '123', '202cb962ac59075b964b07152d234b70', 'Maman Somantri', 'dosen', 'Dr. Maman Somantri S.T.,M.T.', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '2017-08-06 09:13:49', '2017-08-06 09:14:10', 0);
+(3, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 'admin', 'admin', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '2017-08-06 07:15:27', '2017-08-06 07:42:13', 0);
 
 --
 -- Indexes for dumped tables
