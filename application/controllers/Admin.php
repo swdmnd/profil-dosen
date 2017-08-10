@@ -44,4 +44,50 @@ class Admin extends MY_Controller {
         
         redirect('/admin');
 	}
+  
+    public function delete($uid){
+      $this->load->model('Akun_model');
+      $identitas = $this->Akun_model->getIdentitas($uid);
+      
+      if(file_exists(APPPATH.'../files/'.$identitas->uid.$identitas->no_induk)){
+        rrmdir(APPPATH.'../files/'.$identitas->uid.$identitas->no_induk);
+      }
+      
+      $this->Akun_model->deleteUser($uid);
+      
+      redirect('/admin');
+    }
+  
+    public function update($uid)
+	{
+        $this->load->model('Akun_model');
+      
+        $identitas = $this->Akun_model->getIdentitas($uid);
+        
+        header('Content-Type: application/json');
+      
+        $post_data = $this->input->post();
+        $post_data['no_induk'] = $post_data['nik'];
+        unset($post_data['nik']);
+        if($this->input->post('password')){
+          if($post_data["password"]!=$post_data["password_retype"]){
+            echo json_encode(array("status"=>"error", "msg"=>"Password yang diulangi tidak sama. Seluruh perubahan dibatalkan."));
+            return;
+          } else {
+            unset($post_data["password_retype"]);
+            $post_data["password"] = md5($post_data['password']);
+          }
+        } else {
+          unset($post_data["password_retype"]);
+          unset($post_data["password"]);
+        }
+        if($this->Akun_model->setIdentitas($post_data, $uid)){
+          if(file_exists(APPPATH.'../files/'.$identitas->uid.$identitas->no_induk)){
+            rename(APPPATH.'../files/'.$identitas->uid.$identitas->no_induk,APPPATH.'../files/'.$uid.$post_data['no_induk']);
+          }
+          echo json_encode(array("status"=>"success", "msg"=>"Perubahan berhasil dilakukan."));
+        }
+        else
+          echo json_encode(array("status"=>"error", "msg"=>"NIK sudah terdaftar. Seluruh perubahan dibatalkan."));
+	}
 }

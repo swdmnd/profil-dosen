@@ -142,8 +142,9 @@ class Akun_model extends CI_Model{
         return (object)array('thead'=>$thead, 'tbody'=>$res);
     }
     
-    public function getIdentitas(){
-        $this->db->where("uid", $this->session->userdata('login')->uid);
+    public function getIdentitas($uid = null){
+        if($uid) $this->db->where("uid", $uid);
+        else $this->db->where("uid", $this->session->userdata('login')->uid);
         return $this->db->get("users")->row();
     }
     
@@ -224,8 +225,16 @@ class Akun_model extends CI_Model{
         return $this->db->get("pekerjaan")->result();
     }
     
-    public function setIdentitas($data){
-        return $this->db->update("users", $data, array("uid"=>($this->session->userdata('login')->uid)));
+    public function setIdentitas($data, $uid=null){
+        if($uid){
+          if($this->db->where("no_induk = {$data['no_induk']} AND uid != $uid")->get('users')->num_rows() > 0)
+            return 0;
+          $this->db->update("users", $data, array("uid"=>$uid));
+          return 1;
+        }
+        else{
+          return $this->db->update("users", $data, array("uid"=>($this->session->userdata('login')->uid)));
+        }
     }
     
     public function setPendidikan($data){
@@ -274,5 +283,15 @@ class Akun_model extends CI_Model{
     }
     public function updateSeminar($data, $id){
         return $this->db->update("seminar", $data, array("id"=>$id));
+    }
+  
+    public function deleteUser($uid){
+      $this->db->query("DELETE FROM users WHERE uid=$uid");
+      $this->db->query("DELETE FROM pekerjaan WHERE uid=$uid");
+      $this->db->query("DELETE FROM pendidikan WHERE uid=$uid");
+      $this->db->query("DELETE FROM penelitian WHERE uid=$uid");
+      $this->db->query("DELETE FROM publikasi WHERE uid=$uid");
+      $this->db->query("DELETE FROM seminar WHERE uid=$uid");
+      $this->db->query("DELETE FROM bersama WHERE id_anggota=$uid");
     }
 }

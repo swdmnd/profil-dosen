@@ -48,13 +48,13 @@ class Home extends MY_Controller {
             $post_data['pembimbing'] = implode(', ', array_map('trim', $post_data['pembimbing']));
             $this->Akun_model->setPendidikan($post_data);
         } else if($target == "penelitian") {
-            $post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
+            if($this->input->post('tags'))$post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
             $this->Akun_model->setPenelitian($post_data);
         } else if($target == "publikasi") {
-            $post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
+            if($this->input->post('tags'))$post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
             $this->Akun_model->setPublikasi($post_data);
         } else if($target == "seminar") {
-            $post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
+            if($this->input->post('tags'))$post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
             $post_data['waktu'] = strtodate($post_data['waktu']);
             $this->Akun_model->setSeminar($post_data);
         } else if($target == "pekerjaan") {
@@ -98,15 +98,15 @@ class Home extends MY_Controller {
                         $this->Akun_model->updatePekerjaan($post_data, $this->input->get("id"));
                         break;
                     case 'penelitian':
-                        $post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
+                        if($this->input->post('tags'))$post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
                         $this->Akun_model->updatePenelitian($post_data, $this->input->get("id"));
                         break;
                     case 'pengabdian':
-                        $post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
+                        if($this->input->post('tags'))$post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
                         $this->Akun_model->updatePenelitian($post_data, $this->input->get("id"));
                         break;
                     case 'publikasi':
-                        $post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
+                        if($this->input->post('tags'))$post_data['tags'] = implode(',', array_map('trim', $post_data['tags']));
                         $this->Akun_model->updatePublikasi($post_data, $this->input->get("id"));
                         break;
                     case 'seminar':
