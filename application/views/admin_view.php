@@ -219,14 +219,14 @@ $(".btn-submit").click(function(){
         $("#editAlert").attr("class", "alert alert-danger");
       } else {
         $("#editAlert").attr("class", "alert alert-success");
-        data.msg = data.msg + " Melakukan refresh halaman...";
+        data.msg = data.msg + " Memuat ulang halaman...";
         setTimeout(function(){location.reload(1);}, 1000);
       }
       $("#editAlert").text(data.msg);
     },
     error: function(xhr, status, errorThrown){
       $("#editAlert").attr("class", "alert alert-danger");
-      $("#editAlert").text("Gagal menghubungi server. Silahkan cek koneksi Anda."+errorThrown);
+      $("#editAlert").text("Gagal menghubungi server. Silahkan cek koneksi Anda.");
     },
     complete: function(){
       disableModalForms(false);

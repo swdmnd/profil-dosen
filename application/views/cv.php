@@ -330,8 +330,8 @@
                       <tr><td><?= ++$i ?></td><td><?= $item->jabatan ?></td><td><?= $item->tahun ?></td>
                       <td>
                           <div class="btn-group">
-                            <a type="button" class="btn btn-default btn-flat">Action</a>
-                            <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+                            <a type="button" class="btn btn-default btn-flat btn-xs">Action</a>
+                            <button type="button" class="btn btn-default btn-flat btn-xs dropdown-toggle" data-toggle="dropdown">
                               <span class="caret"></span>
                               <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -438,8 +438,8 @@
                       <tr><td><?= ++$i ?></td><td><?= $item->tahun_mulai==$item->tahun_selesai?$item->tahun_mulai:$item->tahun_mulai." - ".$item->tahun_selesai ?></td><td><?= $item->judul ?></td><td><?= $item->sumber_dana ?></td><td><?= number_format($item->jumlah_dana, 0, ',', '.') ?></td>
                           <td>
                           <div class="btn-group">
-                            <a href="<?= site_url(); ?>/home/mydocuments?sd=penelitian&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
-                            <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+                            <a href="<?= site_url(); ?>/home/mydocuments?sd=penelitian&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat btn-xs">Buka direktori</a>
+                            <button type="button" class="btn btn-default btn-flat dropdown-toggle btn-xs" data-toggle="dropdown">
                               <span class="caret"></span>
                               <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -460,8 +460,8 @@
                       <tr><td><?= ++$i ?></td><td><?= $item->tahun_mulai==$item->tahun_selesai?$item->tahun_mulai:$item->tahun_mulai." - ".$item->tahun_selesai ?></td><td><?= $item->judul ?></td><td><?= $item->sumber_dana ?></td><td><?= number_format($item->jumlah_dana, 0, ',', '.') ?></td>
                           <td>
                           <div class="btn-group">
-                            <a href="<?= site_url(); ?>/home/mydocuments?sd=penelitian&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
-                            <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+                            <a href="<?= site_url(); ?>/home/mydocuments?sd=penelitian&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat btn-xs">Buka direktori</a>
+                            <button type="button" class="btn btn-default btn-flat btn-xs dropdown-toggle" data-toggle="dropdown">
                               <span class="caret"></span>
                               <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -569,8 +569,8 @@
                       <tr><td><?= ++$i ?></td><td><?= $item->tahun_mulai==$item->tahun_selesai?$item->tahun_mulai:$item->tahun_mulai." - ".$item->tahun_selesai ?></td><td><?= $item->judul ?></td><td><?= $item->sumber_dana ?></td><td><?= number_format($item->jumlah_dana, 0, ',', '.') ?></td>
                           <td>
                           <div class="btn-group">
-                            <a href="<?= site_url(); ?>/home/mydocuments?sd=pengabdian&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
-                            <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+                            <a href="<?= site_url(); ?>/home/mydocuments?sd=pengabdian&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat btn-xs">Buka direktori</a>
+                            <button type="button" class="btn btn-default btn-flat btn-xs dropdown-toggle" data-toggle="dropdown">
                               <span class="caret"></span>
                               <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -591,8 +591,8 @@
                       <tr><td><?= ++$i ?></td><td><?= $item->tahun_mulai==$item->tahun_selesai?$item->tahun_mulai:$item->tahun_mulai." - ".$item->tahun_selesai ?></td><td><?= $item->judul ?></td><td><?= $item->sumber_dana ?></td><td><?= number_format($item->jumlah_dana, 0, ',', '.') ?></td>
                           <td>
                           <div class="btn-group">
-                            <a href="<?= site_url(); ?>/home/mydocuments?sd=pengabdian&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
-                            <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+                            <a href="<?= site_url(); ?>/home/mydocuments?sd=pengabdian&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat btn-xs">Buka direktori</a>
+                            <button type="button" class="btn btn-default btn-flat btn-xs dropdown-toggle" data-toggle="dropdown">
                               <span class="caret"></span>
                               <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -687,8 +687,8 @@
               ?>
                       <tr><td><?= ++$i ?></td><td><?= $item->tahun ?></td><td><?= $item->judul ?></td><td><?= $item->nomor_jurnal ?></td><td><?= $item->nama_jurnal ?></td><td>
                           <div class="btn-group">
-                            <a href="<?= site_url(); ?>/home/mydocuments?sd=publikasi&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
-                            <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+                            <a href="<?= site_url(); ?>/home/mydocuments?sd=publikasi&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat btn-xs">Buka direktori</a>
+                            <button type="button" class="btn btn-default btn-flat btn-xs dropdown-toggle" data-toggle="dropdown">
                               <span class="caret"></span>
                               <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -707,8 +707,8 @@
               ?>
                       <tr><td><?= ++$i ?></td><td><?= $item->tahun ?></td><td><?= $item->judul ?></td><td><?= $item->nomor_jurnal ?></td><td><?= $item->nama_jurnal ?></td><td>
                           <div class="btn-group">
-                            <a href="<?= site_url(); ?>/home/mydocuments?sd=publikasi&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
-                            <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+                            <a href="<?= site_url(); ?>/home/mydocuments?sd=publikasi&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat btn-xs">Buka direktori</a>
+                            <button type="button" class="btn btn-default btn-flat btn-xs dropdown-toggle" data-toggle="dropdown">
                               <span class="caret"></span>
                               <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -801,8 +801,8 @@
               ?>
                       <tr><td><?= ++$i ?></td><td><?= $item->nama_seminar ?></td><td><?= $item->tema ?></td><td><?= $item->tempat.' '.$item->waktu ?></td><td>
                           <div class="btn-group">
-                            <a href="<?= site_url(); ?>/home/mydocuments?sd=seminar&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a>
-                            <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+                            <a href="<?= site_url(); ?>/home/mydocuments?sd=seminar&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat btn-xs">Buka direktori</a>
+                            <button type="button" class="btn btn-default btn-flat btn-xs dropdown-toggle" data-toggle="dropdown">
                               <span class="caret"></span>
                               <span class="sr-only">Toggle Dropdown</span>
                             </button>
