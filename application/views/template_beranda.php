@@ -183,7 +183,7 @@ desired effect
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <img class="img-responsive" style="height:auto; width:100%;" src="<?=base_url()?>/assets/img/banner.jpg" />
+<!--      <img class="img-responsive" style="height:auto; width:100%;" src="<?=base_url()?>/assets/img/banner.jpg" />-->
     </section>
 
     <!-- Main content -->

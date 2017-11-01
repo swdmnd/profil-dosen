@@ -5,7 +5,7 @@ class Getfile extends MY_Controller {
 
 	public function __construct(){
         parent::__construct();
-        $this->cek_session_in();
+        //$this->cek_session_in();
     }
     
 	public function index()
@@ -13,10 +13,11 @@ class Getfile extends MY_Controller {
         show_404();
 	}
   
-    public function profileImage($rect=false){
+    public function profileImage($rect=false, $uname=null){
       $this->load->model('Akun_model');        
       
-      $identitas=$this->Akun_model->getIdentitas();
+      if($uname) $identitas=$this->Akun_model->getUserByUsername($uname);
+      else $identitas=$this->Akun_model->getIdentitas();
       if($identitas->foto!=''){
         $imageName = $identitas->foto;
         $type=explode('.', $imageName)[1];

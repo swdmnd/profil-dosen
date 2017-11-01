@@ -25,7 +25,10 @@ class MY_Controller extends CI_Controller {
 
 	public function cek_session_out(){
 		if($this->session->userdata('login')!=null){
+          if($this->session->userdata('login')->level == 'dosen')
 			redirect(site_url('home/index'));
+          else
+            redirect(site_url('admin/index'));
 		}
 	}
     

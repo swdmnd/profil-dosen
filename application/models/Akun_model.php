@@ -16,6 +16,11 @@ class Akun_model extends CI_Model{
         return $this->db->where("level <> 'admin'")->get("users")->result();
     }
   
+    public function getUserByUsername($uname){
+        $this->db->where("no_induk", $uname);
+        return $this->db->get("users")->row();
+    }
+  
     public function queryUser($where, $q){
         $this->db->select('no_induk AS `NIK/NIDN`, nama_lengkap AS Nama, jabatan_fungsional AS `Jabatan Fungsional`, jabatan_struktural AS `Jabatan Struktural`');
         if($q!="") $this->db->where(str_replace('?', $q, $where));
@@ -148,8 +153,9 @@ class Akun_model extends CI_Model{
         return $this->db->get("users")->row();
     }
     
-    public function getPendidikan(){
-        $this->db->where("uid", $this->session->userdata('login')->uid);
+    public function getPendidikan($uid=null){
+        if($uid) $this->db->where("uid", $uid);
+        else $this->db->where("uid", $this->session->userdata('login')->uid);
         $res = $this->db->get("pendidikan")->result();
         $data = array();
         foreach($res as $item){
@@ -165,28 +171,32 @@ class Akun_model extends CI_Model{
         return $data;
     }
     
-    public function getPenelitian($id=null){
+    public function getPenelitian($id=null, $uid=null){
         if($id) $this->db->where("id", $id);
+        else if($uid) $this->db->where(array("uid"=>$uid, "tipe"=>"penelitian"));
         else $this->db->where(array("uid"=>$this->session->userdata('login')->uid, "tipe"=>"penelitian"));
         return $this->db->get("penelitian")->result();
     }
   
-    public function getPenelitianExtra($id=null){
+    public function getPenelitianExtra($id=null, $uid=null){
         $cond="";
+        if(!$uid) $uid = $this->session->userdata('login')->uid;
         if($id) $cond = "AND penelitian.id = $id";
-        return $this->db->query("SELECT penelitian.*, users.nama, users.uid FROM penelitian, bersama, users WHERE penelitian.id = bersama.id_penelitian AND penelitian.uid = users.uid AND bersama.id_anggota = {$this->session->userdata('login')->uid} AND penelitian.tipe='penelitian' AND bersama.ref='penelitian' $cond")->result();
+        return $this->db->query("SELECT penelitian.*, users.nama, users.uid FROM penelitian, bersama, users WHERE penelitian.id = bersama.id_penelitian AND penelitian.uid = users.uid AND bersama.id_anggota = {$uid} AND penelitian.tipe='penelitian' AND bersama.ref='penelitian' $cond")->result();
     }
     
-    public function getPengabdian($id=null){
+    public function getPengabdian($id=null, $uid=null){
         if($id) $this->db->where("id", $id);
+        else if($uid) $this->db->where(array("uid"=>$uid, "tipe"=>"penelitian"));
         else $this->db->where(array("uid"=>$this->session->userdata('login')->uid, "tipe"=>"pengabdian"));
         return $this->db->get("penelitian")->result();
     }
   
-    public function getPengabdianExtra($id=null){
+    public function getPengabdianExtra($id=null, $uid=null){
         $cond="";
+        if(!$uid) $uid = $this->session->userdata('login')->uid;
         if($id) $cond = "AND penelitian.id = $id";
-        return $this->db->query("SELECT penelitian.*, users.nama, users.uid FROM penelitian, bersama, users WHERE penelitian.id = bersama.id_penelitian AND penelitian.uid = users.uid AND bersama.id_anggota = {$this->session->userdata('login')->uid} AND penelitian.tipe='pengabdian' AND bersama.ref='penelitian' $cond")->result();
+        return $this->db->query("SELECT penelitian.*, users.nama, users.uid FROM penelitian, bersama, users WHERE penelitian.id = bersama.id_penelitian AND penelitian.uid = users.uid AND bersama.id_anggota = {$uid} AND penelitian.tipe='pengabdian' AND bersama.ref='penelitian' $cond")->result();
     }
     
     public function getDetailPenelitian($id){
@@ -201,27 +211,31 @@ class Akun_model extends CI_Model{
       return (object)array("ketua"=>$ketua, "anggota"=>$anggota);
     }
     
-    public function getPublikasi($id=null){
+    public function getPublikasi($id=null, $uid=null){
         if($id) $this->db->where("id", $id);
-        $this->db->where("uid", $this->session->userdata('login')->uid);
+        else if($uid) $this->db->where("uid",$uid);
+        else $this->db->where("uid", $this->session->userdata('login')->uid);
         return $this->db->get("publikasi")->result();
     }
   
-    public function getPublikasiExtra($id=null){
+    public function getPublikasiExtra($id=null, $uid=null){
         $cond="";
+        if(!$uid) $uid = $this->session->userdata('login')->uid;
         if($id) $cond = "AND publikasi.id = $id";
-        return $this->db->query("SELECT publikasi.*, users.nama, users.uid FROM publikasi, bersama, users WHERE publikasi.id = bersama.id_penelitian AND publikasi.uid = users.uid AND bersama.id_anggota = {$this->session->userdata('login')->uid} AND bersama.ref='publikasi' $cond")->result();
+        return $this->db->query("SELECT publikasi.*, users.nama, users.uid FROM publikasi, bersama, users WHERE publikasi.id = bersama.id_penelitian AND publikasi.uid = users.uid AND bersama.id_anggota = {$uid} AND bersama.ref='publikasi' $cond")->result();
     }
     
-    public function getSeminar($id=null){
+    public function getSeminar($id=null, $uid=null){
         if($id) $this->db->where("id", $id);
-        $this->db->where("uid", $this->session->userdata('login')->uid);
+        if($uid) $uid = $this->db->where("uid", $uid);
+        else $this->db->where("uid", $this->session->userdata('login')->uid);
         return $this->db->get("seminar")->result();
     }
     
-    public function getPekerjaan($id=null){
+    public function getPekerjaan($id=null, $uid=null){
         if($id) $this->db->where("id", $id);
-        $this->db->where("uid", $this->session->userdata('login')->uid);
+        if($uid) $uid = $this->db->where("uid", $uid);
+        else $this->db->where("uid", $this->session->userdata('login')->uid);
         return $this->db->get("pekerjaan")->result();
     }
     

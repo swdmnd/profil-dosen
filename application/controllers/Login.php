@@ -21,12 +21,13 @@ class Login extends MY_Controller {
                 $data['error_msg'] = "Username atau password salah.";
             } else {
                 if(!empty($result=$this->Login_model->login())) {
+                    $this->db->query("UPDATE users SET tanggal_login = NOW() WHERE uid = ".$result->uid);
                     $this->session->set_userdata('login', $result);
                     if($result->level=="dosen"){
                       $WORK_DIR = $GLOBALS['WORK_DIR'].$result->uid.$result->no_induk;
                       if(!file_exists($WORK_DIR)){
-                          mkdir($WORK_DIR);
-                          mkdir($WORK_DIR.'\.profile');
+                          mkdir(sanitize_path($WORK_DIR));
+                          mkdir(sanitize_path($WORK_DIR.'/.profile'));
                       }
                       $this->session->set_userdata('work_dir', $WORK_DIR);
                       redirect('home/index', 'location');

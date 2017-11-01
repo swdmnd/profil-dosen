@@ -1,5 +1,18 @@
+<style>
+  .box-shadow-custom{
+    -webkit-box-shadow: 1px 1px 4px 2px rgba(242,242,242,1);
+    -moz-box-shadow: 1px 1px 4px 2px rgba(242,242,242,1);
+    box-shadow: 1px 1px 4px 2px rgba(242,242,242,1);
+    padding:8px;
+  }
+  
+  .box-shadow-custom:hover{
+    background-color:floralwhite;
+  }
+</style>
+
 <div class="row">
-<div class="col-md-9">
+<div class="col-md-12">
   <div class="box box-default">
     <div class="box-header with-border">
       <h3 class="box-title">Pencarian</h3>
@@ -78,33 +91,6 @@
       </table>
       <?php endif; ?>
       <?php endif; ?>
-    </div>
-    <!-- /.box-body -->
-<!--
-    <div class="box-footer">
-      The footer of the box
-    </div>
--->
-    <!-- box-footer -->
-  </div>
-  <!-- /.box -->
-</div>
-<div class="col-md-3">
-  <div class="box box-default">
-    <div class="box-header with-border">
-      <h3 class="box-title">Entri terakhir</h3>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-      <dl>
-        <dt>Jojo</dt>
-        <dd>
-          <ul>
-            <li>jaja</li>
-            <li>jajak</li>
-          </ul>
-        </dd>
-      </dl>
     </div>
     <!-- /.box-body -->
 <!--
@@ -452,6 +438,48 @@
         </div>
       <?php endif; ?>
       
+    </div>
+    <!-- /.box-body -->
+<!--
+    <div class="box-footer">
+      The footer of the box
+    </div>
+-->
+    <!-- box-footer -->
+  </div>
+  <!-- /.box -->
+</div>
+<?php endif; ?>
+
+<?php if(isset($dosen_list)): ?>
+<div class="col-md-12">
+  <div class="box box-default">
+    <div class="box-header with-border">
+      <h3 class="box-title">Daftar Dosen</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <?php
+        foreach ($dosen_list as $d){
+      ?>
+      <div class="col-md-4" style="padding:8px;">
+        <div class="box-shadow-custom">
+        <a href="<?= site_url()."/beranda/view/".$d->no_induk ?>" style="text-decoration:none;color:black;">
+        <div class="row">
+        <div class="col-md-4">
+          <img src="<?= site_url()."/getfile/profileimage/1/".$d->no_induk ?>" class="img-circle" alt="<?= $d->nama_lengkap ?>" style="width:100%; height:auto;" />
+        </div>
+        <div class="col-md-8">
+          <p><strong><?= $d->nama_lengkap ?></strong></p>
+          <p><?= $d->no_induk ?></p>
+        </div>
+        </div>
+        </a>
+        </div>
+      </div>
+      <?php
+        }
+      ?>
     </div>
     <!-- /.box-body -->
 <!--
