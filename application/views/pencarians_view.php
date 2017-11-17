@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <title>Direktori Dosen Fakultas Teknik</title>
+      <title>Direktori Kepakaran Dosen Fakultas Teknik</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-      <meta name="keywords" content="Direktori Dosen Fakultas Teknik" />
+      <meta name="keywords" content="Direktori Kepakaran Dosen Fakultas Teknik" />
       <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
       <!-- css files -->
       <link href="<?php echo base_url('assets/css/font-awesome.min.css') ?>" rel="stylesheet" type="text/css" media="all" />
@@ -26,21 +26,21 @@
       <section class="top-bar">
       	<div class="container">
       		<div class="row">
-      			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-              <img src="<?php echo base_url('assets/img/logo-teknik.png')?>"/>
+      			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <img width="100%" src="<?php echo base_url('assets/img/banner-new.png')?>"/>
       			</div>
-      			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-      				<ul class="social-icons1">
-      					<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-      					<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-      					<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-      					<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                <li><a href="<?php echo site_url('login/index')?>" class="btn btn-success" role="button">Login</a></li>
+            <div class="sec-title text-center wow fadeInUp animated" data-wow-duration="700ms">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <ol class="social-icons1" style="text-align:right;"><a href="<?php echo site_url('login/index')?>" class="btn btn-success" role="button">Login</a></li>
 
-      				</ul>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <h2 style="text-transform:capitalize">Direktori Kepakaran Dosen Fakultas Teknik</h2>
+
+              </div>
+            </div>
       			</div>
       		</div>
-      	</div>
       </section>
       <!-- /Top Bar -->
       <!-- Navigation Bar -->
@@ -49,8 +49,10 @@
       <!-- Banner Section -->
        <!-- Carousel
           ================================================== -->
-      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          <!--
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">-->
       	<!-- Indicators -->
+        <!--
           <ol class="carousel-indicators">
               <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
               <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -84,7 +86,7 @@
               <span class="sr-only">Next</span>
           </a>
       </div>
-
+-->
       <!-- CSS
       ================================================== -->
       <!-- Fontawesome Icon font -->
@@ -94,49 +96,68 @@
       <link rel="stylesheet" href="<?= base_url(); ?>assets/brandi/css/animate.css">
       <link rel="stylesheet" href="<?= base_url(); ?>assets/brandi/css/main.css">
       <link rel="stylesheet" href="<?= base_url(); ?>assets/brandi/css/media-queries.css">
+      <link rel="stylesheet" href="<?= base_url(); ?>assets/css/theme-style.css">
+      <link rel="stylesheet" href="<?= base_url(); ?>assets/css/bootstrap.min.css">
 
+      <?php
+      $attr = array("class" => "form-horizontal", "role" => "form", "id" => "form1", "name" => "form1");
+      echo form_open("pencarian/search", $attr);?>
+      <div class="form-group" style="margin-top:20px">
+          <div class="col-lg-4 col-sm-2 col-md-2 col-xs-2"></div>
+          <div class="col-lg-4 col-sm-6 col-md-6 col-xs-6">
+              <?php echo $form_prodi; ?>
+          </div>
 
-      <section id="team" class="team">
+          <div class="col-lg-4 col-sm-2 col-md-2 col-xs-2" style="text-align:left">
+            <input id="btn_search" name="btn_search" type="submit" class="btn btn-danger" value="Search" />
+            <!--<a href="<?php echo base_url(). "index.php/"; ?>" class="btn btn-primary">Show All</a>-->
+          </div>
+
+          <?php echo form_close(); ?>
+      </div>
+      <!--<section id="team" class="team">-->
         <div class="container">
-          <div class="row">
-
-            <div class="sec-title text-center wow fadeInUp animated" data-wow-duration="700ms">
-              <h2>Direktori Dosen Fakultas Teknik</h2>
-            </div>
 
             <div class="sec-sub-title text-center wow fadeInRight animated" data-wow-duration="500ms">
-              <p>Selamat datang di situs Direktori Dosen Fakultas Teknik</p>
+              <p align="left" style="padding-left:15px">Staff Dosen <?php echo $prodi?></p>
             </div>
 
-            <!-- single member -->
-            <?php for ($i = 0; $i < count($users); ++$i) { ?>
-            <figure class="team-member col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="500ms">
-              <div class="member-thumb">
-                <img src="<?= base_url(); ?><?= $users[$i]->foto ?>" alt="Team Member" class="img-responsive">
-                <figcaption class="overlay">
-                  <b><p style="color:black"><?= $users[$i]->deskripsi_singkat ?></p></b>
-                  <ul class="social-links text-center">
-                    <li><a href=""><i class="fa fa-twitter fa-lg"></i></a></li>
-                    <li><a href=""><i class="fa fa-facebook fa-lg"></i></a></li>
-                    <li><a href=""><i class="fa fa-google-plus fa-lg"></i></a></li>
-                  </ul>
-                </figcaption>
-              </div>
-              <h4><a style="color:black" href="<?=base_url();?>index.php/detail/index/<?= $users[$i]->uid?>" ><?= $users[$i]->nama_lengkap ?></a></h4>
-              <span><h4><?= $users[$i]->prodi ?></h4></span><br/>
-              <span><h4><?= $users[$i]->research_interests ?></h4></span>
-            </figure>
-            <?php } ?>
-            <!-- end single member -->
+          <?php if (count($users) > 0) {
+          for ($i = 0; $i < count($users); ++$i) { $j=0; ?>
 
+            <div class="block team margin-top-large" id="team">
+              <div class="media col-lg-9">
+                <div class="pull-left"> <img height="170px" width="120px" style="margin-right:20px;margin-bottom:25px" src="<?= base_url(); ?><?= $users[$i]->foto_path.$users[$i]->foto ?>" class="img-polaroid media-object" /></div>
+                <div class="media-body">
+                  <h4 class="media-heading" style="padding-bottom:5px"><a style="color:black;font-weight:bold" href="<?=base_url();?>index.php/detail/index/<?= $users[$i]->uid?>/identitas" ><?= $users[$i]->nama_lengkap ?></a></h4>
+                  <!--<p class="role" style="font-weight:bold"><?= $users[$i]->jabatan_fungsional ?></p>-->
+                  <?php
+                  if(empty($pendidikan[$i])) { echo '<p style="font-weight:bold">-</p>';}
+                  else { echo '<p style="font-weight:bold">';
+                  foreach($pendidikan[$i] as $item):
+                    ++$j;
+                    if ($j<count($pendidikan[$i])) {?>
+                  <?= $item->tingkat ?>, <?= $item->nama_pt ?> :
+                <?php } else { ?>
+                  <?= $item->tingkat ?>, <?= $item->nama_pt ?>
+              <?php } endforeach; echo '</p>'; } ?>
+                  <!--<p><?= $users[$i]->deskripsi_singkat ?></p>-->
+                  <p style="font-weight:bold">Minat Penelitian : <?= $users[$i]->research_interests?></p>
+                  <?php if ($users[$i]->scopus_id) {?> <p style="font-weight:bold"><img src="<?= base_url('assets/img/scopusid.png')?>"/><a href="https://www.scopus.com/authid/detail.uri?authorId=<?= $users[$i]->scopus_id?>"> Scopus ID : <?= $users[$i]->scopus_id?></a></p><?php } ?>
+                  <?php if ($users[$i]->scholar_id) {?> <p style="font-weight:bold"><img src="<?= base_url('assets/img/googleid.png')?>"/><a href="https://scholar.google.com/citations?user=<?= $users[$i]->scholar_id?>"> Scholar ID : <?= $users[$i]->scholar_id?></a></p><?php } ?>
+                  <?php if ($users[$i]->sinta_id) {?> <p style="font-weight:bold"><img src="<?= base_url('assets/img/sintaid.png')?>"/><a href="http://sinta.ristekdikti.go.id/authors/detail?id=<?= $users[$i]->sinta_id?>&view=overview"> Sinta ID : <?= $users[$i]->sinta_id?></a></p><?php } ?>
+                </div>
+              </div>
+<?php } } ?>
           </div>
         </div>
-      </section>
+      <!--</section>-->
       <div class="row">
       <div class="col-md-12 text-center">
           <?php echo $pagination; ?>
       </div>
       </div>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -150,19 +171,22 @@
     </head>
 <body>
     <div class="container">
-        <center><h1 style="font-size:20pt;color:black">Pencarian Dosen</h1></center>
+        <!--<center><h1 style="font-size:20pt;color:black">Pencarian Dosen</h1></center>-->
+        <div class="sec-title text-center wow fadeInUp animated" data-wow-duration="700ms">
+          <h2 style="text-transform:capitalize">Pencarian dengan Filter</h2>
+        </div>
 
         <br>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title" style="color:black" >Filter Dosen : </h3>
+                <h3 class="panel-title" style="color:black" >Filter berdasarkan : </h3>
             </div>
             <div class="panel-body">
                 <form id="form-filter" class="form-horizontal">
                     <div class="form-group">
                         <label for="prodi" class="col-sm-2 control-label" style="color:black">Program Studi</label>
                         <div class="col-sm-4">
-                            <?php echo $form_prodi; ?>
+                            <?php echo $form_prodi_select; ?>
                         </div>
                     </div>
                     <div class="form-group">
@@ -187,7 +211,8 @@
                 </form>
             </div>
         </div>
-        <table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <div class="table-responsive">
+        <table id="table" class="table table-striped table-bordered" cellspacing="0">
             <thead>
                 <tr>
                     <th style="color:black">No</th>
@@ -208,6 +233,7 @@
                 </tr>
             </tfoot>
         </table>
+      </div>
     </div>
 
 <script src="<?php echo base_url('assets/js/jquery-3.1.1.min.js')?>"></script>
@@ -235,7 +261,7 @@ $(document).ready(function() {
             "type": "POST",
             "data": function ( data ) {
                 data.nama_lengkap = $('#nama_lengkap').val();
-                data.prodi = $('#prodi').val();
+                data.prodi = $('#prodiselect').val();
                 data.research_interests = $('#research_interests').val();
             }
         },

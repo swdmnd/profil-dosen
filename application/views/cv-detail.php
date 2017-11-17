@@ -1,6 +1,9 @@
 <div class="panel panel-default" id="identitas">
     <div class="panel-heading">
-        <h4><img src="<?= base_url() . $identitas->foto?>" width="100px" height="120px" class="img-circle"><br><br>Identitas Diri</h4>
+
+        <!--<h4><img src="<?= base_url() . $identitas->foto?>" width="100px" height="120px" class="img-circle"><br><br>Identitas Diri</h4>-->
+        <h4><img src="<?= site_url(); ?>/getfile/profileImage/true" width="100px" height="120px"><br><br>Identitas Diri</h4>
+
     </div>
 
     <div class="panel-body">
@@ -33,6 +36,12 @@
                 <label for="jabatan_struktural" class="col-sm-2 control-label">Jabatan struktural</label>
                 <div class="col-sm-10">
  					<label style="text-align:left;font-weight:normal;margin-bottom:20px" for="jabatan_struktural" class="control-label"><?= $identitas->jabatan_struktural ?></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="gelar_akademik" class="col-sm-2 control-label">Gelar Akademik</label>
+                <div class="col-sm-10">
+                  <label style="text-align:left;font-weight:normal;margin-bottom:20px" for="gelar_akademik" class="control-label"><?= $identitas->gelar_akademik ?></label>
                 </div>
             </div>
 			<!--
@@ -116,6 +125,24 @@
                 <div class="col-sm-10">
  					<label style="text-align:left;font-weight:normal;margin-bottom:20px" for="research_interests" class="control-label"><?= $identitas->research_interests ?></label>
 				</div>
+            </div>
+            <div class="form-group">
+                <label for="scopus_id" class="col-sm-2 control-label">Scopus ID</label>
+                <div class="col-sm-10">
+ 					<label style="text-align:left;font-weight:normal;margin-bottom:20px" for="scopus_id" class="control-label"><?= $identitas->scopus_id ?></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="scholar_id" class="col-sm-2 control-label">Scholar ID</label>
+                <div class="col-sm-10">
+ 					<label style="text-align:left;font-weight:normal;margin-bottom:20px" for="scholar_id" class="control-label"><?= $identitas->scholar_id ?></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="sinta_id" class="col-sm-2 control-label">Sinta ID</label>
+                <div class="col-sm-10">
+ 					<label style="text-align:left;font-weight:normal;margin-bottom:20px" for="sinta_id" class="control-label"><?= $identitas->sinta_id ?></label>
+                </div>
             </div>
     <br />
     </div>
@@ -254,7 +281,7 @@
             </tr>
             <tr>
                 <th>Sumber</th>
-                <th>Jumlah (Juta Rupiah)</th>
+                <th>Jumlah (Rupiah)</th>
             </tr>
         </thead>
 
@@ -288,7 +315,7 @@
             </tr>
             <tr>
                 <th>Sumber</th>
-                <th>Jumlah (Juta Rupiah)</th>
+                <th>Jumlah (Rupiah)</th>
             </tr>
         </thead>
 
@@ -389,7 +416,7 @@
                   $tahun_terbit = "(" . $item->tahun_terbit . ")";
                   $judul_buku = $item->judul_buku;
                   $penerbit = $item->penerbit;
-                  $bukutekslengkap = $penulis . " . " . $tahun . " . " . $judul . " . " . $penerbit . ".";
+                  $bukutekslengkap = $penulis . " . " . $tahun_terbit . " . " . $judul_buku . " . " . $penerbit . ".";
             ?>
                     <tr><td><?= ++$i ?></td><td><?= $bukutekslengkap ?></td>
                     </tr>
@@ -410,6 +437,7 @@
             <tr>
                 <th>No.</th>
                 <th>Tahun penghargaan</th>
+                <th>Sebagai</th>
                 <th>Nama penghargaan</th>
                 <th>Pemberi penghargaan</th>
             </tr>
@@ -421,7 +449,7 @@
                 if(empty($penghargaan)) echo '<tr><td colspan="5"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
                 foreach($penghargaan as $item):
             ?>
-                    <tr><td><?= ++$i ?></td><td><?= $item->tahun_penghargaan ?></td><td><?= $item->nama_penghargaan ?></td><td><?= $item->pemberi_penghargaan ?></td>
+                    <tr><td><?= ++$i ?></td><td><?= $item->sebagai ?></td><td><?= $item->tahun_penghargaan ?></td><td><?= $item->nama_penghargaan ?></td><td><?= $item->pemberi_penghargaan ?></td>
                     </tr>
             <?php
                 endforeach;
@@ -440,8 +468,9 @@
         <thead>
             <tr>
                 <th>No.</th>
+                <th>Sebagai</th>
                 <th>Nama Pertemuan Ilmiah/Seminar</th>
-                <th>Judul Artikel Ilmiah</th>
+                <th>Tema Pertemuan Ilmiah/Seminar</th>
                 <th>Waktu dan Tempat</th>
             </tr>
         </thead>
@@ -452,7 +481,7 @@
                 if(empty($seminar)) echo '<tr><td colspan="5"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
                 foreach($seminar as $item):
             ?>
-                    <tr><td><?= ++$i ?></td><td><?= $item->nama_seminar ?></td><td><?= $item->tema ?></td><td><?= $item->tempat.', '.$item->waktu ?></td></tr>
+                    <tr><td><?= ++$i ?></td><td><?= $item->sebagai ?></td><td><?= $item->nama_seminar ?></td><td><?= $item->tema ?></td><td><?= $item->tempat.', '.$item->waktu ?></td></tr>
             <?php
                 endforeach;
             ?>

@@ -2,7 +2,9 @@
 
 <div class="panel panel-default" id="identitas">
     <div class="panel-heading">
-        <h4><img src="<?= base_url() . $identitas->foto?>" width="100px" height="120px" class="img-circle"><br><br>Identitas Diri</h4>
+        <!--<h4><img src="<?= base_url() . $identitas->foto?>" width="100px" height="120px" class="img-circle"><br><br>Identitas Diri</h4>-->
+        <h4><img src="<?= site_url(); ?>/getfile/profileImage/true" width="100px" height="120px"><br><br>Identitas Diri</h4>
+
     </div>
 
     <div class="panel-body">
@@ -52,6 +54,12 @@
                 <label for="jabatan_struktural" class="col-sm-2 control-label">Jabatan struktural</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="jabatan_struktural" name="jabatan_struktural" placeholder="Jabatan struktural" value="<?= $identitas->jabatan_struktural ?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="gelar_akademik" class="col-sm-2 control-label">Gelar Akademik</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="gelar_akademik" name="gelar_akademik" placeholder="Magister,Kandidat Doktor,Doktor,Profesor" value="<?= $identitas->gelar_akademik ?>">
                 </div>
             </div>
 			<!--
@@ -151,13 +159,13 @@
             <div class="form-group">
                 <label for="mk_diampu" class="col-sm-2 control-label">Mata kuliah yang diampu</label>
                 <div class="col-sm-10" style="margin-top:10px">
-                    <input type="text" class="form-control" data-role="tagsinput" id="mk_diampu" name="mk_diampu" placeholder="Pisahkan dengan koma" value="<?= $identitas->mk_diampu ?>">
+                    <input type="text" class="form-control" id="mk_diampu" name="mk_diampu" placeholder="Pisahkan dengan koma" value="<?= $identitas->mk_diampu ?>">
                 </div>
             </div>
             <div class="form-group">
                 <label for="research_interests" class="col-sm-2 control-label">Research Interest</label>
                 <div class="col-sm-10" style="margin-top:5px">
-                    <input type="text" class="form-control" data-role="tagsinput" id="research_interests" name="research_interests" placeholder="Pisahkan dengan koma" value="<?= $identitas->research_interests ?>">
+                    <input type="text" class="form-control" id="research_interests" name="research_interests" placeholder="Pisahkan dengan koma" value="<?= $identitas->research_interests ?>">
 				</div>
             </div>
             <div class="form-group">
@@ -166,12 +174,31 @@
                         <input type="file" name="foto" />
 				</div>
             </div>
+            <div class="form-group">
+                <label for="scopus_id" class="col-sm-2 control-label">Scopus ID</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="scopus_id" name="scopus_id" placeholder="Scopus ID" value="<?= $identitas->scopus_id ?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="scholar_id" class="col-sm-2 control-label">Scholar ID</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="scholar_id" name="scholar_id" placeholder="Scholar ID" value="<?= $identitas->scholar_id ?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="sinta_id" class="col-sm-2 control-label">Sinta ID</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="sinta_id" name="sinta_id" placeholder="Sinta ID" value="<?= $identitas->sinta_id ?>">
+                </div>
+            </div>
     <br />
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="submit" class="btn btn-primary" name="save" value="Simpan">
                 </div>
             </div>
+
         <?= form_close(); ?>
     </div>
 </div>
@@ -251,11 +278,14 @@
             <tr>
                 <th></th>
                 <?php
+                if(empty($pendidikan)){echo '<th><center>Kosong</h2></th>';}
+                else{
                     foreach($pendidikan->tingkat as $item => $value):
                 ?>
                             <th><span class='span-pendidikan-tingkat caption-pendidikan' data-id='<?= $value['id'] ?>'><?= $value['tingkat'] ?></span> <input style='display: none; type='text' class='field-pendidikan-tingkat form-control editor-pendidikan' value='<?= $value['tingkat'] ?>' data-id='<?= $value['id'] ?>' /></th>
                 <?php
                     endforeach;
+                }
                 ?>
             </tr>
         </thead>
@@ -264,66 +294,86 @@
             <tr>
                 <th>Nama PT</th>
                 <?php
+                if(empty($pendidikan)){echo '<th><center>Kosong</h2></th>';}
+                else{
                     foreach($pendidikan->nama_pt as $item => $value):
                 ?>
                             <td><span class='span-pendidikan-nama_pt caption-pendidikan' data-id='<?= $value['id'] ?>'><?= $value['nama_pt'] ?></span> <input style='display: none; type='text' class='field-pendidikan-nama_pt form-control editor-pendidikan' value='<?= $value['nama_pt'] ?>' data-id='<?= $value['id'] ?>' /></td>
                 <?php
                     endforeach;
+                }
                 ?>
             </tr>
             <tr>
                 <th>Bidang Ilmu</th>
                 <?php
+                if(empty($pendidikan)){echo '<th><center>Kosong</h2></th>';}
+                else{
                     foreach($pendidikan->bidang_ilmu as $item => $value):
                 ?>
                             <td><span class='span-pendidikan-bidang_ilmu caption-pendidikan' data-id='<?= $value['id'] ?>'><?= $value['bidang_ilmu'] ?></span> <input style='display: none; type='text' class='field-pendidikan-bidang_ilmu form-control editor-pendidikan' value='<?= $value['bidang_ilmu'] ?>' data-id='<?= $value['id'] ?>' /></td>
                 <?php
                     endforeach;
+                }
                 ?>
             </tr>
             <tr>
                 <th>Tahun Masuk</th>
                 <?php
+                if(empty($pendidikan)){echo '<th><center>Kosong</h2></th>';}
+                else{
                     foreach($pendidikan->tahun_masuk as $item => $value):
                 ?>
                             <td><span class='span-pendidikan-tahun_masuk caption-pendidikan' data-id='<?= $value['id'] ?>'><?= $value['tahun_masuk'] ?></span> <input style='display: none; type='text' class='field-pendidikan-tahun_masuk form-control editor-pendidikan' value='<?= $value['tahun_masuk'] ?>' data-id='<?= $value['id'] ?>' /></td>
                 <?php
                     endforeach;
+                }
                 ?>
             </tr>
             <tr>
                 <th>Tahun Lulus</th>
                 <?php
+                if(empty($pendidikan)){echo '<th><center>Kosong</h2></th>';}
+                else{
                     foreach($pendidikan->tahun_lulus as $item => $value):
                 ?>
                             <td><span class='span-pendidikan-tahun_lulus caption-pendidikan' data-id='<?= $value['id'] ?>'><?= $value['tahun_lulus'] ?></span> <input style='display: none; type='text' class='field-pendidikan-tahun_lulus form-control editor-pendidikan' value='<?= $value['tahun_lulus'] ?>' data-id='<?= $value['id'] ?>' /></td>
                 <?php
                     endforeach;
+                }
                 ?>
             </tr>
             <tr>
                 <th>Judul Tugas Akhir</th>
                 <?php
+                if(empty($pendidikan)){echo '<th><center>Kosong</h2></th>';}
+                else{
                     foreach($pendidikan->judul_ta as $item => $value):
                 ?>
                             <td><span class='span-pendidikan-judul_ta caption-pendidikan' data-id='<?= $value['id'] ?>'><?= $value['judul_ta'] ?></span> <input style='display: none; type='text' class='field-pendidikan-judul_ta form-control editor-pendidikan' value='<?= $value['judul_ta'] ?>' data-id='<?= $value['id'] ?>' /></td>
                 <?php
                     endforeach;
+                }
                 ?>
             </tr>
             <tr>
                 <th>Nama Pembimbing/Promotor</th>
                 <?php
+                if(empty($pendidikan)){echo '<th><center>Kosong</h2></th>';}
+                else{
                     foreach($pendidikan->pembimbing as $item => $value):
                 ?>
                             <td><span class='span-pendidikan-pembimbing caption-pendidikan' data-id='<?= $value['id'] ?>'><?= $value['pembimbing'] ?></span> <input style='display: none; type='text' class='field-pendidikan-pembimbing form-control editor-pendidikan' value='<?= $value['pembimbing'] ?>' data-id='<?= $value['id'] ?>' /></td>
                 <?php
                     endforeach;
+                }
                 ?>
             </tr>
             <tr>
               <th>Aksi</th>
               <?php
+              if(empty($pendidikan)){echo '<th><center>Kosong</h2></th>';}
+              else{
                   foreach($pendidikan->id as $item):
               ?>
               <td>
@@ -339,6 +389,7 @@
               </td>
               <?php
                   endforeach;
+              }
               ?>
             </tr>
         </tbody>
@@ -397,12 +448,12 @@
 
         <tbody>
             <?php
-                $i=0;
+                $i=1;
                 if(empty($pekerjaan)) echo '<tr><td colspan="5"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
                 foreach($pekerjaan as $item):
             ?>
 
-                    <tr data-id="<?= $item->id ?>"><td><?= ++$i ?></td><td><span class='span-pekerjaan-tahun_mulai caption-pekerjaan' data-id='<?= $item->id ?>'><?= $item->tahun_mulai ?></span> <input style="display: none;" type='text' class='field-pekerjaan-tahun_mulai form-control editor-pekerjaan' value='<?= $item->tahun_mulai ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-pekerjaan-tahun_selesai caption-pekerjaan' data-id='<?= $item->id ?>'><?= $item->tahun_selesai ?></span> <input style="display: none;" type='text' class='field-pekerjaan-tahun_selesai form-control editor-pekerjaan' value='<?= $item->tahun_selesai ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-pekerjaan-jabatan caption-pekerjaan' data-id='<?= $item->id ?>'><?= $item->jabatan ?></span> <input style='display: none; type='text' class='field-pekerjaan-jabatan form-control editor-pekerjaan' value='<?= $item->jabatan ?>' data-id='<?= $item->id ?>' /></td>
+                    <tr data-id="<?= $item->id ?>"><td><?= $i++ ?></td><td><span class='span-pekerjaan-tahun_mulai caption-pekerjaan' data-id='<?= $item->id ?>'><?= $item->tahun_mulai ?></span> <input style="display: none;" type='text' class='field-pekerjaan-tahun_mulai form-control editor-pekerjaan' value='<?= $item->tahun_mulai ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-pekerjaan-tahun_selesai caption-pekerjaan' data-id='<?= $item->id ?>'><?= $item->tahun_selesai ?></span> <input style="display: none;" type='text' class='field-pekerjaan-tahun_selesai form-control editor-pekerjaan' value='<?= $item->tahun_selesai ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-pekerjaan-jabatan caption-pekerjaan' data-id='<?= $item->id ?>'><?= $item->jabatan ?></span> <input style='display: none; type='text' class='field-pekerjaan-jabatan form-control editor-pekerjaan' value='<?= $item->jabatan ?>' data-id='<?= $item->id ?>' /></td>
                     <td>
                         <div class="dropdown">
                           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><a href="#">Action</a>
@@ -460,9 +511,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="jumlah_dana" class="col-sm-2 control-label">Jumlah Pendanaan (Juta Rupiah)</label>
+                <label for="jumlah_dana" class="col-sm-2 control-label">Jumlah Pendanaan (Rupiah)</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="jumlah_dana" name="jumlah_dana" placeholder="10 untuk Rp 10.000.000" required>
+                    <input type="text" class="form-control nominal" id="jumlah_dana" name="jumlah_dana" placeholder="" required>
                 </div>
             </div>
             <div class="form-group">
@@ -485,18 +536,18 @@
             </tr>
             <tr>
                 <th>Sumber</th>
-                <th>Jumlah (Juta Rupiah)</th>
+                <th>Jumlah (Rupiah)</th>
             </tr>
         </thead>
 
         <tbody>
             <?php
-                $i=0;
+                $i=1;
                 if(empty($penelitian)) echo '<tr><td colspan="6"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
                 foreach($penelitian as $item):
+
             ?>
-                    <tr data-id="<?= $item->id ?>"><td><?= ++$i ?></td><td><span class='span-penelitian-tahun_mulai caption-penelitian' data-id='<?= $item->id ?>'><?= $item->tahun_mulai ?></span> <input style="display: none;" type='text' class='field-penelitian-tahun_mulai form-control editor-penelitian' value='<?= $item->tahun_mulai ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-penelitian-tahun_selesai caption-penelitian' data-id='<?= $item->id ?>'><?= $item->tahun_selesai ?></span> <input style="display: none;" type='text' class='field-penelitian-tahun_selesai form-control editor-penelitian' value='<?= $item->tahun_selesai ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-penelitian-judul caption-penelitian' data-id='<?= $item->id ?>'><?= $item->judul ?></span> <input style='display: none; type='text' class='field-penelitian-judul form-control editor-penelitian' value='<?= $item->judul ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-penelitian-sumber_dana caption-penelitian' data-id='<?= $item->id ?>'><?= $item->sumber_dana ?></span> <input style='display: none; type='text' class='field-penelitian-jumlah_dana form-control editor-penelitian' value='<?= $item->jumlah_dana ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-penelitian-jumlah_dana caption-penelitian' data-id='<?= $item->id ?>'><?= $item->jumlah_dana ?></span> <input style='display: none; type='text' class='field-penelitian-jumlah_dana form-control editor-penelitian' value='<?= $item->jumlah_dana ?>' data-id='<?= $item->id ?>' /></td>
-                    <!--<tr><td><?= ++$i ?></td><td><?= $item->tahun_mulai==$item->tahun_selesai?$item->tahun_mulai:$item->tahun_mulai." - ".$item->tahun_selesai ?></td><td><?= $item->judul ?></td><td><?= $item->sumber_dana ?></td><td><?= $item->jumlah_dana ?></td>-->
+                    <tr data-id="<?= $item->id ?>"><td><?= $i++ ?></td><td><span class='span-penelitian-tahun_mulai caption-penelitian' data-id='<?= $item->id ?>'><?= $item->tahun_mulai ?></span> <input style="display: none;" type='text' class='field-penelitian-tahun_mulai form-control editor-penelitian' value='<?= $item->tahun_mulai ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-penelitian-tahun_selesai caption-penelitian' data-id='<?= $item->id ?>'><?= $item->tahun_selesai ?></span> <input style="display: none;" type='text' class='field-penelitian-tahun_selesai form-control editor-penelitian' value='<?= $item->tahun_selesai ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-penelitian-judul caption-penelitian' data-id='<?= $item->id ?>'><?= $item->judul ?></span> <input style='display: none; type='text' class='field-penelitian-judul form-control editor-penelitian' value='<?= $item->judul ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-penelitian-sumber_dana caption-penelitian' data-id='<?= $item->id ?>'><?= $item->sumber_dana ?></span> <input style='display: none; type='text' class='field-penelitian-sumber_dana form-control editor-penelitian' value='<?= $item->sumber_dana ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-penelitian-jumlah_dana caption-penelitian' data-id='<?= $item->id ?>'><?= $item->jumlah_dana ?></span> <input style='display: none; type='text' class='field-penelitian-jumlah_dana form-control editor-penelitian' value='<?= $item->jumlah_dana ?>' data-id='<?= $item->id ?>' /></td>
                         <td>
                         <div class="btn-group">
                           <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown"><a href="#">Action</a>
@@ -556,9 +607,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="jumlah_dana" class="col-sm-2 control-label">Jumlah Pendanaan (Juta Rupiah)</label>
+                <label for="jumlah_dana" class="col-sm-2 control-label">Jumlah Pendanaan (Rupiah)</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="jumlah_dana" name="jumlah_dana" placeholder="10 untuk Rp 10.000.000" required>
+                    <input type="text" class="form-control nominal" id="jumlah_dana" name="jumlah_dana" placeholder="" required>
                 </div>
             </div>
             <div class="form-group">
@@ -581,18 +632,17 @@
             </tr>
             <tr>
                 <th>Sumber</th>
-                <th>Jumlah (Juta Rupiah)</th>
+                <th>Jumlah (Rupiah)</th>
             </tr>
         </thead>
 
         <tbody>
             <?php
-                $i=0;
+                $i=1;
                 if(empty($pengabdian)) echo '<tr><td colspan="6"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
                 foreach($pengabdian as $item):
             ?>
-            <tr data-id="<?= $item->id ?>"><td><?= ++$i ?></td><td><span class='span-pengabdian-tahun_mulai caption-pengabdian' data-id='<?= $item->id ?>'><?= $item->tahun_mulai ?></span> <input style="display: none;" type='text' class='field-pengabdian-tahun_mulai form-control editor-pengabdian' value='<?= $item->tahun_mulai ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-pengabdian-tahun_selesai caption-pengabdian' data-id='<?= $item->id ?>'><?= $item->tahun_selesai ?></span> <input style="display: none;" type='text' class='field-pengabdian-tahun_selesai form-control editor-pengabdian' value='<?= $item->tahun_selesai ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-pengabdian-judul caption-pengabdian' data-id='<?= $item->id ?>'><?= $item->judul ?></span> <input style='display: none; type='text' class='field-pengabdian-judul form-control editor-pengabdian' value='<?= $item->judul ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-pengabdian-sumber_dana caption-pengabdian' data-id='<?= $item->id ?>'><?= $item->sumber_dana ?></span> <input style='display: none; type='text' class='field-pengabdian-jumlah_dana form-control editor-pengabdian' value='<?= $item->jumlah_dana ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-pengabdian-jumlah_dana caption-pengabdian' data-id='<?= $item->id ?>'><?= $item->jumlah_dana ?></span> <input style='display: none; type='text' class='field-pengabdian-jumlah_dana form-control editor-pengabdian' value='<?= $item->jumlah_dana ?>' data-id='<?= $item->id ?>' /></td>
-                    <!--<tr><td><?= ++$i ?></td><td><?= $item->tahun_mulai==$item->tahun_selesai?$item->tahun_mulai:$item->tahun_mulai." - ".$item->tahun_selesai ?></td><td><?= $item->judul ?></td><td><?= $item->sumber_dana ?></td><td><?= $item->jumlah_dana ?></td>-->
+            <tr data-id="<?= $item->id ?>"><td><?= $i++ ?></td><td><span class='span-pengabdian-tahun_mulai caption-pengabdian' data-id='<?= $item->id ?>'><?= $item->tahun_mulai ?></span> <input style="display: none;" type='text' class='field-pengabdian-tahun_mulai form-control editor-pengabdian' value='<?= $item->tahun_mulai ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-pengabdian-tahun_selesai caption-pengabdian' data-id='<?= $item->id ?>'><?= $item->tahun_selesai ?></span> <input style="display: none;" type='text' class='field-pengabdian-tahun_selesai form-control editor-pengabdian' value='<?= $item->tahun_selesai ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-pengabdian-judul caption-pengabdian' data-id='<?= $item->id ?>'><?= $item->judul ?></span> <input style='display: none; type='text' class='field-pengabdian-judul form-control editor-pengabdian' value='<?= $item->judul ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-pengabdian-sumber_dana caption-pengabdian' data-id='<?= $item->id ?>'><?= $item->sumber_dana ?></span> <input style='display: none; type='text' class='field-pengabdian-jumlah_dana form-control editor-pengabdian' value='<?= $item->jumlah_dana ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-pengabdian-jumlah_dana caption-pengabdian' data-id='<?= $item->id ?>'><?= $item->jumlah_dana ?></span> <input style='display: none; type='text' class='field-pengabdian-jumlah_dana form-control editor-pengabdian' value='<?= $item->jumlah_dana ?>' data-id='<?= $item->id ?>' /></td>
                         <td>
                         <div class="btn-group">
                           <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown"><a href="#">Action</a>
@@ -681,12 +731,11 @@
 
         <tbody>
             <?php
-                $i=0;
+                $i=1;
                 if(empty($publikasi)) echo '<tr><td colspan="6"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
                 foreach($publikasi as $item):
             ?>
-                    <!--<tr><td><?= ++$i ?></td><td><?= $item->tahun ?></td><td><?= $item->judul ?></td><td><?= $item->nomor_jurnal ?></td><td><?= $item->nama_jurnal ?></td><td>-->
-            <tr data-id="<?= $item->id ?>"><td><?= ++$i ?></td><td><span class='span-publikasi-tahun caption-publikasi' data-id='<?= $item->id ?>'><?= $item->tahun ?></span> <input style="display: none;" type='text' class='field-publikasi-tahun form-control editor-publikasi' value='<?= $item->tahun ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-publikasi-penulis caption-publikasi' data-id='<?= $item->id ?>'><?= $item->penulis ?></span> <input style="display: none;" type='text' class='field-publikasi-penulis form-control editor-publikasi' value='<?= $item->penulis ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-publikasi-judul caption-publikasi' data-id='<?= $item->id ?>'><?= $item->judul ?></span> <input style="display: none;" type='text' class='field-publikasi-judul form-control editor-publikasi' value='<?= $item->judul ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-publikasi-nomor_jurnal caption-publikasi' data-id='<?= $item->id ?>'><?= $item->nomor_jurnal ?></span> <input style='display: none; type='text' class='field-publikasi-nomor_jurnal form-control editor-publikasi' value='<?= $item->nomor_jurnal ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-publikasi-nama_jurnal caption-publikasi' data-id='<?= $item->id ?>'><?= $item->nama_jurnal ?></span> <input style='display: none; type='text' class='field-publikasi-nama_jurnal form-control editor-publikasi' value='<?= $item->nama_jurnal ?>' data-id='<?= $item->id ?>' /></td>
+            <tr data-id="<?= $item->id ?>"><td><?= $i++ ?></td><td><span class='span-publikasi-tahun caption-publikasi' data-id='<?= $item->id ?>'><?= $item->tahun ?></span> <input style="display: none;" type='text' class='field-publikasi-tahun form-control editor-publikasi' value='<?= $item->tahun ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-publikasi-penulis caption-publikasi' data-id='<?= $item->id ?>'><?= $item->penulis ?></span> <input style="display: none;" type='text' class='field-publikasi-penulis form-control editor-publikasi' value='<?= $item->penulis ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-publikasi-judul caption-publikasi' data-id='<?= $item->id ?>'><?= $item->judul ?></span> <input style="display: none;" type='text' class='field-publikasi-judul form-control editor-publikasi' value='<?= $item->judul ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-publikasi-nomor_jurnal caption-publikasi' data-id='<?= $item->id ?>'><?= $item->nomor_jurnal ?></span> <input style='display: none; type='text' class='field-publikasi-nomor_jurnal form-control editor-publikasi' value='<?= $item->nomor_jurnal ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-publikasi-nama_jurnal caption-publikasi' data-id='<?= $item->id ?>'><?= $item->nama_jurnal ?></span> <input style='display: none; type='text' class='field-publikasi-nama_jurnal form-control editor-publikasi' value='<?= $item->nama_jurnal ?>' data-id='<?= $item->id ?>' /></td>
                         <td>
                         <div class="btn-group">
                           <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown"><a href="#">Action</a>
@@ -767,12 +816,11 @@
 
         <tbody>
             <?php
-                $i=0;
+                $i=1;
                 if(empty($buku_teks)) echo '<tr><td colspan="5"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
                 foreach($buku_teks as $item):
             ?>
-                    <!--<tr><td><?= ++$i ?></td><td><?= $item->nama_seminar ?></td><td><?= $item->tema ?></td><td><?= $item->tempat.' '.$item->waktu ?></td><td>-->
-            <tr data-id="<?= $item->id ?>"><td><?= ++$i ?></td><td><span class='span-bukuteks-tahun_terbit caption-bukuteks' data-id='<?= $item->id ?>'><?= $item->tahun_terbit ?></span> <input style="display: none;" type='text' class='field-bukuteks-tahun_terbit form-control editor-bukuteks' value='<?= $item->tahun_terbit ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-bukuteks-penulis caption-bukuteks' data-id='<?= $item->id ?>'><?= $item->penulis ?></span> <input style="display: none;" type='text' class='field-bukuteks-penulis form-control editor-bukuteks' value='<?= $item->penulis ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-bukuteks-judul_buku caption-bukuteks' data-id='<?= $item->id ?>'><?= $item->judul_buku ?></span> <input style='display: none; type='text' class='field-bukuteks-judul_buku form-control editor-bukuteks' value='<?= $item->judul_buku ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-bukuteks-penerbit caption-bukuteks' data-id='<?= $item->id ?>'><?= $item->penerbit ?></span> <input style='display: none; type='text' class='field-bukuteks-penerbit form-control editor-bukuteks' value='<?= $item->penerbit ?>' data-id='<?= $item->id ?>' /></td><td>
+            <tr data-id="<?= $item->id ?>"><td><?= $i++ ?></td><td><span class='span-bukuteks-tahun_terbit caption-bukuteks' data-id='<?= $item->id ?>'><?= $item->tahun_terbit ?></span> <input style="display: none;" type='text' class='field-bukuteks-tahun_terbit form-control editor-bukuteks' value='<?= $item->tahun_terbit ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-bukuteks-penulis caption-bukuteks' data-id='<?= $item->id ?>'><?= $item->penulis ?></span> <input style="display: none;" type='text' class='field-bukuteks-penulis form-control editor-bukuteks' value='<?= $item->penulis ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-bukuteks-judul_buku caption-bukuteks' data-id='<?= $item->id ?>'><?= $item->judul_buku ?></span> <input style='display: none; type='text' class='field-bukuteks-judul_buku form-control editor-bukuteks' value='<?= $item->judul_buku ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-bukuteks-penerbit caption-bukuteks' data-id='<?= $item->id ?>'><?= $item->penerbit ?></span> <input style='display: none; type='text' class='field-bukuteks-penerbit form-control editor-bukuteks' value='<?= $item->penerbit ?>' data-id='<?= $item->id ?>' /></td><td>
                         <div class="btn-group">
                           <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown"><a href='#'>Action</a>
                             <span class="caret"></span>
@@ -813,6 +861,12 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="sebagai" class="col-sm-2 control-label">Sebagai</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="sebagai" name="sebagai" placeholder="Sebagai" required>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="nama_penghargaan" class="col-sm-2 control-label">Nama Penghargaan</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="nama_penghargaan" name="nama_penghargaan" placeholder="Nama Penghargaan" required>
@@ -837,6 +891,7 @@
             <tr>
                 <th>No.</th>
                 <th>Tahun penghargaan</th>
+                <th>Sebagai</th>
                 <th>Nama penghargaan</th>
                 <th>Pemberi penghargaan</th>
                 <th>Pilihan</th>
@@ -845,12 +900,11 @@
 
         <tbody>
             <?php
-                $i=0;
+                $i=1;
                 if(empty($penghargaan)) echo '<tr><td colspan="5"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
                 foreach($penghargaan as $item):
             ?>
-                    <!--<tr><td><?= ++$i ?></td><td><?= $item->nama_seminar ?></td><td><?= $item->tema ?></td><td><?= $item->tempat.' '.$item->waktu ?></td><td>-->
-            <tr data-id="<?= $item->id ?>"><td><?= ++$i ?></td><td><span class='span-penghargaan-tahun_penghargaan caption-penghargaan' data-id='<?= $item->id ?>'><?= $item->tahun_penghargaan ?></span> <input style="display: none;" type='text' class='field-penghargaan-tahun_penghargaan form-control editor-penghargaan' value='<?= $item->tahun_penghargaan ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-penghargaan-nama_penghargaan caption-penghargaan' data-id='<?= $item->id ?>'><?= $item->nama_penghargaan ?></span> <input style="display: none;" type='text' class='field-penghargaan-nama_penghargaan form-control editor-penghargaan' value='<?= $item->nama_penghargaan ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-penghargaan-pemberi_penghargaan caption-penghargaan' data-id='<?= $item->id ?>'><?= $item->pemberi_penghargaan ?></span> <input style='display: none; type='text' class='field-penghargaan-nama_penghargaan form-control editor-penghargaan' value='<?= $item->nama_penghargaan ?>' data-id='<?= $item->id ?>' /></td><td>
+            <tr data-id="<?= $item->id ?>"><td><?= $i++ ?></td><td><span class='span-penghargaan-tahun_penghargaan caption-penghargaan' data-id='<?= $item->id ?>'><?= $item->tahun_penghargaan ?></span> <input style="display: none;" type='text' class='field-penghargaan-tahun_penghargaan form-control editor-penghargaan' value='<?= $item->tahun_penghargaan ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-penghargaan-sebagai caption-penghargaan' data-id='<?= $item->id ?>'><?= $item->sebagai ?></span> <input style="display: none;" type='text' class='field-penghargaan-sebagai form-control editor-penghargaan' value='<?= $item->sebagai ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-penghargaan-nama_penghargaan caption-penghargaan' data-id='<?= $item->id ?>'><?= $item->nama_penghargaan ?></span> <input style="display: none;" type='text' class='field-penghargaan-nama_penghargaan form-control editor-penghargaan' value='<?= $item->nama_penghargaan ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-penghargaan-pemberi_penghargaan caption-penghargaan' data-id='<?= $item->id ?>'><?= $item->pemberi_penghargaan ?></span> <input style='display: none; type='text' class='field-penghargaan-pemberi_penghargaan form-control editor-penghargaan' value='<?= $item->pemberi_penghargaan ?>' data-id='<?= $item->id ?>' /></td><td>
                         <div class="btn-group">
                           <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown"><a href='#'>Action</a>
                             <span class="caret"></span>
@@ -885,6 +939,12 @@
             endif;
         ?>
         <?= form_open(site_url()."/home/save/seminar", 'class="form-horizontal"'); ?>
+          <div class="form-group">
+            <label for="sebagai" class="col-sm-2 control-label">Sebagai</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="sebagai" name="sebagai" placeholder="Sebagai" required>
+            </div>
+          </div>
             <div class="form-group">
                 <label for="nama_seminar" class="col-sm-2 control-label">Nama Seminar</label>
                 <div class="col-sm-10">
@@ -892,11 +952,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="tema" class="col-sm-2 control-label">Judul Artikel Ilmiah</label>
+                <label for="tema" class="col-sm-2 control-label">Tema Seminar</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="tema" name="tema" placeholder="Judul Artikel Ilmiah" required>
                 </div>
             </div>
+
             <div class="form-group">
                 <label for="tempat" class="col-sm-2 control-label">Tempat</label>
                 <div class="col-sm-10">
@@ -921,8 +982,9 @@
         <thead>
             <tr>
                 <th>No.</th>
+                <th>Sebagai</th>
                 <th>Nama Pertemuan Ilmiah/Seminar</th>
-                <th>Judul Artikel Ilmiah</th>
+                <th>Tema Pertemuan Ilmiah</th>
                 <th>Waktu</th>
                 <th>Tempat</th>
                 <th>Pilihan</th>
@@ -931,12 +993,11 @@
 
         <tbody>
             <?php
-                $i=0;
+                $i=1;
                 if(empty($seminar)) echo '<tr><td colspan="5"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
                 foreach($seminar as $item):
             ?>
-                    <!--<tr><td><?= ++$i ?></td><td><?= $item->nama_seminar ?></td><td><?= $item->tema ?></td><td><?= $item->tempat.' '.$item->waktu ?></td><td>-->
-            <tr data-id="<?= $item->id ?>"><td><?= ++$i ?></td><td><span class='span-seminar-nama_seminar caption-seminar' data-id='<?= $item->id ?>'><?= $item->nama_seminar ?></span> <input style="display: none;" type='text' class='field-seminar-nama_seminar form-control editor-seminar' value='<?= $item->nama_seminar ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-seminar-tema caption-seminar' data-id='<?= $item->id ?>'><?= $item->tema ?></span> <input style="display: none;" type='text' class='field-seminar-tema form-control editor-seminar' value='<?= $item->tema ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-seminar-waktu caption-seminar' data-id='<?= $item->id ?>'><?= $item->waktu ?></span> <input style='display: none; type='text' class='field-seminar-waktu form-control editor-seminar' value='<?= $item->waktu ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-seminar-tempat caption-seminar' data-id='<?= $item->id ?>'><?= $item->tempat ?></span> <input style='display: none; type='text' class='field-seminar-tempat form-control editor-seminar' value='<?= $item->tempat ?>' data-id='<?= $item->id ?>' /></td><td>
+            <tr data-id="<?= $item->id ?>"><td><?= $i++ ?></td><td><span class='span-seminar-sebagai caption-seminar' data-id='<?= $item->id ?>'><?= $item->sebagai ?></span> <input style="display: none;" type='text' class='field-seminar-sebagai form-control editor-seminar' value='<?= $item->sebagai ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-seminar-nama_seminar caption-seminar' data-id='<?= $item->id ?>'><?= $item->nama_seminar ?></span> <input style="display: none;" type='text' class='field-seminar-nama_seminar form-control editor-seminar' value='<?= $item->nama_seminar ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-seminar-tema caption-seminar' data-id='<?= $item->id ?>'><?= $item->tema ?></span> <input style="display: none;" type='text' class='field-seminar-tema form-control editor-seminar' value='<?= $item->tema ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-seminar-waktu caption-seminar' data-id='<?= $item->id ?>'><?= $item->waktu ?></span> <input style='display: none; type='text' class='field-seminar-waktu form-control editor-seminar' value='<?= $item->waktu ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-seminar-tempat caption-seminar' data-id='<?= $item->id ?>'><?= $item->tempat ?></span> <input style='display: none; type='text' class='field-seminar-tempat form-control editor-seminar' value='<?= $item->tempat ?>' data-id='<?= $item->id ?>' /></td><td>
                         <div class="btn-group">
                           <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown"><a href='#'>Action</a>
                             <span class="caret"></span>
@@ -955,7 +1016,129 @@
     </table>
 </div>
 
+<div class="panel panel-default" id="kuliah">
+    <div class="panel-heading">
+        <h4><i class="glyphicon glyphicon-share"></i>&nbsp;&nbsp;Kuliah</h4>
+    </div>
 
+    <div class="panel-body">
+        <?= validation_errors('<div class="alert alert-danger" role="alert">', '</div>'); ?>
+        <?php
+            if($this->session->flashdata("failure")):
+        ?>
+            <div class="alert alert-danger" role="alert"><?= $this->session->flashdata("failure") ?></div>
+        <?php
+            endif;
+        ?>
+        <?= form_open_multipart(site_url()."/home/save/kuliah", 'class="form-horizontal"'); ?>
+          <div class="form-group">
+            <label for="nama_mk" class="col-sm-2 control-label">Nama Mata Kuliah</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="nama_mk" name="nama_mk" placeholder="Nama Mata Kuliah" required>
+            </div>
+          </div>
+            <div class="form-group">
+                <label for="kode_mk" class="col-sm-2 control-label">Kode Mata Kuliah</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="kode_mk" name="kode_mk" placeholder="Kode Mata Kuliah" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="deskripsi_mk" class="col-sm-2 control-label">Deskripsi Mata Kuliah</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="deskripsi_mk" name="deskripsi_mk" placeholder="Deskripsi Mata Kuliah"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="sks_mk" class="col-sm-2 control-label">SKS Mata Kuliah</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="sks_mk" name="sks_mk" placeholder="SKS Mata Kuliah" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pengampu_mk" class="col-sm-2 control-label">Pengampu Mata Kuliah</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="pengampu_mk" name="pengampu_mk" placeholder="Pengampu Mata Kuliah" required></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="rps_mk" class="col-sm-2 control-label">Upload RPS Mata Kuliah</label>
+                <div class="col-sm-10" style="margin-top:5px">
+                        <input type="file" name="rps_mk" />
+				        </div>
+            </div>
+            <div class="form-group">
+                <label for="kontrak_mk" class="col-sm-2 control-label">Upload Kontrak Mata Kuliah</label>
+                <div class="col-sm-10" style="margin-top:5px">
+                        <input type="file" name="kontrak_mk" />
+				        </div>
+            </div>
+            <div class="form-group">
+                <label for="silabus_mk" class="col-sm-2 control-label">Upload Silabus Mata Kuliah</label>
+                <div class="col-sm-10" style="margin-top:5px">
+                        <input type="file" name="silabus_mk" />
+				        </div>
+            </div>
+            <div class="form-group">
+                <label for="link_kulon" class="col-sm-2 control-label">Link Kulon</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="link_kulon" name="link_kulon" placeholder="http://kulon.undip.ac.id/course/view.php?id=149">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="link_drive" class="col-sm-2 control-label">Link Drive</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="link_drive" name="link_drive" placeholder="https://drive.google.com/drive/u/0/folders/0B_AqBxcy3qx1WExUZXVIbEhWOW8">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" class="btn btn-primary" name="save" value="Simpan">
+                </div>
+            </div>
+        <?= form_close(); ?>
+    </div>
+
+    <table class="table" style="word-wrap:break-word;table-layout: fixed;">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Nama</th>
+                <th>Kode</th>
+                <th>Deskripsi</th>
+                <th>SKS</th>
+                <th>Pengampu</th>
+                <th>Kulon</th>
+                <th>Drive</th>
+                <th>Pilihan</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php
+                $i=1;
+                if(empty($kuliah)) echo '<tr><td colspan="9"><h2 style="color:#ccc"><center>Kosong</h2></td></tr>';
+                foreach($kuliah as $item):
+            ?>
+            <tr data-id="<?= $item->id ?>"><td><?= $i++ ?></td><td><span class='span-kuliah-nama_mk caption-kuliah' data-id='<?= $item->id ?>'><?= $item->nama_mk ?></span> <input style="display: none;" type='text' class='field-kuliah-sebagai form-control editor-kuliah' value='<?= $item->nama_mk ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-kuliah-kode_mk caption-kode_mk' data-id='<?= $item->id ?>'><?= $item->kode_mk ?></span> <input style="display: none;" type='text' class='field-kuliah-kode_mk form-control editor-kuliah' value='<?= $item->kode_mk ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-kuliah-deskripsi_mk caption-kuliah' data-id='<?= $item->id ?>'><?= $item->deskripsi_mk ?></span> <input style="display: none;" type='text' class='field-kuliah-deskripsi_mk form-control editor-kuliah' value='<?= $item->deskripsi_mk ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-kuliah-sks_mk caption-kuliah' data-id='<?= $item->id ?>'><?= $item->sks_mk ?></span> <input style='display: none; type='text' class='field-kuliah-sks_mk form-control editor-kuliah' value='<?= $item->sks_mk ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-kuliah-pengampu_mk caption-kuliah' data-id='<?= $item->id ?>'><?= $item->pengampu_mk ?></span> <input style='display: none; type='text' class='field-kuliah-pengampu_mk form-control editor-kuliah' value='<?= $item->pengampu_mk ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-kuliah-link_kulon caption-kuliah' data-id='<?= $item->id ?>'><?= $item->link_kulon ?></span> <input style='display: none; type='text' class='field-kuliah-link_kulon form-control editor-kuliah' value='<?= $item->link_kulon ?>' data-id='<?= $item->id ?>' /></td><td><span class='span-kuliah-link_drive caption-kuliah' data-id='<?= $item->id ?>'><?= $item->link_drive ?></span> <input style='display: none; type='text' class='field-kuliah-link_drive form-control editor-kuliah' value='<?= $item->link_drive ?>' data-id='<?= $item->id ?>' /></td><td>
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown"><a href='#'>Action</a>
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu">
+                            <li><a href="<?= site_url(); ?>/home/mydocuments?sd=kuliah&id=<?= $item->id; ?>" type="button" class="btn btn-default btn-flat">Buka direktori</a></li>
+                            <li><a href="<?= site_url() ?>/home/deletekuliah/<?= $item->id ?>/<?= $identitas->uid ?>/<?= $identitas->no_induk?>" type="button" class="btn btn-default btn-flat">Delete <span class="glyphicon glyphicon-trash"></span></a></li>
+                          </ul>
+                        </div>
+                        </td></tr>
+            <?php
+                endforeach;
+            ?>
+        </tbody>
+    </table>
+</div>
 
 <script>
 $(document).ready(function(){
@@ -1048,6 +1231,8 @@ $(document).ready(function(){
         language: "id"
     });
     $(".select2").select2();
+    //$(".nominal").mask("#.##0", {reverse: true});
+
 </script>
 <script src="<?= base_url(); ?>assets/js/bootstrap-tagsinput.js"></script>
 <script type="text/javascript">
@@ -1083,6 +1268,8 @@ $(this).find("span[class~='caption-bukuteks']").hide();
 $(this).find("input[class~='editor-bukuteks']").fadeIn().focus();
 $(this).find("span[class~='caption-penghargaan']").hide();
 $(this).find("input[class~='editor-penghargaan']").fadeIn().focus();
+$(this).find("span[class~='caption-kuliah']").hide();
+$(this).find("input[class~='editor-kuliah']").fadeIn().focus();
 });
 
 $(document).on("keydown",".editor-pendidikan",function(e){
@@ -1236,7 +1423,9 @@ var target=$(e.target);
 var value=target.val();
 var id=target.attr("data-id");
 var data={idseminar:id,valueseminar:value};
-if(target.is(".field-seminar-nama_seminar")){
+if(target.is(".field-seminar-sebagai")){
+data.modulseminar="sebagai";
+}else if(target.is(".field-seminar-nama_seminar")){
 data.modulseminar="nama_seminar";
 }else if(target.is(".field-seminar-tema")){
 data.modulseminar="tema";
@@ -1292,6 +1481,8 @@ var id=target.attr("data-id");
 var data={idpenghargaan:id,valuepenghargaan:value};
 if(target.is(".field-penghargaan-tahun_penghargaan")){
 data.modulpenghargaan="tahun_penghargaan";
+}else if(target.is(".field-penghargaan-sebagai")){
+data.modulpenghargaan="sebagai";
 }else if(target.is(".field-penghargaan-nama_penghargaan")){
 data.modulpenghargaan="nama_penghargaan";
 }else if(target.is(".field-penghargaan-pemberi_penghargaan")){
@@ -1308,6 +1499,40 @@ target.siblings("span[class~='caption-penghargaan']").html(value).fadeIn();
 }
 
 });
+
+$(document).on("keydown",".editor-kuliah",function(e){
+if(e.keyCode==13){
+var target=$(e.target);
+var value=target.val();
+var id=target.attr("data-id");
+var data={idkuliah:id,valuekuliah:value};
+if(target.is(".field-kuliah-nama_mk")){
+data.modulkuliah="nama_mk";
+}else if(target.is(".field-kuliah-kode_mk")){
+data.modulkuliah="kode_mk";
+}else if(target.is(".field-kuliah-deskripsi_mk")){
+data.modulkuliah="deskripsi_mk";
+}else if(target.is(".field-kuliah-sks_mk")){
+data.modulkuliah="sks_mk";
+}else if(target.is(".field-kuliah-pengampu_mk")){
+data.modulkuliah="pengampu_mk";
+}else if(target.is(".field-kuliah-link_kulon")){
+data.modulkuliah="link_kulon";
+}else if(target.is(".field-kuliah-link_drive")){
+data.modulkuliah="link_drive";
+}
+//alert(JSON.stringify(data));
+$.ajax({
+	data:data,
+	url:"<?php echo site_url() . '/home/updatekuliahlive/' ?>",
+
+})
+target.hide();
+target.siblings("span[class~='caption-kuliah']").html(value).fadeIn();
+}
+
+});
+
 //end
 });
 

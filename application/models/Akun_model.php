@@ -6,6 +6,16 @@ class Akun_model extends CI_Model{
         $this->load->database();
     }
 
+    public function addUser($data){
+        if($this->db->where("no_induk = {$data['no_induk']}")->get('users')->num_rows() > 0) return 0;
+        $this->db->set($data)->insert('users');
+        return 1;
+    }
+
+    public function getAllUsers(){
+        return $this->db->where("level <> 'admin'")->get("users")->result();
+    }
+
     public function getIdentitas($uid=''){
 		if ($uid=='')
 		{
@@ -17,6 +27,7 @@ class Akun_model extends CI_Model{
 		}
         return $this->db->get("users")->row();
     }
+
 
     public function getProdi(){
         $res = $this->db->get("prodi")->result();
@@ -58,15 +69,32 @@ class Akun_model extends CI_Model{
         return $data;
     }
 
+    public function getPendidikanLine($id=null,$uid=''){
+        if($id) $this->db->where("id", $id);
+		if ($uid=='')
+		{
+        $this->db->where("uid", $this->session->userdata('login')->uid);
+		}
+		else
+		{
+        $this->db->where("uid", $uid);
+		}
+        return $this->db->get("pendidikan")->result();
+    }
+
     public function getPenelitian($id=null,$uid=''){
         if($id) $this->db->where("id", $id);
 		if ($uid=='')
 		{
         $this->db->where(array("uid"=>$this->session->userdata('login')->uid, "tipe"=>"penelitian"));
+        $this->db->order_by("tahun_mulai", "desc");
+
 		}
 		else
 		{
         $this->db->where(array("uid"=>$uid, "tipe"=>"penelitian"));
+        $this->db->order_by("tahun_mulai", "desc");
+
 		}
         return $this->db->get("penelitian")->result();
     }
@@ -76,10 +104,13 @@ class Akun_model extends CI_Model{
 		if ($uid=='')
 		{
         $this->db->where(array("uid"=>$this->session->userdata('login')->uid, "tipe"=>"pengabdian"));
+        $this->db->order_by("tahun_mulai", "desc");
 		}
 		else
 		{
         $this->db->where(array("uid"=>$uid, "tipe"=>"pengabdian"));
+        $this->db->order_by("tahun_mulai", "desc");
+
 		}
         return $this->db->get("penelitian")->result();
     }
@@ -89,10 +120,12 @@ class Akun_model extends CI_Model{
 		if ($uid=='')
 		{
         $this->db->where("uid", $this->session->userdata('login')->uid);
+        $this->db->order_by("tahun", "desc");
 		}
 		else
 		{
         $this->db->where("uid", $uid);
+        $this->db->order_by("tahun", "desc");
 		}
         return $this->db->get("publikasi")->result();
     }
@@ -102,10 +135,14 @@ class Akun_model extends CI_Model{
 		if ($uid=='')
 		{
         $this->db->where("uid", $this->session->userdata('login')->uid);
+        $this->db->order_by("waktu", "desc");
+
 		}
 		else
 		{
         $this->db->where("uid", $uid);
+        $this->db->order_by("waktu", "desc");
+
 		}
         return $this->db->get("seminar")->result();
     }
@@ -115,10 +152,12 @@ class Akun_model extends CI_Model{
 		if ($uid=='')
 		{
         $this->db->where("uid", $this->session->userdata('login')->uid);
+        $this->db->order_by("tahun_mulai", "desc");
 		}
 		else
 		{
         $this->db->where("uid", $uid);
+        $this->db->order_by("tahun_mulai", "desc");
 		}
         return $this->db->get("pekerjaan")->result();
     }
@@ -128,10 +167,12 @@ class Akun_model extends CI_Model{
 		if ($uid=='')
 		{
         $this->db->where("uid", $this->session->userdata('login')->uid);
+        $this->db->order_by("tahun_terbit", "desc");
 		}
 		else
 		{
         $this->db->where("uid", $uid);
+        $this->db->order_by("tahun_terbit", "desc");
 		}
         return $this->db->get("buku_teks")->result();
     }
@@ -141,20 +182,84 @@ class Akun_model extends CI_Model{
     if ($uid=='')
     {
         $this->db->where("uid", $this->session->userdata('login')->uid);
+        $this->db->order_by("tahun_penghargaan", "desc");
+
     }
     else
     {
         $this->db->where("uid", $uid);
+        $this->db->order_by("tahun_penghargaan", "desc");
+
     }
         return $this->db->get("penghargaan")->result();
     }
 
+    public function getKuliah($id=null,$uid=''){
+        if($id) $this->db->where("id", $id);
+    if ($uid=='')
+    {
+        $this->db->where("uid", $this->session->userdata('login')->uid);
+        $this->db->order_by("kode_mk", "desc");
+
+    }
+    else
+    {
+        $this->db->where("uid", $uid);
+        $this->db->order_by("kode_mk", "desc");
+
+    }
+        return $this->db->get("kuliah")->result();
+    }
+
+    public function getKuliahItem($id=null,$uid=''){
+        if($id) $this->db->where("id", $id);
+    if ($uid=='')
+    {
+        $this->db->where("uid", $this->session->userdata('login')->uid);
+        //$this->db->order_by("kode_mk", "desc");
+
+    }
+    else
+    {
+        $this->db->where("uid", $uid);
+        //$this->db->order_by("kode_mk", "desc");
+
+    }
+        return $this->db->get("kuliah")->row();
+    }
+
+    public function getLastKuliahId()
+    {
+      $maxid = $this->db->query('SELECT AUTO_INCREMENT as maxid FROM information_schema.TABLES WHERE TABLE_SCHEMA = "manajemen_dosen" AND TABLE_NAME = "kuliah"')->row()->maxid;
+      return $maxid;
+    }
+
     public function setIdentitas($data){
-        return $this->db->update("users", $data, array("uid"=>($this->session->userdata('login')->uid)));
+      if($data['uid'])
+      {
+        $uid = $data['uid'];
+      }
+      else
+      {
+        $uid = $this->session->userdata('login')->uid;
+      }
+        return $this->db->update("users", $data, array("uid"=>($uid)));
+    }
+
+    public function setIdentitasuid($data,$uid){
+      return $this->db->update("users", $data, array("uid"=>($uid)));
     }
 
     public function setPendidikan($data){
-        $this->db->query("REPLACE INTO pendidikan(uid, tingkat, nama_pt, tahun_masuk, tahun_lulus, judul_ta, pembimbing) VALUES({$this->session->userdata('login')->uid}, '{$data['tingkat']}', '{$data['nama_pt']}', '{$data['tahun_masuk']}', '{$data['tahun_lulus']}', '{$data['judul_ta']}', '{$data['pembimbing']}')");
+      if($data['uid'])
+      {
+        $uid = $data['uid'];
+      }
+      else
+      {
+        $uid = $this->session->userdata('login')->uid;
+      }
+        $this->db->query("REPLACE INTO pendidikan(uid, tingkat, nama_pt, bidang_ilmu, tahun_masuk, tahun_lulus, judul_ta, pembimbing) VALUES({$uid}, '{$data['tingkat']}', '{$data['nama_pt']}','{$data['bidang_ilmu']}', '{$data['tahun_masuk']}', '{$data['tahun_lulus']}', '{$data['judul_ta']}', '{$data['pembimbing']}')");
     }
 
     public function setPenelitian($data){
@@ -178,6 +283,10 @@ class Akun_model extends CI_Model{
 
     public function setPenghargaan($data){
         $this->db->insert("penghargaan", $data);
+    }
+
+    public function setKuliah($data){
+        $this->db->insert("kuliah", $data);
     }
 
     public function updatePendidikanlive($idpendidikan,$valuependidikan,$modulpendidikan){
@@ -233,6 +342,13 @@ class Akun_model extends CI_Model{
   		$this->db->where(array("id"=>$idpenghargaan));
   		$this->db->update("penghargaan",array($modulpenghargaan=>$valuepenghargaan));
   	}
+    public function updateKuliah($data, $id){
+        return $this->db->update("kuliah", $data, array("id"=>$id));
+    }
+    public function updateKuliahlive($idkuliah,$valuekuliah,$modulkuliah){
+  		$this->db->where(array("id"=>$idkuliah));
+  		$this->db->update("kuliah",array($modulkuliah=>$valuekuliah));
+  	}
     public function deletePendidikan($id,$uid)
     {
       $this->db->delete('pendidikan', array('id'=>$id,'uid'=>$uid));
@@ -260,5 +376,23 @@ class Akun_model extends CI_Model{
     public function deletePenghargaan($id,$uid)
     {
       $this->db->delete('penghargaan', array('id'=>$id,'uid'=>$uid));
+    }
+    public function deleteKuliah($id,$uid)
+    {
+      $this->db->delete('kuliah', array('id'=>$id,'uid'=>$uid));
+
+    }
+    public function deleteUser($uid){
+      $this->db->query("DELETE FROM users WHERE uid=$uid");
+      $this->db->query("DELETE FROM pekerjaan WHERE uid=$uid");
+      $this->db->query("DELETE FROM pendidikan WHERE uid=$uid");
+      $this->db->query("DELETE FROM penelitian WHERE uid=$uid");
+      $this->db->query("DELETE FROM publikasi WHERE uid=$uid");
+      $this->db->query("DELETE FROM seminar WHERE uid=$uid");
+      $this->db->query("DELETE FROM penghargaan WHERE uid=$uid");
+      $this->db->query("DELETE FROM buku_teks WHERE uid=$uid");
+      $this->db->query("DELETE FROM kuliah WHERE uid=$uid");
+
+      //$this->db->query("DELETE FROM bersama WHERE id_anggota=$uid");
     }
 }

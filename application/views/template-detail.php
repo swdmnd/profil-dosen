@@ -217,14 +217,18 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="<?= base_url() . $identitas->foto; ?>" class="user-image" alt="User Image">
+              <!--<img src="<?= base_url() . $identitas->foto; ?>" class="user-image" alt="User Image">-->
+              <img src="<?= site_url(); ?>/getfile/profileImage/true" class="img-circle" alt="User Image">
+
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs"><?= $identitas->nama_lengkap ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="<?= base_url() . $identitas->foto; ?>" class="img-circle" alt="User Image">
+                <!--<img src="<?= base_url() . $identitas->foto; ?>" class="img-circle" alt="User Image">-->
+                <img src="<?= site_url(); ?>/getfile/profileImage/true" class="img-circle" alt="User Image">
+
 
                 <p>
                   <?= $identitas->nama_lengkap ?>
@@ -278,9 +282,12 @@ desired effect
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?= base_url() . $identitas->foto; ?>" class="img-circle" alt="User Image">
+          <!--<img src="<?= base_url() . $identitas->foto; ?>" class="img-circle" alt="User Image">-->
+          <img src="<?= site_url(); ?>/getfile/profileImage/true" class="img-circle" alt="User Image">
+
         </div>
         <div style="margin-top:50px">
+        <br>
         <div class="pull-left info">
           <p style="color:white;"><?= wordwrap($identitas->nama_lengkap, 40, "<br />\n"); ?></p>
           <!-- Status -->

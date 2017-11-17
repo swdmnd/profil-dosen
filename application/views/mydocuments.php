@@ -19,15 +19,15 @@ if($action){
         word-wrap: break-word;
         border-radius: 5px;
     }
-    
+
     .dir-item-container{
         padding:20px;
     }
-    
+
     .btn-parent{
         padding:0px !important;
     }
-    
+
     .btn-inherit{
         all:inherit;
         display:block;
@@ -35,11 +35,11 @@ if($action){
         padding:10px 15px;
         border: none;
     }
-    
+
     .dir-item-container:hover{
         background: #fcfcfc;
     }
-    
+
     .delete-icon{
         position:absolute;
         top:0px;
@@ -47,12 +47,12 @@ if($action){
         color:red;
         opacity:0.3;
     }
-    
+
     .delete-icon:hover{
         opacity:1;
     }
-    
-    .checkbox label:after, 
+
+    .checkbox label:after,
     .radio label:after {
         content: '';
         display: table;
@@ -115,7 +115,7 @@ if($action){
 </style>
 
 <div class="panel panel-info">
-   
+
     <div class="panel-heading">
         <?php
             $pt = "/";
@@ -129,16 +129,16 @@ if($action){
             endforeach;
         ?>
     </div>
-    
+
     <form id="multiple-action" action="<?= site_url()."/home/mydocuments/multiple-action/?d=".$pt.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>" method="post"></form>
-    
+
     <div class="panel-body">
         <ul class="nav nav-pills">
             <li><a role="presentation" class="btn" href="<?= site_url()."/home/mydocuments/upload/?d=".$pt.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>"><i class="glyphicon glyphicon-plus"></i> Upload File</a></li>
             <li><a role="presentation" class="btn" href="<?= site_url()."/home/mydocuments/makedir/?d=".$pt.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>"><i class="glyphicon glyphicon-folder-close"></i> Buat Folder</a></li>
             <li><a role="presentation" class="btn btn-parent"><button type="submit" value="remove" name="intent" form="multiple-action" class="btn-inherit"><i class="glyphicon glyphicon-remove"></i> Hapus</button></a></li>
             <li><a role="presentation" class="btn btn-parent"><button type="submit" value="rename" name="intent" form="multiple-action" class="btn-inherit"><i class="glyphicon glyphicon-edit"></i> Ubah nama</button></a></li>
-            
+
 <!--
             <li role="presentation" class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -152,7 +152,7 @@ if($action){
             </li>
 -->
         </ul>
-        
+
         <hr>
         <?php
             array_splice($dir_path, 0, 1);
@@ -166,7 +166,7 @@ if($action){
                 if($i % 4 == 0) echo '<div class="row" style="padding:0px 12px">';
                 if($dir_entry->is_dir):
         ?>
-        
+
         <div class="col-md-3"><div class="row"><h4 class="col-md-12 dir-item-container">
             <div class="checkbox col-md-2">
                 <label>
@@ -174,10 +174,10 @@ if($action){
                         <input type="checkbox" name="selected_directory[]" value="<?= $dir_entry->name ?>" form="multiple-action" <?= ($this->input->post('selected_directory')?(in_array($dir_entry->name, $this->input->post('selected_directory'))?"checked":""):"") ?> />
                         <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                     </small>
-                    
+
                 </label>
             </div>
-            <a class="dir-item" href="<?= site_url()."/home/mydocuments/?d=".implode('/', $dir_path).'/'.$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>"><i class="glyphicon glyphicon-folder-open col-md-2"></i><span class="col-md-8"><?= $dir_entry->name ?></span></a><!--<a href="<?= site_url()."/home/mydocuments/remove/?d=".$this->input->get('d')."&remove_directory=".$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""); ?>"><span class="delete-icon"><b>&times;</b></span></a>-->
+            <a class="dir-item" href="<?= site_url()."/home/mydocuments/?d=".$this->input->get('d').'/'.$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>"><i class="glyphicon glyphicon-folder-open col-md-2"></i><span class="col-md-8"><?= $dir_entry->name ?></span></a><!--<a href="<?= site_url()."/home/mydocuments/remove/?d=".$this->input->get('d')."&remove_directory=".$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""); ?>"><span class="delete-icon"><b>&times;</b></span></a>-->
         </h4></div></div>
         <?php
                 else:
@@ -189,10 +189,10 @@ if($action){
                         <input type="checkbox" name="selected_file[]" value="<?= $dir_entry->name ?>" form="multiple-action" <?= ($this->input->post('selected_file')?(in_array($dir_entry->name, $this->input->post('selected_file'))?"checked":""):"") ?> />
                         <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                     </small>
-                    
+
                 </label>
             </div>
-            <a class="dir-item" href="<?= site_url()."/home/mydocuments/?d=".$this->input->get('d')."&f=".$pt.$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>"><i class="glyphicon glyphicon-file col-md-2"></i><span class="col-md-8"><?= $dir_entry->name ?> <small>(<?= human_filesize(filesize(str_replace('/','\\',$this->session->userdata('work_dir').($this->input->get("sd") ? "/.profile/".$this->input->get("sd").$this->input->get("id")."/":"").$pt.$dir_entry->name)), 0); ?>)</small></span></a><!--<a href="<?= site_url()."/home/mydocuments/remove/?d=".$this->input->get('d')."&remove_file=".$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""); ?>"><span class="delete-icon"><b>&times;</b></span></a>-->
+            <a class="dir-item" href="<?= site_url()."/home/mydocuments/?d=".$this->input->get('d')."&f=".$pt.$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):"") ?>"><i class="glyphicon glyphicon-file col-md-2"></i><span class="col-md-8"><?= $dir_entry->name ?> <small>(<?= human_filesize(filesize(sanitize_path($work_dir.$pt.$dir_entry->name)), 0); ?>)</small></span></a><!--<a href="<?= site_url()."/home/mydocuments/remove/?d=".$this->input->get('d')."&remove_file=".$dir_entry->name.($this->input->get("sd") ? "&sd=".$this->input->get("sd")."&id=".$this->input->get("id"):""); ?>"><span class="delete-icon"><b>&times;</b></span></a>-->
         </h4></div></div>
         <?php
                 endif;

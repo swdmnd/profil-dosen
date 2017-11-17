@@ -3,3 +3,48 @@ riwayat pekerjaan
 > tahun bulan -> link ke SK
 
 manajemen file (SK, proposal, dsb) untuk tiap record penelitian
+
+            <!-- single member -->
+            <!--
+            <?php for ($i = 0; $i < count($users); ++$i) { ?>
+            <figure class="team-member col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="500ms">
+              <div class="member-thumb">
+                <img src="<?= base_url(); ?><?= $users[$i]->foto ?>" alt="Team Member" class="img-responsive">
+                <figcaption class="overlay">
+                  <b><p style="color:black"><?= $users[$i]->deskripsi_singkat ?></p></b>
+                  <ul class="social-links text-center">
+                    <li><a href=""><i class="fa fa-twitter fa-lg"></i></a></li>
+                    <li><a href=""><i class="fa fa-facebook fa-lg"></i></a></li>
+                    <li><a href=""><i class="fa fa-google-plus fa-lg"></i></a></li>
+                  </ul>
+                </figcaption>
+              </div>
+              <h4><a style="color:black" href="<?=base_url();?>index.php/detail/index/<?= $users[$i]->uid?>/identitas" ><?= $users[$i]->nama_lengkap ?></a></h4>
+              <span><h4><?= $users[$i]->prodi ?></h4></span><br/>
+              <span><h4><?= $users[$i]->research_interests ?></h4></span>
+            </figure>
+            <?php } ?>
+          -->
+            <!-- end single member -->
+
+            <!--<?php if (count($users) == $max_users->jumlah) { ?>
+              <div class="table-responsive">
+              <table class="table table-striped table-bordered" style="width: auto;" align="center">
+                <tr>
+                    <th style="color:black;">No</th>
+                    <th style="color:black;">Nama</th>
+                </tr>
+                <?php for ($i = 0; $i < count($users); ++$i) { ?>
+
+
+
+
+                    <tr>
+                      <td><?php echo $i+1;?></td>
+                      <td><a href="<?= base_url()?>index.php/detail/index/<?=  $users[$i]->uid?>/identitas"><?php echo $users[$i]->nama_lengkap;?></a></td>
+                    </tr>
+
+              <?php } ?>
+            </table></div>
+          <?php } else { ?>
+          -->

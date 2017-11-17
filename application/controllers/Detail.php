@@ -6,8 +6,91 @@ class Detail extends MY_Controller {
 	public function __construct(){
         parent::__construct();
     }
+	public function scandir_recursive($directory, $filter=FALSE)
+		{
+		 // if the path has a slash at the end we remove it here
+		 if(substr($directory,-1) == '/')
+		 {
+		     $directory = substr($directory,0,-1);
+		 }
 
-	public function index($uid='')
+		 // if the path is not valid or is not a directory ...
+		 if(!file_exists($directory) || !is_dir($directory))
+		 {
+		     // ... we return false and exit the function
+		     return FALSE;
+
+		 // ... else if the path is readable
+		 }elseif(is_readable($directory))
+		 {
+		     // initialize directory tree variable
+		     $directory_tree = array();
+
+		     // we open the directory
+		     $directory_list = opendir($directory);
+
+		     // and scan through the items inside
+		     while (FALSE !== ($file = readdir($directory_list)))
+		     {
+		         // if the filepointer is not the current directory
+		         // or the parent directory
+		         if($file != '.' && $file != '..')
+		         {
+		             // we build the new path to scan
+		             $path = $directory.'/'.$file;
+
+		             // if the path is readable
+		             if(is_readable($path))
+		             {
+		                 // we split the new path by directories
+		                 $subdirectories = explode('/',$path);
+
+		                 // if the new path is a directory
+		                 if(is_dir($path))
+		                 {
+		                     // add the directory details to the file list
+		                     $directory_tree[] = array(
+		                         'path'    => $path,
+		                         'name'    => end($subdirectories),
+		                         'kind'    => 'directory',
+
+		                         // we scan the new path by calling this function
+		                         'content' => $this->scandir_recursive($path, $filter));
+
+		                 // if the new path is a file
+		                 }elseif(is_file($path))
+		                 {
+		                     // get the file extension by taking everything after the last dot
+		                     $extension_awal = explode('.',end($subdirectories));
+												 $extension = end($extension_awal);
+		                     // if there is no filter set or the filter is set and matches
+		                     if($filter === FALSE || $filter == $extension)
+		                     {
+		                         // add the file details to the file list
+		                         $directory_tree[] = array(
+		                             'path'      => $path,
+		                             'name'      => end($subdirectories),
+		                             'extension' => $extension,
+		                             'size'      => filesize($path),
+		                             'kind'      => 'file');
+		                     }
+		                 }
+		             }
+		         }
+		     }
+		     // close the directory
+		     closedir($directory_list);
+
+		     // return file list
+		     return $directory_tree;
+
+		// if the path is not readable ...
+		 }else{
+		     // ... we return false
+		     return FALSE;
+		    }
+		}
+	public function index($uid='',$menu)
 	{
 		if ($uid=='')
 		{
@@ -25,6 +108,8 @@ class Detail extends MY_Controller {
         $this->data['seminar'] = $this->Akun_model->getSeminar();
 				$this->data['buku_teks'] = $this->Akun_model->getBukuTeks();
         $this->data['penghargaan'] = $this->Akun_model->getPenghargaan();
+				$this->data['kuliah'] = $this->Akun_model->getKuliah();
+
         $this->data['content'] = 'cv';
         $this->set_tab_index("1");
         $this->set_page_header("Curriculum Vitae", "CV <a href=\"".site_url()."/home/printpdf\"><i class=\"glyphicon glyphicon-print\"></i></a>");
@@ -36,9 +121,15 @@ class Detail extends MY_Controller {
         $this->load->library('form_validation');
         $this->load->model('Akun_model');
 
-        $this->data['identitas'] = $this->Akun_model->getIdentitas($uid);
+				$this->data['identitas'] = $this->Akun_model->getIdentitas($uid);
+				$identitas = $this->Akun_model->getIdentitas($uid);
+				$uid = $identitas->uid;
+				$no_induk = $identitas->no_induk;
+				//$this->load->helper('directory');
+				//$dir = directory_map('files/'.$uid.$no_induk.'/');
+				//$this->data['files'] = $this->recursive($dir);
         $this->data['prodi'] = $this->Akun_model->getProdi();
-        $this->data['pendidikan'] = $this->Akun_model->getPendidikan($uid);
+        $this->data['pendidikan'] = $this->Akun_model->getPendidikanLine(null,$uid);
         $this->data['pekerjaan'] = $this->Akun_model->getPekerjaan(null,$uid);
         $this->data['penelitian'] = $this->Akun_model->getPenelitian(null,$uid);
         $this->data['pengabdian'] = $this->Akun_model->getPengabdian(null,$uid);
@@ -46,10 +137,56 @@ class Detail extends MY_Controller {
         $this->data['seminar'] = $this->Akun_model->getSeminar(null,$uid);
 				$this->data['buku_teks'] = $this->Akun_model->getBukuTeks(null,$uid);
         $this->data['penghargaan'] = $this->Akun_model->getPenghargaan(null,$uid);
-        $this->data['content'] = 'cv-detail';
+				$this->data['kuliah'] = $this->Akun_model->getKuliah(null,$uid);
+
+
+				if ($menu=='identitas')
+				{
+        $this->data['content'] = 'cv-detail-identitas';
+				}
+				elseif ($menu=='pendidikan')
+				{
+				$this->data['content'] = 'cv-detail-pendidikan';
+				}
+				elseif ($menu=='pekerjaan')
+				{
+				$this->data['content'] = 'cv-detail-pekerjaan';
+				}
+				elseif ($menu=='penelitian')
+				{
+				$this->data['content'] = 'cv-detail-penelitian';
+				}
+				elseif ($menu=='pengabdian')
+				{
+				$this->data['content'] = 'cv-detail-pengabdian';
+				}
+				elseif ($menu=='publikasi')
+				{
+				$this->data['content'] = 'cv-detail-publikasi';
+				}
+				elseif ($menu=='bukuteks')
+				{
+				$this->data['content'] = 'cv-detail-bukuteks';
+				}
+				elseif ($menu=='penghargaan')
+				{
+				$this->data['content'] = 'cv-detail-penghargaan';
+				}
+				elseif ($menu=='seminar')
+				{
+				$this->data['content'] = 'cv-detail-seminar';
+				}
+				elseif (strpos($menu, 'kuliah') !== false)
+				{
+				$kulid = substr($menu, strpos($menu, "-") + 1);
+				$this->data['kuliah_item'] = $this->Akun_model->getKuliahItem($kulid,$uid);
+				$this->data['directory_tree'] = $this->scandir_recursive('files/'.$uid.$no_induk.'/profile/kuliah'.$kulid.'/tugas/');
+
+				$this->data['content'] = 'cv-detail-kuliah';
+				}
         $this->set_tab_index("1");
 				$this->set_page_header("Curriculum Vitae", "CV <a href=\"".site_url()."/home/printpdf\"><i class=\"glyphicon glyphicon-print\"></i></a>&nbsp;&nbsp;<a href='" . site_url('pencarian/view') . "' class='btn-sm btn-danger' role='button'>Back</a>");
-		$this->load->view('template-detail', $this->data);
+		$this->load->view('template-new', $this->data);
 		}
 
 	}
@@ -71,6 +208,7 @@ class Detail extends MY_Controller {
             $post_data['tanggal_lahir'] = strtodate($post_data['tanggal_lahir']);
             //$this->Akun_model->setIdentitas($post_data);
 			$work_dir = $this->session->userdata('work_dir');
+			/*
 			if(!empty($_FILES['foto']['name'])){
 			$config =  array(
                   'upload_path'     => $work_dir."/foto/",
@@ -91,6 +229,38 @@ class Detail extends MY_Controller {
 					$this->Akun_model->setIdentitas($post_data);
                 }
 			}
+			*/
+			if (!empty($_FILES['foto']['name'])) {
+				$this->load->library('upload');
+
+				$config['upload_path']          = sanitize_path($this->session->userdata('work_dir').'/foto/');
+				$config['allowed_types']        = 'jpg|png|jpeg';
+				$config['max_size']             = 2000;
+				$config['overwrite']            = TRUE;
+
+				$config['file_name']            = md5($this->session->userdata('login')->uid.'_foto'.date(DATE_RFC2822));
+				$this->upload->initialize($config);
+
+				$uploaded = array();
+
+				if ( !$this->upload->do_upload('foto') )
+				{
+						$this->session->set_flashdata('failure', $this->upload->display_errors());
+						$this->Akun_model->setIdentitas($post_data);
+				}
+				else
+				{
+//                if(file_exists($data_jamaah['foto'])){
+//                    unlink($data_jamaah['foto']);
+//                }
+						//$post_data['foto']=$config['file_name'].$this->upload->data('file_ext');
+						$post_data['foto_path'] = $work_dir."/foto/";
+						$post_data['foto'] = $config['file_name'].$this->upload->data('file_ext');
+						$this->Akun_model->setIdentitas($post_data);
+				}
+			}
+
+
 			else
 			{
 				$this->Akun_model->setIdentitas($post_data);
@@ -199,9 +369,9 @@ class Detail extends MY_Controller {
                     break;
 
             }
-            $work_dir = $this->session->userdata('work_dir')."\\.profile\\".$this->input->get("sd").$this->input->get("id");
+            $work_dir = $this->session->userdata('work_dir')."/.profile/".$this->input->get("sd").$this->input->get("id");
             if(!file_exists($work_dir)){
-                mkdir($work_dir);
+                mkdir(sanitize_path($work_dir));
             }
         } else {
             $work_dir = $this->session->userdata('work_dir');

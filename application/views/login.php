@@ -7,13 +7,13 @@
             position: relative;
             top:100px;
         }
-        
+
         #login-box{
             margin: 10px;
             border: 1px solid #D0D0D0;
-            box-shadow: 0 0 8px #D0D0D0; 
+            box-shadow: 0 0 8px #D0D0D0;
         }
-        
+
         #login-body{
             margin: 0px 8px 20px 8px;
         }
@@ -40,10 +40,14 @@
                     <input type="password" class="form-control" id="passwordField" placeholder="Password" name="password">
                   </div>
                   <input type="submit" class="btn btn-default" value="Log In" name="login"/>
+                  <a href="<?php echo site_url('/')?>" class="btn btn-danger" role="button">Back</a>
+
+                  <!--
                     <span style="margin-left:4px; font-size:12px; position:relative; top:4px;">
                         <a href="<?php echo base_url('recover') ?>">Lupa password?</a>
                         <br>Belum punya akun? Silahkan <a href="<?php echo base_url('daftar') ?>">daftar di sini</a>.
                     </span>
+                  -->
                 <?php echo form_close(); ?>
             </div>
         </div>

@@ -22,7 +22,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/select2/select2.min.css">
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/iCheck/all.css">
-
+  <!-- DataTables -->
+  <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= base_url(); ?>assets/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -48,6 +49,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="<?= base_url(); ?>assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
   <!-- AdminLTE App -->
   <script src="<?= base_url(); ?>assets/js/app.min.js"></script>
+  <!-- Select2 -->
+  <script src="<?= base_url(); ?>assets/plugins/select2/select2.min.js"></script>
+  <!-- InputMask -->
+  <script src="<?= base_url(); ?>assets/plugins/mask/jquery.mask.min.js"></script>
+  <!-- DataTable -->
+  <script src="<?= base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="<?= base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
+  <script src="<?= base_url(); ?>assets/plugins/highlight/jquery.highlight.js"></script>
+
   <script>
       // The function actually applying the offset
       function offsetAnchor() {
@@ -217,14 +227,17 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="<?= base_url() . $identitas->foto; ?>" class="user-image" alt="User Image">
+              <!--<img src="<?= base_url() . $identitas->foto; ?>" class="user-image" alt="User Image">-->
+              <img src="<?= site_url(); ?>/getfile/profileImage/true" class="user-image" alt="User Image">
+
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs"><?= $identitas->nama_lengkap ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="<?= base_url() . $identitas->foto; ?>" class="img-circle" alt="User Image">
+                <!--<img src="<?= base_url() . $identitas->foto; ?>" class="img-circle" alt="User Image">-->
+                <img src="<?= site_url(); ?>/getfile/profileImage/true" class="img-circle" alt="User Image">
 
                 <p>
                   <?= $identitas->nama_lengkap ?>
@@ -251,7 +264,7 @@ desired effect
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="<?=site_url()?>/settings/" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="<?=site_url()?>/login/logout" class="btn btn-default btn-flat">Log out</a>
@@ -278,9 +291,12 @@ desired effect
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?= base_url() . $identitas->foto; ?>" class="img-circle" alt="User Image">
+          <!--<img src="<?= base_url() . $identitas->foto; ?>" class="img-circle" alt="User Image">-->
+          <img src="<?= site_url(); ?>/getfile/profileImage/true" class="img-circle" alt="User Image">
+
         </div>
         <div style="margin-top:50px">
+          <br>
         <div class="pull-left info">
           <p style="color:white;"><?= wordwrap($identitas->nama_lengkap, 40, "<br />\n"); ?></p>
           <!-- Status -->
@@ -322,6 +338,7 @@ desired effect
               <li><a href="#bukuteks"><i class="glyphicon glyphicon-book"></i> <span>Buku Teks</span></a></li>
               <li><a href="#penghargaan"><i class="glyphicon glyphicon-bookmark"></i> <span>Penghargaan</span></a></li>
               <li><a href="#seminar"><i class="glyphicon glyphicon-share"></i> <span>Nara Sumber</span></a></li>
+              <li><a href="#kuliah"><i class="glyphicon glyphicon-share"></i> <span>Kuliah</span></a></li>
 
             </ul>
             <?php endif; ?>
@@ -339,6 +356,25 @@ desired effect
             <li><a href="#">Link in level 2</a></li>
           </ul>
         </li>
+-->
+
+<?php elseif($user->level == "admin"): ?>
+<ul class="sidebar-menu">
+  <li class="header">MENU ADMIN</li>
+  <!-- Optionally, you can add icons to the links -->
+  <li <?= $tab=="1" ? 'class="active"':"" ?>><a href="<?= site_url() ?>/admin"><i class="glyphicon glyphicon-user"></i> <span>Akun</span></a></li>
+<!--
+  <li class="treeview">
+    <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="#">Link in level 2</a></li>
+      <li><a href="#">Link in level 2</a></li>
+    </ul>
+  </li>
 -->
       </ul>
       <?php endif; ?>

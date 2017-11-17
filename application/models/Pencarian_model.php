@@ -19,6 +19,7 @@ class Pencarian_model extends CI_Model {
     {
 
         //add custom filter here
+        $this->db->where('level !=','admin');
         if($this->input->post('nama_lengkap'))
         {
             $this->db->like('nama_lengkap', $this->input->post('nama_lengkap'));
@@ -29,10 +30,14 @@ class Pencarian_model extends CI_Model {
         }
         if($this->input->post('research_interests'))
         {
-			$this->db->like('research_interests', $this->input->post('research_interests'));
-		}
-
+			       $this->db->like('research_interests', $this->input->post('research_interests'));
+		    }
         $this->db->from($this->table);
+
+        $order_gelar = sprintf('FIELD (users.gelar_akademik, "%s","%s","%s","%s")', "Profesor", "Doktor", "Kandidat Doktor", "Magister");
+        $this->db->order_by($order_gelar);
+        $this->db->order_by("nidn", "asc");
+
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column
@@ -65,6 +70,7 @@ class Pencarian_model extends CI_Model {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
+
     }
 
     public function get_datatables()
@@ -93,7 +99,7 @@ class Pencarian_model extends CI_Model {
     {
         $this->db->select('nm_prodi');
         $this->db->from($this->tableprodi);
-        $this->db->order_by('nm_prodi','asc');
+        $this->db->order_by('id_prodi','asc');
         $query = $this->db->get();
         $result = $query->result();
 
@@ -109,11 +115,59 @@ class Pencarian_model extends CI_Model {
     {
         $this->db->select('uid,nama_lengkap,prodi,research_interests,foto,deskripsi_singkat');
         $this->db->from($this->table);
-        $this->db->order_by('nama_lengkap','asc');
+        $this->db->where('level <>','admin');
+        $this->db->order_by('nidn','asc');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
         $result = $query->result();
         return $result;
     }
 
+    public function get_max_users()
+    {
+        $this->db->select('count(uid) as jumlah');
+        $this->db->from($this->table);
+        $this->db->where('level <>','admin');
+        $query = $this->db->get();
+        $result = $query->row();
+        return $result;
+    }
+
+    public function get_list_user($limit, $start, $keyword = NULL)
+    {
+        if ($keyword == "NIL") $keyword = "";
+        $order_gelar = sprintf('FIELD (users.gelar_akademik, "%s","%s","%s","%s")', "Profesor", "Doktor", "Kandidat Doktor", "Magister");
+        $sql = "select * from users where level!='admin' and prodi like '%$keyword%' order by " . $order_gelar . ", nidn asc limit " . $start . ", " . $limit;
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    public function get_list_user_awal($keyword = NULL)
+    {
+        if ($keyword == "NIL") $keyword = "";
+        $order_gelar = sprintf('FIELD (users.gelar_akademik, "%s","%s","%s","%s")', "Profesor", "Doktor", "Kandidat Doktor", "Magister");
+        $sql = "select * from users where level!='admin' and prodi like '%$keyword%' order by " . $order_gelar . ", nidn asc";
+        $query = $this->db->query($sql);
+
+        return $query->result();
+    }
+
+    public function get_list_users_keyword($keyword = NULL)
+       {
+           if ($keyword == "NIL") $keyword = "";
+           $order_gelar = sprintf('FIELD (users.gelar_akademik, "%s","%s","%s","%s")', "Profesor", "Doktor", "Kandidat Doktor", "Magister");
+
+           $sql = "select * from users where level!='admin' and prodi like '%$keyword%' order by " . $order_gelar . ", nidn asc";
+           $query = $this->db->query($sql);
+
+           return $query->num_rows();
+       }
+
+       public function get_list_pendidikan_by_uid($uid = NULL)
+       {
+           if ($uid == "NIL") $uid = "";
+           $sql = "select * from pendidikan where uid = '$uid'";
+           $query = $this->db->query($sql);
+           return $query->result();
+       }
 }
